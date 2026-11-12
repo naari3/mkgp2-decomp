@@ -11710,43 +11710,27 @@ game/SceneRoleTransitions.cpp:
 	.sdata      start:0x806D0940 end:0x806D0970
 
 game/autodata/sdata_806D0970.c:
-	.sdata      start:0x806D0970 end:0x806D09A8
+	.sdata      start:0x806D0970 end:0x806D0990
 
 game/autodata/data_804EEF78.c:
-	.data       start:0x804EEF78 end:0x804EEFBC
+	.data       start:0x804EEF78 end:0x804EEF98
 
 game/autodata/rodata_803EFEA0.c:
-	.rodata     start:0x803EFEA0 end:0x803F0860
+	.rodata     start:0x803EFEA0 end:0x803F0800
 
 game/SceneRoleRender.cpp:
-	extab       start:0x8001E570 end:0x8001E578
-	extabindex  start:0x8002B610 end:0x8002B61C
-	.text       start:0x8024CFE8 end:0x8024D02C
+	extab       start:0x8001E570 end:0x8001E614
+	extabindex  start:0x8002B610 end:0x8002B658
+	.text       start:0x8024CFE8 end:0x8024D36C
+	.rodata     start:0x803F0800 end:0x803F0824
+	.data       start:0x804EEF98 end:0x804EEFBC
+	.sdata      start:0x806D0990 end:0x806D09A0
 
-game/SceneRoleUpdate.cpp:
-	extab       start:0x8001E578 end:0x8001E580
-	extabindex  start:0x8002B61C end:0x8002B628
-	.text       start:0x8024D02C end:0x8024D108
+game/autodata/sdata_806D09A0.c:
+	.sdata      start:0x806D09A0 end:0x806D09A8
 
-game/SceneRoleDelete.cpp:
-	extab       start:0x8001E580 end:0x8001E588
-	extabindex  start:0x8002B628 end:0x8002B634
-	.text       start:0x8024D108 end:0x8024D140
-
-game/SceneRoleCreate.cpp:
-	extab       start:0x8001E588 end:0x8001E5A0
-	extabindex  start:0x8002B634 end:0x8002B640
-	.text       start:0x8024D140 end:0x8024D17C
-
-game/SceneRoleDtor.cpp:
-	extab       start:0x8001E5A0 end:0x8001E5C8
-	extabindex  start:0x8002B640 end:0x8002B64C
-	.text       start:0x8024D17C end:0x8024D244
-
-game/BattleSceneInit.cpp:
-	extab       start:0x8001E5C8 end:0x8001E614
-	extabindex  start:0x8002B64C end:0x8002B658
-	.text       start:0x8024D244 end:0x8024D36C
+game/autodata/rodata_803F0824.c:
+	.rodata     start:0x803F0824 end:0x803F0860
 
 game/ContinueSceneDraw.cpp:
 	extab       start:0x8001E614 end:0x8001E61C
