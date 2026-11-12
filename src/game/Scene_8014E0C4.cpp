@@ -1107,9 +1107,12 @@ struct CourseModeInfo {
     const char *name;
 };
 
+/* One attract-screen sprite: texture file index, then its rectangle on
+ * that texture in pixels. fn_801F6D58 takes the four floats from &x. */
 struct SprEntry {
     unsigned int key;
-    char name[8];
+    float x;
+    float y;
     float w;
     float h;
 };
@@ -6035,7 +6038,7 @@ void SprScene::Draw(unsigned int layer, unsigned int id, unsigned int flags, flo
     SprInst inst(res);
     fn_801F7344(res, &inst.d);
     fn_801F7198(inst.res, &inst.d, 0);
-    fn_801F6D58(&inst.d, e->name, 0, 0);
+    fn_801F6D58(&inst.d, &e->x, 0, 0);
     fn_801F70F0(&inst.d, x, y, 1.0f);
     fn_801F6ED0(&inst.d, sx, sy);
     fn_801F6EEC(&inst.d, rot);
