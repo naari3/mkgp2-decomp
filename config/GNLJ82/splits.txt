@@ -1651,7 +1651,7 @@ game/dtor_80060024.cpp:
 	.sdata      start:0x806CEEB8 end:0x806CEEC0
 
 game/autodata/sdata_806CEEC0.c:
-	.sdata      start:0x806CEEC0 end:0x806CEF58
+	.sdata      start:0x806CEEC0 end:0x806CEF00
 
 game/autodata/data_803F9D10.c:
 	.data       start:0x803F9D10 end:0x803F9DAC
@@ -1685,7 +1685,7 @@ game/clMiyoshiCardCreate.c:
 	.data       start:0x803F9E18 end:0x803F9F2C
 
 game/autodata/data_803F9F2C.c:
-	.data       start:0x803F9F2C end:0x803FBF80
+	.data       start:0x803F9F2C end:0x803FBF28
 
 game/dtor_8006178C.c:
 	extab       start:0x80007E74 end:0x80007E84
@@ -1708,9 +1708,6 @@ game/ShadowBillboard.c:
 	extabindex  start:0x80020E10 end:0x80020E70
 	.text       start:0x80061954 end:0x80064CD4
 	.rodata     start:0x802EE320 end:0x802EE510
-
-game/autodata/rodata_802EE510.c:
-	.rodata     start:0x802EE510 end:0x802EE57C
 
 game/dtor_80064CD4.c:
 	extab       start:0x80007F1C end:0x80007F24
@@ -1740,25 +1737,16 @@ game/TwoSubDtor_Pending_80064f58.cpp:
 	extabindex  start:0x80020EA0 end:0x80020EAC
 	.text       start:0x80064F58 end:0x80065028
 
-game/EffectSpeedAction_SpeedScale_Dtor.c:
-	extab       start:0x80007F84 end:0x80007F8C
-	extabindex  start:0x80020EAC end:0x80020EB8
-	.text       start:0x80065028 end:0x80065084
+game/EffectSpeedAction_SpeedScale_Dtor.cpp:
+	extab       start:0x80007F84 end:0x80008090
+	extabindex  start:0x80020EAC end:0x80020F54
+	.text       start:0x80065028 end:0x800657D8
+	.rodata     start:0x802EE510 end:0x802EE57A
+	.data       start:0x803FBF28 end:0x803FBF7C
+	.sdata      start:0x806CEF00 end:0x806CEF18
 
-game/EffectSpeedAction_MueScale_Dtor.c:
-	extab       start:0x80007F8C end:0x80007F94
-	extabindex  start:0x80020EB8 end:0x80020EC4
-	.text       start:0x80065084 end:0x800650E0
-
-game/EffectSpeed_Init.cpp:
-	extab       start:0x80007F94 end:0x80007FF8
-	extabindex  start:0x80020EC4 end:0x80020ED0
-	.text       start:0x800650E0 end:0x8006520C
-
-game/EffectSpeedAction.cpp:
-	extab       start:0x80007FF8 end:0x80008090
-	extabindex  start:0x80020ED0 end:0x80020F54
-	.text       start:0x8006520C end:0x800657D8
+game/autodata/sdata_806CEF18.c:
+	.sdata      start:0x806CEF18 end:0x806CEF58
 
 game/Cosf_LUT_Wrap.c:
 	extab       start:0x80008090 end:0x80008098
