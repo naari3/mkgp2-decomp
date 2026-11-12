@@ -8934,7 +8934,7 @@ game/fn_801DAB20.cpp:
 	.sdata      start:0x806CFEE8 end:0x806CFEF0
 
 game/autodata/sdata_806CFEF0.c:
-	.sdata      start:0x806CFEF0 end:0x806CFFF0
+	.sdata      start:0x806CFEF0 end:0x806CFFD8
 
 game/autodata/data_8049BC30.c:
 	.data       start:0x8049BC30 end:0x8049D030
@@ -9330,7 +9330,7 @@ game/AI_UpdateItemEffects.c:
 	.data       start:0x804E4A78 end:0x804E4AF0
 
 game/autodata/data_804E4AF0.c:
-	.data       start:0x804E4AF0 end:0x804E4C28
+	.data       start:0x804E4AF0 end:0x804E4BE0
 
 game/fn_801E6594.c:
 	extab       start:0x800164A0 end:0x800164A8
@@ -9648,19 +9648,17 @@ game/fn_801EC3DC.c:
 	.ctors      start:0x802E8928 end:0x802E892C
 
 game/fn_801EC404.cpp:
-	extab       start:0x80016BDC end:0x80016C04
-	extabindex  start:0x80028AA8 end:0x80028AB4
-	.text       start:0x801EC404 end:0x801EC4B0
+	extab       start:0x80016BDC end:0x80016C14
+	extabindex  start:0x80028AA8 end:0x80028ACC
+	.text       start:0x801EC404 end:0x801EC5A4
+	.data       start:0x804E4BE0 end:0x804E4BFC
+	.sdata      start:0x806CFFD8 end:0x806CFFE8
 
-game/EnemyRunType2_CalcSteering.c:
-	extab       start:0x80016C04 end:0x80016C0C
-	extabindex  start:0x80028AB4 end:0x80028AC0
-	.text       start:0x801EC4B0 end:0x801EC568
+game/autodata/sdata_806CFFE8.c:
+	.sdata      start:0x806CFFE8 end:0x806CFFF0
 
-game/EnemyRunType2_Init.c:
-	extab       start:0x80016C0C end:0x80016C14
-	extabindex  start:0x80028AC0 end:0x80028ACC
-	.text       start:0x801EC568 end:0x801EC5A4
+game/autodata/data_804E4BFC.c:
+	.data       start:0x804E4BFC end:0x804E4C28
 
 game/EnemyRunType1_CalcSteering.c:
 	extab       start:0x80016C14 end:0x80016C1C

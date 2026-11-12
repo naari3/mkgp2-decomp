@@ -1964,7 +1964,6 @@ config.libs = [
             Object(Matching, "game/ItemSelectChildSpriteUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemSelectChildSpriteDtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelectChildSpriteCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/EnemyRunType2_Init.c"),
             Object(Matching, "game/EnemyRunType1_Init.c"),
             Object(Matching, "game/PathFollower_EnsureGlobalAlloc.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetEnemyParam.c", extab_padding=b"\x00\x00"),
@@ -2268,7 +2267,6 @@ config.libs = [
             Object(Matching, "game/ItemHolder_SetItem.c"),
             Object(Matching, "game/ItemHolder_Update.cpp"),
             Object(Matching, "game/fn_801EB91C.c"),
-            Object(Matching, "game/EnemyRunType2_CalcSteering.c"),
             Object(Matching, "game/fn_801ECB04.c"),
             Object(Matching, "game/fn_801F5A64.cpp"),
             Object(Matching, "game/MenuModeLane.cpp", extab_padding=b""),
@@ -2325,7 +2323,7 @@ config.libs = [
             Object(Matching, "game/KartPhysics_UpdateSmoothing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_CalcRivalAvoidance.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EnemyRun_BaseInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/fn_801EC404.cpp", extab_padding=b""),
+            Object(Matching, "game/fn_801EC404.cpp", extab_padding=b"", extra_cflags=["-RTTI on", "-inline deferred,noauto", "-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F0BD4.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801F6860.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801CCF2C.cpp", extab_padding=b"", mw_version="GC/2.6"),
@@ -3464,6 +3462,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/autodata/data_804E4BFC",
     "game/autodata/data_803F9C3C",
     "game/autodata/data_8048E34C",
     "game/autodata/data_80490B14",
