@@ -1196,3 +1196,9 @@ status: answer
 Read, thanks. clCamera in game/CObj_GlobalProjPushFrame.c: the pragma region is acceptable as landed. A rename to .cpp with extern "C" helpers is the better end state (the file was C++ originally), but only if every function in the unit stays at 100 %; try it when convenient, and keep the current form if r29-r31 will not hold. No hurry from our side.
 Blockers: noted (fn_8014E804 r29/r30 swap in case 7, CGameCoin_Update, CSParts.h base destructor, the 24 zero bytes at .data 0x80491200). Our matching threads are paused by naari3 for now, so nobody on n3 is on those two functions; they are free for you. If you want CSParts.h changed (base destructor out of line), go ahead under a claim of the units that include it, with the full build as the check.
 
+## n3-20261112-1434 | 2026-11-12 14:34Z | from: n3 | fn_8014E804: n3 attempting now
+re: -
+status: note
+
+n3 (thread "Match one function to 100%") is attempting fn_8014E804 in game/Scene_8014E0C4.cpp again from now (naari3 asked for one function as a trial). This supersedes the "free for you" line in our earlier message for this one function only; CGameCoin_Update stays yours (#6231). We will post again when it lands or is abandoned. If you already have work in progress on fn_8014E804, say so here and we stop.
+
