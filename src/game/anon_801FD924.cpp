@@ -7,7 +7,11 @@
 #include "game/types/FlowController.h"
 
 /* Holds the scene list at +4 (vtable FlowSceneHost_vtable_804EC190). */
-#include "game/types/FlowSceneHost.h"
+struct clCardErrCheck {
+    virtual ~clCardErrCheck();
+    VHolder<FlowSceneList> list;
+    clCardErrCheck();
+};
 
 extern "C" {
 extern int lbl_806D19D0;
@@ -28,11 +32,11 @@ extern "C" bool fn_801FD924(FlowController *self) {
     return fn_801F4DC0(self->owner, 100) != 0;
 }
 
-FlowSceneHost::~FlowSceneHost() {
+clCardErrCheck::~clCardErrCheck() {
     fn_801F4D3C(list.p);
 }
 
-FlowSceneHost::FlowSceneHost() : list(new SceneListImpl) {
+clCardErrCheck::clCardErrCheck() : list(new SceneListImpl) {
 }
 
 static inline int MapCommonCardError(int code) {
@@ -125,6 +129,78 @@ extern "C" int fn_801FDCA8(int code) {
     case 7:
     default:
         card_eject_init();
+        lbl_806D19D4 = 9;
+        break;
+    }
+    return lbl_806D19D4;
+}
+
+extern "C" int fn_801FDDA4(int code) {
+    lbl_806D19D0 = 0;
+    lbl_806D19D4 = 0;
+    if (MapCommonCardError(code)) {
+        return lbl_806D19D4;
+    }
+    switch (code) {
+    case 1:
+        break;
+    case 4:
+        lbl_806D19D4 = 1;
+        break;
+    case 3:
+        if (Sci2Card_GetUnpackStatusCode() == 6) lbl_806D19D4 = 2;
+        break;
+    case 103:
+        lbl_806D19D4 = 3;
+        break;
+    case 5:
+        lbl_806D19D4 = 4;
+        break;
+    case 2:
+    case 6:
+    default:
+        DebugPrintf(lbl_806DA840, lbl_803BFEF8, 0xD7);
+        card_send_read_cmd_init();
+        lbl_806D19D4 = 9;
+        break;
+    }
+    return lbl_806D19D4;
+}
+
+extern "C" int fn_801FDF20(void) {
+    int code = Sci2Card_GetPrintErrorCode();
+    lbl_806D19D0 = 0;
+    lbl_806D19D4 = 0;
+    if (code == 100) {
+        lbl_806D19D0 = 0;
+        lbl_806D19D4 = 9;
+        return 9;
+    }
+    if (MapCommonCardError(code)) {
+        return lbl_806D19D4;
+    }
+    if (code != 1) {
+        card_send_ping_cmd_init();
+        lbl_806D19D4 = 9;
+    }
+    return lbl_806D19D4;
+}
+
+extern "C" int fn_801FE030(int code, unsigned char clean) {
+    lbl_806D19D0 = 0;
+    lbl_806D19D4 = 0;
+    if (MapCommonCardError(code)) {
+        return lbl_806D19D4;
+    }
+    switch (code) {
+    case 1:
+        break;
+    case 6:
+    default:
+        if (clean == 1) {
+            DebugPrintf(lbl_806DA840, lbl_803BFEF8, 0x6D);
+            card_send_cleaning_cmd_init();
+        }
         lbl_806D19D4 = 9;
         break;
     }
