@@ -3897,5 +3897,25 @@
     "fn_8017FCAC",
     "fn_8017FD68",
     "PrintPool__10clMiyazakiFPCc"
-  ]
+  ],
+  "src/game/anon_80211B10.cpp": {
+    "extab": [
+      "fn_80211B10",
+      "JumpDistanceMode_Update",
+      "fn_802124FC",
+      "fn_802128F4",
+      "fn_80212EA4",
+      "JumpDistanceMode_Init",
+      "dtor_80036E40"
+    ],
+    "extabindex": [
+      "fn_80211B10",
+      "JumpDistanceMode_Update",
+      "fn_802124FC",
+      "fn_802128F4",
+      "fn_80212EA4",
+      "JumpDistanceMode_Init",
+      "dtor_80036E40"
+    ]
+  }
 }

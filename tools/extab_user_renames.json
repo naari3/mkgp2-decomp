@@ -1697,31 +1697,6 @@
     "extab_JumpDistanceMode_HandlePhysics": "@etb_80019EDC",
     "extabindex_JumpDistanceMode_HandlePhysics": "@eti_80029F48"
   },
-  "src/game/JumpDistanceMode_Update.c": {
-    "extab_JumpDistanceMode_Update": "@etb_80019EEC",
-    "extabindex_JumpDistanceMode_Update": "@eti_80029F60"
-  },
-  "src/game/JumpDistanceMode_Init.c": {
-    "extab_JumpDistanceMode_Init": "@etb_80019F1C",
-    "extabindex_JumpDistanceMode_Init": "@eti_80029F90",
-    "__ct__16JumpDistanceModeFv": "JumpDistanceMode_Init",
-    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
-    "__dt__8ModeBaseFv": "dtor_80122FD8",
-    "__vt__16JumpDistanceMode": "JumpDistanceMode_vtable_804ECC08",
-    "__vt__8ModeBase": "lbl_8048E144",
-    "__ct__12InputManagerFv": "InputManager_Init",
-    "__ct__6CameraFffiii": "Camera_Create",
-    "__ct__9CarObjectFiiiiiiiifff": "CarObject_Init",
-    "__ct__8ItemSlotFi": "fn_8023EA80",
-    "__ct__11LakituStartFPCvifff": "LakituStart_Init",
-    "__ct__7Scene3DFi": "Scene3D_Init",
-    "__ct__19ChallengeGoalCameraFv": "ChallengeGoalCamera_Init",
-    "__ct__12KartMovementFRC12KartMovement": "JumpDistanceMode_CopyKartMovement",
-    "__ct__3HUDFi": "HUD_Init",
-    "__ct__12TimerDisplayFi": "JumpDistanceMode_InitTimerDisplay",
-    "__ct__13WeatherSystemFi": "WeatherSystem_Init",
-    "__ct__13LandingMarkerFPCvi": "fn_8013D800"
-  },
   "src/game/JumpDistanceMode_UpdateGameplay.c": {
     "extab_JumpDistanceMode_UpdateGameplay": "@etb_80019ED4",
     "extabindex_JumpDistanceMode_UpdateGameplay": "@eti_80029F3C"
@@ -5651,9 +5626,30 @@
     "__dt__8DemoBaseFv": "clCGameDemo_Dtor"
   },
   "src/game/anon_80211B10.cpp": {
-    "Draw__16JumpDistanceModeFv": "fn_80211B10"
-  },
-  "src/game/anon_802124FC.cpp": {
+    "@420": "@etb_80019EE4",
+    "@421": "@eti_80029F54",
+    "@533": "@etb_80019EEC",
+    "@534": "@eti_80029F60",
+    "@592": "@etb_80019EF4",
+    "@593": "@eti_80029F6C",
+    "@663": "@etb_80019EFC",
+    "@664": "@eti_80029F78",
+    "@743": "@etb_80019F14",
+    "@744": "@eti_80029F84",
+    "@813": "@etb_80019F1C",
+    "@814": "@eti_80029F90",
+    "@340": "lbl_803C3D8C",
+    "@342": "JumpDistanceMode_Init_rodata_803C3D98",
+    "@343": "lbl_806DAD68",
+    "@344": "sdata_806D0358_data_804ECBE8",
+    "@341": "sdata_806D0358_data_804ECBF4",
+    "@809": "lbl_803C3DA4",
+    "@810": "lbl_803C3DB8",
+    "@811": "lbl_803C3DC8",
+    "__vt__7clCGame": "lbl_8048E144",
+    "__dt__12InputManagerFv": "CourseEnvironment_Dtor",
+    "__ct__7CtorCarFiiiiiiiifff": "CarObject_Init",
+    "Draw__16JumpDistanceModeFv": "fn_80211B10",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__16JumpDistanceModeFv": "fn_80212EA4",
@@ -5666,7 +5662,32 @@
     "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
     "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
     "__dt__8ItemSlotFv": "fn_8023E808",
-    "__dt__3HUDFv": "fn_80254134"
+    "__dt__3HUDFv": "fn_80254134",
+    "__ct__16JumpDistanceModeFv": "JumpDistanceMode_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__vt__8ModeBase": "lbl_8048E144",
+    "__ct__12InputManagerFv": "InputManager_Init",
+    "__ct__6CameraFffiii": "Camera_Create",
+    "__ct__9CarObjectFiiiiiiiifff": "CarObject_Init",
+    "__ct__8ItemSlotFi": "fn_8023EA80",
+    "__ct__11LakituStartFPCvifff": "LakituStart_Init",
+    "__ct__7Scene3DFi": "Scene3D_Init",
+    "__ct__19ChallengeGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__12KartMovementFRC12KartMovement": "JumpDistanceMode_CopyKartMovement",
+    "__ct__3HUDFi": "HUD_Init",
+    "__ct__12TimerDisplayFi": "JumpDistanceMode_InitTimerDisplay",
+    "__ct__13WeatherSystemFi": "WeatherSystem_Init",
+    "__ct__13LandingMarkerFPCvi": "fn_8013D800",
+    "__ct__9clCGameDNFv": "JumpDistanceMode_Init",
+    "__dt__9clCGameDNFv": "fn_80212EA4",
+    "Draw__9clCGameDNFv": "fn_80211B10",
+    "Update__9clCGameDNFv": "JumpDistanceMode_Update",
+    "__vt__9clCGameDN": "JumpDistanceMode_vtable_804ECC08",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__7clCGameFv": "dtor_80122FD8",
+    "__RTTI__9clCGameDN": "data_804ECA88_data_806D03F0",
+    "__RTTI__7clCGame": "data_804ECA88_data_806D03E8",
+    "__RTTI__11clJobRunner": "lbl_806D03E0"
   },
   "src/game/anon_802151C8.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
@@ -9650,21 +9671,6 @@
     "@98": "@etb_8001BCF0",
     "@99": "@eti_8002A7D0"
   },
-  "src/game/anon_802124FC_m1.cpp": {
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__16JumpDistanceModeFv": "fn_80212EA4",
-    "__dt__8ModeBaseFv": "dtor_80122FD8",
-    "__vt__16JumpDistanceMode": "JumpDistanceMode_vtable_804ECC08",
-    "__dt__7KartPosFv": "dtor_80036E40",
-    "__dt__13WeatherSystemFv": "fn_8016C634",
-    "__dt__12KartMovementFv": "CarObject_Dtor",
-    "__dt__11LakituStartFv": "LakituStart_Dtor",
-    "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
-    "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
-    "__dt__8ItemSlotFv": "fn_8023E808",
-    "__dt__3HUDFv": "fn_80254134"
-  },
   "src/game/anon_80219FF4_nm1.cpp": {
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
@@ -12957,11 +12963,6 @@
     "extabindex_fn_80139810": "@eti_80024C74",
     "__ct__9GXChannelFP4JObjP4DObjUii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4"
-  },
-  "src/game/anon_802124FC_nm1.cpp": {
-    "__dt__7KartPosFv": "dtor_80036E40",
-    "@92": "@etb_80019EFC",
-    "@93": "@eti_80029F78"
   },
   "src/game/AI_AdjustThunks.cpp": {
     "@12@__dt__12AIControllerFv": "fn_801E8C90",
