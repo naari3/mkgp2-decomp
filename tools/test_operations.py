@@ -104,5 +104,22 @@ class PublicationTests(unittest.TestCase):
             verify("abc123", "repo", "page")
 
 
+class RestorationPageTests(unittest.TestCase):
+    def test_page_renders_from_partial_numbers(self):
+        import gen_restoration_page as G
+        d = {"classes": {"error": "no rtti"}, "offsets": {"accesses": 5, "through_macros": 3,
+             "written_out": 2, "files": 1, "top_files": [["src/game/A.c", 5]]}}
+        hist = [{"sha": "a" * 40, "ts": "2026-01-01T10:00:00+09:00", "offset_accesses": 9},
+                {"sha": "b" * 40, "ts": "2026-01-01T23:00:00+00:00", "offset_accesses": 7},
+                {"sha": "c" * 40, "ts": "2026-03-01T00:00:00+00:00", "offset_accesses": 6},
+                {"sha": "d" * 40, "ts": "2026-03-02T00:00:00+00:00", "offset_accesses": 5}]
+        days = G.daily(hist)
+        self.assertEqual([x["sha"][0] for x in days], ["b", "c", "d"])
+        page = G.render(d, hist, commit="d" * 40)
+        self.assertIn("Byte-offset accesses left", page)
+        self.assertIn('[["2026-03-01", 6], ["2026-03-02", 5]]', page)   # starts after the 30-day pause
+        self.assertNotIn("{tiles}", page)
+
+
 if __name__ == "__main__":
     unittest.main()

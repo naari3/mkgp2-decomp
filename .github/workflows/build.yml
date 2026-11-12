@@ -228,6 +228,16 @@ jobs:
                 --report build/${{ matrix.version }}/report.json \
                 --history .progress-data/history/${{ matrix.version }}.jsonl \
                 --sha "$GITHUB_SHA" --ts "$TS"
+            # Source-restoration numbers (tools/restoration.py) for the
+            # restoration page: this commit, plus one row per past day the
+            # file does not have yet (40 days per run, so the first runs fill
+            # the past). Never fails the build.
+            RH=.progress-data/history/${{ matrix.version }}_restoration.jsonl
+            python tools/restoration.py append --history "$RH" --sha "$GITHUB_SHA" --ts "$TS" \
+                || echo "::warning::restoration history append failed"
+            python tools/restoration.py backfill --history "$RH" --ref "$GITHUB_SHA" --limit 40 \
+                || echo "::warning::restoration history backfill failed"
+            test -f "$RH" && git -C .progress-data add history/${{ matrix.version }}_restoration.jsonl
             git -C .progress-data add history/${{ matrix.version }}.jsonl
             if git -C .progress-data diff --cached --quiet; then
               published=1
@@ -251,6 +261,7 @@ jobs:
               --version ${{ matrix.version }} \
               --commit "$GITHUB_SHA" \
               --history .progress-data/history/${{ matrix.version }}.jsonl \
+              --restoration-history .progress-data/history/${{ matrix.version }}_restoration.jsonl \
               --out-dir site
 
       - name: Upload Pages artifact

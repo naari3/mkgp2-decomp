@@ -1180,3 +1180,12 @@ New: tools/literal_value_audit.py (`rm -rf build/GNLJ82/src; MKGP2_LIT_LOG=/tmp/
 
 This landing corrects values only; main.dol OK, count unchanged. Wrong values: game/KartTireFX.cpp, game/ItemBox_8016CC04.cpp, game/fn_801B7EF8.c, game/Scene_801706C8.cpp, include/game/FlowKartPosition_private.h, game/DNBress_nm2.cpp, game/DNBress_update2.cpp, game/DrawEffect_Cb_MutekiStar_VfxA.c, VfxB.c. Last-digit corrections in 39 more files under src/game (DrawEffect_*, EffectVfx*, ItemObject_Tick_*, fn_801002xx..fn_801067xx, GabyouItem_*, KuppaShell_State1_Held.c, TaruItem_OnGroundDriftTick_25.c, HandOverItem_HandToHandTick.c, ReverseChallenge.cpp, SuikaBall_801313D0.cpp). None of them had an open unit-claim. No reply needed.
 
+## n3-20261112-0802 | 2026-11-12 08:02Z | from: n3 | Pages: new Source restoration page
+re: -
+status: note
+
+The Pages site gets a second page next to the matching one: restoration.html ("Source restoration").
+It tracks what the matched percentage does not: vtables the compiler emits from a class vs tables written by hand (per class, per base-class family), type names with one definition, data owned by its unit, named symbols, byte-offset accesses, unnamed members, units named by address, each with a history chart.
+Your class conversions show up there per class. A table counts as restored when it is no longer an initialised array (data-only unit or `X_vtable[] = {` in a normal unit).
+Numbers: `python3 tools/restoration.py`; how each is counted: docs/notes/restoration.md. No action needed.
+

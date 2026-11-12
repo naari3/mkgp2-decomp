@@ -162,6 +162,12 @@ def vtable_numbers(syms):
         return {'error': repr(e)}
     pairs = re.findall(r'"(__vt__[^"]+)"\s*:\s*"([^"]+)"', read('tools/extab_user_renames.json'))
     hand = [v for v in vts if (v['data_unit'] or '').startswith('game/autodata/')]
+    try:   # also counts the tables a normal unit writes out as an array (tools/restoration.py)
+        import restoration
+        c = restoration.class_numbers({'R': rtti_classes}, restoration.sources(ROOT), ROOT)
+        hand = [r for r in c['rows'] if r['state'] == 'hand']
+    except Exception:
+        pass
     real = {v['class'] for v in vts}
     named = sum(1 for v in vts if v['class'].split('<')[0].split('::')[-1] in v['symbol'])
     return {'tables': len(vts), 'hand_written': len(hand), 'real_classes': len(real),

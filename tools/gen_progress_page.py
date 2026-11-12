@@ -331,6 +331,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   h1 {{ font-size: 1.75rem; margin: 0 0 0.5rem; }}
   h2 {{ font-size: 1.2rem; margin: 2rem 0 1rem; border-bottom: 1px solid #30363d; padding-bottom: 0.3rem; }}
   a {{ color: #58a6ff; }}
+  .nav {{ display: flex; gap: 0.4rem; margin: 0.8rem 0 0; flex-wrap: wrap; }}
+  .nav a {{ padding: 0.3rem 0.8rem; border: 1px solid #30363d; border-radius: 6px; text-decoration: none; color: #8b949e; font-size: 0.9rem; }}
+  .nav a.here {{ background: #21262d; color: #f0f6fc; border-color: #8b949e; }}
   .summary {{ display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 1rem; }}
   .card {{ background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 1rem; }}
   .card .label {{ font-size: 0.85rem; color: #8b949e; text-transform: uppercase; letter-spacing: 0.04em; }}
@@ -424,6 +427,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <main>
   <h1>{title}</h1>
   <p class="meta">Version <code>{version}</code> · Generated from <code>report.json</code>{commit_part}</p>
+  <nav class="nav"><a class="here" href="index.html">Matching</a><a href="restoration.html">Source restoration</a></nav>
 
   <h2>Overall</h2>
   <div class="summary">
@@ -1455,6 +1459,8 @@ def main() -> int:
     ap.add_argument("--commit", default=None, help="Optional commit SHA to display")
     ap.add_argument("--history", type=Path, default=None,
                     help="Per-commit history JSONL (progress-data branch)")
+    ap.add_argument("--restoration-history", type=Path, default=None,
+                    help="Per-commit restoration history JSONL (tools/restoration.py)")
     ap.add_argument("--repo-url", default="https://github.com/naari3/mkgp2-decomp")
     args = ap.parse_args()
 
@@ -1535,15 +1541,21 @@ def main() -> int:
             history_section = build_history_section(hist_rows, args.repo_url)
             shutil.copyfile(args.history, args.out_dir / "history.jsonl")
 
-    # Port-readiness table (tools/port_readiness.py); the page still builds without it
+    # Source restoration page (tools/restoration.py): restoration.html next to
+    # index.html, and a short summary here. The port-readiness table moved there.
+    # The site still builds without it.
     port_section = ""
     try:
         import port_readiness
+        import gen_restoration_page
         pr = port_readiness.collect()
-        port_section = port_readiness.html_section(pr)
         (args.out_dir / "port_readiness.json").write_text(json.dumps(pr, indent=1), encoding="utf-8")
+        rs = gen_restoration_page.write(
+            str(args.out_dir), str(args.restoration_history) if args.restoration_history else None,
+            args.version, args.commit, args.repo_url, extra_html=port_readiness.html_section(pr))
+        port_section = gen_restoration_page.index_section(rs)
     except Exception as e:
-        print(f"warning: port readiness section skipped: {e!r}", file=sys.stderr)
+        print(f"warning: source restoration page skipped: {e!r}", file=sys.stderr)
 
     commit_part = f" · commit <code>{html.escape(args.commit)}</code>" if args.commit else ""
 

@@ -8,6 +8,10 @@ This repo ships two pieces of infrastructure for tracking decomp progress:
 2. `tools/gen_progress_page.py` — turns `build/<version>/report.json` into a
    self-contained HTML dashboard (treemap + per-category bars + unit table).
 
+The site also has a second page, `restoration.html` ("Source restoration":
+classes, types, data, names), rendered by `tools/gen_restoration_page.py` from
+`tools/restoration.py`; see `docs/notes/restoration.md`.
+
 Public dashboards:
 
 | | URL | Source |
