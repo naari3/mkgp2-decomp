@@ -131,10 +131,7 @@ static inline void JObjSetTranslate(HSD_JObj *jobj, Vec3 *t) {
     }
 }
 
-struct clCSModelInterface {
-    virtual ~clCSModelInterface() {}
-    virtual void Draw();
-};
+#include "game/types/clCSModelInterface.h"
 
 struct clCSOrgKartModel : clCSModelInterface {
     clNormal3D *kart;

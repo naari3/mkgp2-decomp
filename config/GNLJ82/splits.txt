@@ -6018,19 +6018,22 @@ game/KartPreview.c:
 	.data       start:0x8048EACC end:0x8048EAE8
 	.sdata      start:0x806CF650 end:0x806CF660
 
-game/autodata/sdata_806CF660.c:
-	.sdata      start:0x806CF660 end:0x806CF6E8
-
-game/autodata/data_8048EAE8.c:
-	.data       start:0x8048EAE8 end:0x8048EBEC
-
-game/autodata/rodata_80360440.c:
-	.rodata     start:0x80360440 end:0x80360498
-
 game/PreviewModel.c:
 	extab       start:0x8000D538 end:0x8000D630
 	extabindex  start:0x80024E48 end:0x80024F38
 	.text       start:0x8013D4B0 end:0x8013DD38
+	.rodata     start:0x80360440 end:0x80360450
+	.data       start:0x8048EAE8 end:0x8048EB18
+	.sdata      start:0x806CF660 end:0x806CF668
+
+game/autodata/sdata_806CF668.c:
+	.sdata      start:0x806CF668 end:0x806CF6E8
+
+game/autodata/data_8048EB18.c:
+	.data       start:0x8048EB18 end:0x8048EBEC
+
+game/autodata/rodata_80360450.c:
+	.rodata     start:0x80360450 end:0x80360498
 
 game/SpriteEffects.c:
 	extab       start:0x8000D630 end:0x8000D670

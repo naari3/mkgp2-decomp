@@ -1,29 +1,12 @@
-#include "game/types/c_region.h"
-C_REGION_BEGIN
-/*
- * 3D preview models drawn through the orthographic camera into the shared
- * render target, plus eight per-layer lists of them.
- *
- * The vtables (clCSModelInterface_vtable_8048EAE8 base, PreviewModel_data_8048EB04 model) stay in data, so the
- * vptr stores and the virtual Render call are spelled out by hand.
- *
- * The base dtor (dtor_8013DCBC) is written as a plain deleting-dtor
- * function: as a real inline ~PreviewBase, CW would emit its weak copy right
- * after the model ctor instead of at the end of the unit.
- *
- * Still asm: the model ctor (a real C++ ctor matches except that weak-copy
- * placement; an extern "C" version with `new` matches the code but gets an
- * auto extab without the DESTROYBASE action).
- *
- * fn_8013D940 keeps its iterator in a stack slot: that happens when the
- * iterator is a derived class (CIter : CBase) passed by value to an inline
- * helper. fn_8013DA00 has the same body looped over all eight lists; the
- * loop has to live in an inline taking the PreviewLists pointer (counter
- * r31, end r30, list r29), and begin() goes to RenderRange as a temporary
- * (a named CIter swaps the two iterator stack slots).
+/* clCSModel and the eight preview layers (0x8013D4B0..0x8013DD38).
+ * Nondeferred generation: the base table precedes the derived base list.
+ * Single-declaration C++ linkage specifications keep the member definitions
+ * on the same no-cleanup parser path as the C entry points. The ordinary
+ * fn_8013DBF8 definition flushes the pending base destructor after its code.
+ * PreviewList's inline constructor is defined last so its address-only copy
+ * follows the base Draw method. See the RTTI working notes for the rule.
  */
 #include "game/types/size_t.h"
-C_REGION_END
 #pragma cplusplus on
 
 struct Normal3D {
@@ -33,8 +16,6 @@ struct Normal3D {
 };
 
 extern "C" {
-extern char clCSModelInterface_vtable_8048EAE8[];
-extern char PreviewModel_data_8048EB04[];
 extern void *Alloc(unsigned long size);
 extern void MemoryManager_TimedFree(void *p);
 extern void Object_SetColorRGBA(Normal3D *obj, int, float r, float g, float b, float a);
@@ -64,18 +45,15 @@ extern void fn_8013C3C0(void);
 void *operator new(size_t size);
 void operator delete(void *p);
 
-struct PreviewBase {
-    void *vptr;
-    PreviewBase() { vptr = clCSModelInterface_vtable_8048EAE8; }
-    ~PreviewBase() { vptr = clCSModelInterface_vtable_8048EAE8; }
-};
+#include "game/types/clCSModelInterface.h"
 
-struct PreviewModel : PreviewBase {
+struct clCSModel : clCSModelInterface {
     Normal3D *model;
     float x, y;
     float r, g, b, a;
-    PreviewModel(void *resource, unsigned char flag);
-    ~PreviewModel();
+    clCSModel(void *resource, unsigned char flag);
+    virtual ~clCSModel();
+    virtual void Draw();
 };
 
 extern "C" {
@@ -86,141 +64,6 @@ extern const float lbl_806D76E4;
 
 void fn_8013D940(int layer);
 void fn_8013DA00(void);
-struct PreviewBase;
-PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-
-__declspec(section ".extab_user") static const unsigned char extab_dtor_8013DCBC[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_8013DCBC = {
-    (void *)&dtor_8013DCBC, 0x00000048, (void *)extab_dtor_8013DCBC
-};
-
-}
-
-extern "C" void fn_8013D4B0(PreviewModel *p, float a) {
-    Object_SetColorRGBA(p->model, 0, p->r, p->g, p->b, a);
-    p->a = a;
-}
-
-extern "C" void fn_8013D50C(PreviewModel *p, float r, float g, float b, float a) {
-    Object_SetColorRGBA(p->model, 0, r, g, b, a);
-    p->r = r;
-    p->g = g;
-    p->b = b;
-    p->a = a;
-}
-
-extern "C" void fn_8013D570(PreviewModel *p, float ry) {
-    if (p->model) {
-        Object_SetJObjRotationY(p->model, ry);
-    }
-}
-
-extern "C" void fn_8013D59C(PreviewModel *p, float rx, float ry, float rz) {
-    if (p->model) {
-        Object_SetJObjRotationZ(p->model, rz);
-        Object_SetJObjRotationX(p->model, rx);
-        Object_SetJObjRotationY(p->model, ry);
-    }
-}
-
-extern "C" void fn_8013D608(PreviewModel *p, float x, float y, float z) {
-    if (p->model) {
-        Object_SetJObjScaleXYZ(p->model, x, y, z);
-    }
-}
-
-extern "C" void fn_8013D634(PreviewModel *p, float x, float y, float z) {
-    if (p->model) {
-        Object_SetJObjPositionXYZ(p->model, x, y, z);
-    }
-}
-
-extern "C" void fn_8013D660(PreviewModel *p, float x, float y) {
-    p->x = x;
-    p->y = y;
-}
-
-extern "C" void fn_8013D66C(PreviewModel *p) {
-    if (p->model && fn_8013BC98() && fn_8013C3B8()) {
-        fn_8013BB1C(fn_8013BC98(), p->x, p->y);
-        if (fn_8013BC38(fn_8013BC98())) {
-            fn_8013C34C(fn_8013C3B8());
-            fn_8013BBFC(fn_8013BC98());
-            Object_RenderJObjTree(p->model, 7);
-            fn_8013BB9C(fn_8013BC98());
-            fn_8013C334(fn_8013C3B8());
-        }
-    }
-}
-
-extern "C" int fn_8013D704(PreviewModel *p) {
-    int ret;
-    if (p->model == 0) {
-        ret = 0;
-    } else {
-        ret = clNormal3D_Exec(p->model);
-    }
-    return ret;
-}
-
-extern "C" int fn_8013D738(PreviewModel *p, float sx, float sy) {
-    if (p->model == 0) {
-        return 0;
-    } else {
-        return clNormal3D_SetScale(p->model, 0, sx, sy, 0.0f, 0.0f);
-    }
-}
-
-PreviewModel::~PreviewModel() {
-    vptr = PreviewModel_data_8048EB04;
-    if (model) {
-        delete model;
-    }
-    fn_8013BCA0();
-    fn_8013C3C0();
-}
-
-/* fakematch (class view): the ctor is built on a second view of the base
- * whose dtor is only declared, so the DESTROYBASE cleanup names the
- * out-of-line dtor_8013DCBC instead of emitting a weak copy of the inline
- * base dtor right after this function. Natural code: the same ctor on
- * PreviewModel/PreviewBase. */
-struct PreviewBaseOOL {
-    void *vptr;
-    PreviewBaseOOL() { vptr = clCSModelInterface_vtable_8048EAE8; }
-    ~PreviewBaseOOL();
-};
-
-struct PreviewModelCtor : PreviewBaseOOL {
-    Normal3D *model;
-    float x, y;
-    float r, g, b, a;
-    PreviewModelCtor(void *resource, unsigned char flag);
-};
-
-PreviewModelCtor::PreviewModelCtor(void *resource, unsigned char flag) {
-    vptr = PreviewModel_data_8048EB04;
-    fn_8013BD7C();
-    fn_8013C428();
-    model = 0;
-    x = lbl_806D76E0;
-    y = lbl_806D76E0;
-    r = lbl_806D76E4;
-    g = lbl_806D76E4;
-    b = lbl_806D76E4;
-    model = new Normal3D(resource, flag);
-    if (flag) {
-        clNormal3D_SetFlags(model, 0x40000000, 0);
-    }
 }
 
 struct ListNodeBase {
@@ -229,7 +72,7 @@ struct ListNodeBase {
 };
 
 struct ListNode : ListNodeBase {
-    PreviewModel *data;
+    clCSModel *data;
 };
 
 struct ListBase {
@@ -237,7 +80,7 @@ struct ListBase {
         ListNodeBase *node;
         iterator(ListNodeBase *n) : node(n) {}
         iterator(const iterator &o) : node(o.node) {}
-        PreviewModel *&operator*() const { return ((ListNode *)node)->data; }
+        clCSModel *&operator*() const { return ((ListNode *)node)->data; }
         iterator &operator++() {
             node = node->next;
             return *this;
@@ -252,9 +95,9 @@ struct ListBase {
     iterator end() { return iterator(&end_); }
     bool empty() const { return count == 0; }
     iterator erase(iterator first, iterator last);
-    iterator insert(iterator pos, PreviewModel *const &value);
+    iterator insert(iterator pos, clCSModel *const &value);
     void clear() { erase(begin(), end()); }
-    void push_back(PreviewModel *const &value) { insert(end(), value); }
+    void push_back(clCSModel *const &value) { insert(end(), value); }
 };
 
 struct ListMid : ListBase {
@@ -262,7 +105,7 @@ struct ListMid : ListBase {
 };
 
 struct PreviewList : ListMid {
-    PreviewList() {}
+    PreviewList();
     ~PreviewList();
 };
 
@@ -277,17 +120,9 @@ struct CBase {
 
 struct CIter : CBase {
     CIter(const ListBase::iterator &o) : CBase(o.node) {}
-    PreviewModel *operator*() const { return ((ListNode *)node)->data; }
+    clCSModel *operator*() const { return ((ListNode *)node)->data; }
     bool operator!=(const ListBase::iterator &o) const { return node != o.node; }
 };
-
-struct PreviewRenderable {
-    virtual void v08();
-    virtual void Render();
-};
-
-PreviewList::~PreviewList() {
-}
 
 struct PreviewLists {
     PreviewList lists[8];
@@ -306,15 +141,127 @@ struct PreviewLists {
 
 extern "C" PreviewLists *PreviewModel_bss_806D1560;
 
+extern "C" int fn_8013DBF8(void);
+
 static inline void RenderRange(CIter first, const ListBase::iterator &last) {
     for (; first != last; ++first) {
-        ((PreviewRenderable *)*first)->Render();
+        (*first)->Draw();
     }
 }
 
 static inline void EraseFrom(ListBase &l, ListNodeBase *e) {
     l.erase(ListBase::iterator(e->next), ListBase::iterator(e));
 }
+
+static inline void RenderAll(PreviewLists *p) {
+    for (int i = 0; i < 8; i++) {
+        PreviewList &l = p->lists[i];
+        if (!l.empty()) {
+            RenderRange(l.begin(), l.end());
+            l.clear();
+        }
+    }
+}
+extern "C" void fn_8013D4B0(clCSModel *p, float a) {
+    Object_SetColorRGBA(p->model, 0, p->r, p->g, p->b, a);
+    p->a = a;
+}
+
+extern "C" void fn_8013D50C(clCSModel *p, float r, float g, float b, float a) {
+    Object_SetColorRGBA(p->model, 0, r, g, b, a);
+    p->r = r;
+    p->g = g;
+    p->b = b;
+    p->a = a;
+}
+
+extern "C" void fn_8013D570(clCSModel *p, float ry) {
+    if (p->model) {
+        Object_SetJObjRotationY(p->model, ry);
+    }
+}
+
+extern "C" void fn_8013D59C(clCSModel *p, float rx, float ry, float rz) {
+    if (p->model) {
+        Object_SetJObjRotationZ(p->model, rz);
+        Object_SetJObjRotationX(p->model, rx);
+        Object_SetJObjRotationY(p->model, ry);
+    }
+}
+
+extern "C" void fn_8013D608(clCSModel *p, float x, float y, float z) {
+    if (p->model) {
+        Object_SetJObjScaleXYZ(p->model, x, y, z);
+    }
+}
+
+extern "C" void fn_8013D634(clCSModel *p, float x, float y, float z) {
+    if (p->model) {
+        Object_SetJObjPositionXYZ(p->model, x, y, z);
+    }
+}
+
+extern "C" void fn_8013D660(clCSModel *p, float x, float y) {
+    p->x = x;
+    p->y = y;
+}
+
+void clCSModel::Draw() {
+    clCSModel *p = this;
+    if (p->model && fn_8013BC98() && fn_8013C3B8()) {
+        fn_8013BB1C(fn_8013BC98(), p->x, p->y);
+        if (fn_8013BC38(fn_8013BC98())) {
+            fn_8013C34C(fn_8013C3B8());
+            fn_8013BBFC(fn_8013BC98());
+            Object_RenderJObjTree(p->model, 7);
+            fn_8013BB9C(fn_8013BC98());
+            fn_8013C334(fn_8013C3B8());
+        }
+    }
+}
+
+extern "C" int fn_8013D704(clCSModel *p) {
+    int ret;
+    if (p->model == 0) {
+        ret = 0;
+    } else {
+        ret = clNormal3D_Exec(p->model);
+    }
+    return ret;
+}
+
+extern "C" int fn_8013D738(clCSModel *p, float sx, float sy) {
+    if (p->model == 0) {
+        return 0;
+    } else {
+        return clNormal3D_SetScale(p->model, 0, sx, sy, 0.0f, 0.0f);
+    }
+}
+
+clCSModel::~clCSModel() {
+    if (model) {
+        delete model;
+    }
+    fn_8013BCA0();
+    fn_8013C3C0();
+}
+
+extern "C++" clCSModel::clCSModel(void *resource, unsigned char flag) {
+    fn_8013BD7C();
+    fn_8013C428();
+    model = 0;
+    x = lbl_806D76E0;
+    y = lbl_806D76E0;
+    r = lbl_806D76E4;
+    g = lbl_806D76E4;
+    b = lbl_806D76E4;
+    model = new Normal3D(resource, flag);
+    if (flag) {
+        clNormal3D_SetFlags(model, 0x40000000, 0);
+    }
+}
+
+extern "C++" PreviewList::~PreviewList() {}
 
 extern "C" void fn_8013D940(int layer) {
     if (PreviewModel_bss_806D1560 && layer >= 0 && layer < 8) {
@@ -328,22 +275,13 @@ extern "C" void fn_8013D940(int layer) {
     }
 }
 
-static inline void RenderAll(PreviewLists *p) {
-    for (int i = 0; i < 8; i++) {
-        PreviewList &l = p->lists[i];
-        if (!l.empty()) {
-            RenderRange(l.begin(), l.end());
-            l.clear();
-        }
-    }
-}
 extern "C" void fn_8013DA00(void) {
     if (PreviewModel_bss_806D1560) RenderAll(PreviewModel_bss_806D1560);
 }
 
-extern "C" void fn_8013DAC8(PreviewModel *m, int layer) {
+extern "C" void fn_8013DAC8(clCSModel *m, int layer) {
     if (PreviewModel_bss_806D1560) {
-        PreviewModel *v = m;
+        clCSModel *v = m;
         if (v && layer >= 0 && layer < 8) {
             PreviewModel_bss_806D1560->lists[layer].push_back(v);
         }
@@ -364,7 +302,7 @@ extern "C" void fn_8013DB9C(void) {
     }
 }
 
-extern "C" int fn_8013DBF8(void) {
+int fn_8013DBF8(void) {
     if (!PreviewModel_bss_806D1560) {
         PreviewModel_bss_806D1560 = new PreviewLists;
     }
@@ -374,17 +312,6 @@ extern "C" int fn_8013DBF8(void) {
     return 1;
 }
 
-#pragma exceptions off
-extern "C" PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag) {
-    if (self != 0) {
-        self->vptr = clCSModelInterface_vtable_8048EAE8;
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
-#pragma exceptions reset
+void clCSModelInterface::Draw() {}
 
-extern "C" void fn_8013DD04(void) {
-}
+inline PreviewList::PreviewList() {}

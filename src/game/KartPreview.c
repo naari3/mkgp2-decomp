@@ -109,10 +109,7 @@ struct KPNormal3D {
     KPNormal3D(const void *name, unsigned char flags);
 };
 
-struct clCSModelInterface {
-    virtual ~clCSModelInterface() {}
-    virtual void Draw();
-};
+#include "game/types/clCSModelInterface.h"
 
 struct clCSKartModel : clCSModelInterface {
     KPNormal3D *kart;
