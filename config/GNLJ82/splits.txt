@@ -4122,7 +4122,7 @@ game/DbgMenu.cpp:
 	.sdata      start:0x806CF330 end:0x806CF34C
 
 game/autodata/sdata_806CF34C.c:
-	.sdata      start:0x806CF34C end:0x806CF488
+	.sdata      start:0x806CF34C end:0x806CF470
 
 game/autodata/data_8041C9E8.c:
 	.data       start:0x8041C9E8 end:0x8041E8B0
@@ -5714,7 +5714,7 @@ game/NokoNokoChallenge.c:
 	.rodata     start:0x80355840 end:0x803558A8
 
 game/autodata/rodata_803558A8.c:
-	.rodata     start:0x803558A8 end:0x803558E8
+	.rodata     start:0x803558A8 end:0x803558B8
 
 game/NokoNokoChallenge_TransitionToResult.c:
 	extab       start:0x8000BCEC end:0x8000BCF4
@@ -5741,14 +5741,19 @@ game/MiniGame.c:
 	.text       start:0x80123050 end:0x8012318C
 	.data       start:0x8048E158 end:0x8048E178
 
-game/autodata/data_8048E178.c:
-	.data       start:0x8048E178 end:0x8048E1C0
-
 game/ZoneList.c:
-	extab       start:0x8000BD8C end:0x8000BE88
-	extabindex  start:0x80024794 end:0x8002486C
-	.text       start:0x8012318C end:0x801240B4
+	extab       start:0x8000BD8C end:0x8000BE44
+	extabindex  start:0x80024794 end:0x8002483C
+	.text       start:0x8012318C end:0x80123F34
 	.ctors      start:0x802E8908 end:0x802E890C
+	.rodata     start:0x803558B8 end:0x803558E8
+	.data       start:0x8048E178 end:0x8048E1C0
+	.sdata      start:0x806CF470 end:0x806CF488
+
+game/ZoneList_Attract.cpp:
+	extab       start:0x8000BE44 end:0x8000BE88
+	extabindex  start:0x8002483C end:0x8002486C
+	.text       start:0x80123F34 end:0x801240B4
 	.rodata     start:0x803558E8 end:0x80355900
 	.data       start:0x8048E1C0 end:0x8048E1E0
 	.sdata      start:0x806CF488 end:0x806CF498

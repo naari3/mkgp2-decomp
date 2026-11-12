@@ -3,8 +3,8 @@ C_REGION_BEGIN
 /*
  * Mini-game helpers: the per-cup timer lookup and the trigger-zone lists
  * (box and quad zones chained through `next`, vtable at +4) plus a small
- * game-mode wrapper clAttract. The zone classes keep undefined key
- * virtuals; clAttract owns its compiler-emitted vtable and RTTI.
+ * game-mode wrapper clAttract (now in ZoneList_Attract.cpp). The area
+ * classes own their compiler-emitted vtables and RTTI.
  *
  * Built with GC/2.7: the zone ctors schedule src loads across the stores
  * to `this`, which GC/1.3.2 never does.
@@ -24,9 +24,6 @@ extern int g_roundIndex;
 extern int g_ccClass;
 extern int MiniGame_GetTimerValue_rodata_80355078[][3][2];
 extern int MiniGame_GetTimerValue_rodata_803554E0[][3][2];
-extern char QuadZone_vtable_8048E184[];
-extern char BoxZone_vtable_8048E1A0[];
-extern char Zone_vtable_8048E1B0[];
 extern const float lbl_806D6E50;
 extern unsigned char IsCardValid(void);
 extern float Vec3_Magnitude(const Vec3 *v);
@@ -257,18 +254,18 @@ struct ZoneSrc {
     float bottom;
 };
 
-struct Zone {
-    Zone *next;
-    Zone() { next = 0; }
-    virtual ~Zone() {
+struct clAreaData {
+    clAreaData *next;
+    clAreaData() { next = 0; }
+    virtual ~clAreaData() {
         if (next) {
             delete next;
         }
     }
-    virtual unsigned char Contains(const Vec3 *pos);
+    virtual unsigned char Contains(Vec3 *pos);
 };
 
-struct BoxZone : Zone {
+struct clAreaDataSimple : clAreaData {
     unsigned int flags;
     float top;
     float bottom;
@@ -279,12 +276,14 @@ struct BoxZone : Zone {
     float lenV;
     float maxX, maxZ;
     float minX, minZ;
-    virtual unsigned char Contains(const Vec3 *pos);
-    BoxZone(const ZoneSrc *src);
-    virtual ~BoxZone();
+    /* No key function: the inline virtuals and their declaration order
+     * place the table after Exact and export the dtor before Contains. */
+    virtual inline ~clAreaDataSimple();
+    virtual inline unsigned char Contains(Vec3 *pos);
+    clAreaDataSimple(const ZoneSrc *src);
 };
 
-struct QuadZone : Zone {
+struct clAreaDataExact : clAreaData {
     unsigned int flags;
     float top;
     float bottom;
@@ -292,19 +291,19 @@ struct QuadZone : Zone {
     Vec3 n[4];
     float maxX, maxZ;
     float minX, minZ;
-    virtual unsigned char Contains(const Vec3 *pos);
-    QuadZone(const ZoneSrc *src);
-    virtual ~QuadZone();
+    virtual unsigned char Contains(Vec3 *pos);
+    clAreaDataExact(const ZoneSrc *src);
+    virtual ~clAreaDataExact();
 };
 
 struct ZoneList {
-    Zone *head;
+    clAreaData *head;
     ZoneList(const ZoneSrc *src, int count);
     ~ZoneList();
 };
 
-extern "C" int fn_80123480(ZoneList *l, const Vec3 *pos) {
-    Zone *z;
+extern "C" int fn_80123480(ZoneList *l, Vec3 *pos) {
+    clAreaData *z;
     for (z = l->head; z; z = z->next) {
         if (z->Contains(pos)) {
             return 1;
@@ -313,20 +312,20 @@ extern "C" int fn_80123480(ZoneList *l, const Vec3 *pos) {
     return 0;
 }
 
-extern "C" int fn_801234F0(void) {
+unsigned char clAreaData::Contains(Vec3 *pos) {
     return 0;
 }
 
-extern "C" void fn_801235A0(Zone *z, Zone *add);
+extern "C" void fn_801235A0(clAreaData *z, clAreaData *add);
 
 extern "C" void fn_801234F8(ZoneList *l, const ZoneSrc *src, int count) {
     int i;
     for (i = 0; i < count; i++) {
-        Zone *z;
+        clAreaData *z;
         if (src[i].flags & 4) {
-            z = new QuadZone(&src[i]);
+            z = new clAreaDataExact(&src[i]);
         } else {
-            z = new BoxZone(&src[i]);
+            z = new clAreaDataSimple(&src[i]);
         }
         if (l->head == 0) {
             l->head = z;
@@ -336,7 +335,7 @@ extern "C" void fn_801234F8(ZoneList *l, const ZoneSrc *src, int count) {
     }
 }
 
-extern "C" void fn_801235A0(Zone *z, Zone *add) {
+extern "C" void fn_801235A0(clAreaData *z, clAreaData *add) {
     if (z->next) {
         fn_801235A0(z->next, add);
     } else {
@@ -344,7 +343,7 @@ extern "C" void fn_801235A0(Zone *z, Zone *add) {
     }
 }
 
-static inline void BoxZone_Extend(BoxZone *z, const Vec3 *p) {
+static inline void BoxZone_Extend(clAreaDataSimple *z, const Vec3 *p) {
     if (p->x < z->minX) {
         z->minX = p->x;
     }
@@ -359,7 +358,7 @@ static inline void BoxZone_Extend(BoxZone *z, const Vec3 *p) {
     }
 }
 
-BoxZone::BoxZone(const ZoneSrc *src) {
+clAreaDataSimple::clAreaDataSimple(const ZoneSrc *src) {
     flags = src->flags;
     top = src->top;
     bottom = src->bottom;
@@ -382,9 +381,9 @@ BoxZone::BoxZone(const ZoneSrc *src) {
 }
 
 
-/* dtor_80123870 is Zone::~Zone (emitted here for the ctors' cleanup). */
+/* dtor_80123870 is clAreaData::~clAreaData (emitted here for the ctors' cleanup). */
 
-QuadZone::QuadZone(const ZoneSrc *src) {
+clAreaDataExact::clAreaDataExact(const ZoneSrc *src) {
     flags = src->flags;
     top = src->top;
     bottom = src->bottom;
@@ -443,10 +442,11 @@ ZoneList::ZoneList(const ZoneSrc *src, int count) {
     fn_801234F8(this, src, count);
 }
 
-QuadZone::~QuadZone() {
+clAreaDataExact::~clAreaDataExact() {
 }
 
-extern "C" int fn_80123C78(QuadZone *q, const Vec3 *pos) {
+unsigned char clAreaDataExact::Contains(Vec3 *pos) {
+    clAreaDataExact *q = this;
     Vec3 d;
     int i;
     if (pos->x < q->minX || pos->x > q->maxX || pos->z < q->minZ || pos->z > q->maxZ) {
@@ -467,10 +467,8 @@ extern "C" int fn_80123C78(QuadZone *q, const Vec3 *pos) {
     return 1;
 }
 
-BoxZone::~BoxZone() {
-}
-
-extern "C" int fn_80123E1C(BoxZone *b, Vec3 *pos) {
+unsigned char clAreaDataSimple::Contains(Vec3 *pos) {
+    clAreaDataSimple *b = this;
     Vec3 d;
     float t;
     if (pos->x < b->minX || pos->x > b->maxX || pos->z < b->minZ || pos->z > b->maxZ) {
@@ -494,54 +492,7 @@ extern "C" int fn_80123E1C(BoxZone *b, Vec3 *pos) {
     return 1;
 }
 
-struct ModeTaskBase {
-    virtual ~ModeTaskBase();
-    virtual void Finish();
-    virtual void Update();
-    virtual void Draw();
-};
-
-struct ModeTask : ModeTaskBase {
-    unsigned char done;
-};
-
-#include "game/types/clJobRunner.h"
-
-struct clAttract : clJobRunner {
-    ModeTask *task;
-    clAttract() { task = (ModeTask *)fn_8014F6A4(); }
-    virtual int Update();
-    virtual void Draw();
-    virtual ~clAttract();
-};
-
-void clAttract::Draw() {
-    if (task) {
-        task->Draw();
-    }
-}
-
-int clAttract::Update() {
-    if (task) {
-        if (task->done) {
-            task->Finish();
-            task = 0;
-        } else {
-            task->Update();
-        }
-    }
-    return -2;
-}
-
-clAttract::~clAttract() {
-    if (task) {
-        task->Finish();
-        task = 0;
-    }
-}
-
-extern "C" clAttract *fn_80124064(void) {
-    return new clAttract;
+clAreaDataSimple::~clAreaDataSimple() {
 }
 
 __declspec(section ".ctors") static void *const fn_801232E0_ctor_ref = (void *)fn_801232E0;

@@ -1975,6 +1975,7 @@ config.libs = [
             Object(Matching, "game/CourseTables.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.7"),
+            Object(Matching, "game/ZoneList_Attract.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.7"),
             Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PushPrompt.c", extab_padding=b"\x00\x00", extra_cflags=["-RTTI on", "-rostr", "-inline deferred"]),
             Object(Matching, "game/ResultFx.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),

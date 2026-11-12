@@ -832,11 +832,7 @@
     "fn_80123BEC",
     "fn_80123C78",
     "fn_80123D90",
-    "fn_80123E1C",
-    "fn_80123F34",
-    "fn_80123F6C",
-    "fn_80123FDC",
-    "fn_80124064"
+    "fn_80123E1C"
   ],
   "src/game/LogoAnim.c": [
     "fn_80141990",
@@ -3959,5 +3955,11 @@
       "dtor_800869D0",
       "PrintClassNames__Q28nsWakeup11clInterfaceFv"
     ]
-  }
+  },
+  "src/game/ZoneList_Attract.cpp": [
+    "fn_80123F34",
+    "fn_80123F6C",
+    "fn_80123FDC",
+    "fn_80124064"
+  ]
 }
