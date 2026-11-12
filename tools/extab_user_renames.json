@@ -19228,5 +19228,27 @@
     "@43": "global:lbl_803558E8",
     "@44": "global:sdata_806CF1C0_data_8048E1C0",
     "@45": "global:lbl_803558F4"
+  },
+  "src/game/CObj_GlobalProjPushFrame.c": {
+    "__dt__8clCameraFv": "Object_DtorTree_56b8",
+    "__ct__8clCameraFPCc": "Scene3D_Init",
+    "Render__8clCameraFv": "CObj_GlobalProjPushFrame",
+    "DebugFlush__8clCameraFv": "CObj_DebugVizPathFlush",
+    "Ready__8clCameraFv": "CObj_RenderPass_Execute",
+    "__vt__8clCamera": "Scene3D_data_803F56B8",
+    "__RTTI__8clCamera": "global:data_803F5698_data_806CED50",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "cameraOrigin": "global:lbl_802E96B8",
+    "@67": "global:lbl_802E96C4",
+    "@22": "@etb_80005928",
+    "@23": "@eti_8001F5C8",
+    "@28": "@etb_80005930",
+    "@29": "@eti_8001F5D4",
+    "@36": "@etb_80005938",
+    "@37": "@eti_8001F5E0",
+    "@61": "@etb_80005940",
+    "@62": "@eti_8001F5EC",
+    "@84": "@etb_80005948",
+    "@85": "@eti_8001F5F8"
   }
 }

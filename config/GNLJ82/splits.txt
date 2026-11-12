@@ -126,13 +126,7 @@ game/autodata/sdata2_806D22C8.c:
 	.sdata2     start:0x806D22C8 end:0x806D2480
 
 game/autodata/sdata_806CED48.c:
-	.sdata      start:0x806CED48 end:0x806CED88
-
-game/autodata/data_803F56B8.c:
-	.data       start:0x803F56B8 end:0x803F5788
-
-game/autodata/rodata_802E96B8.c:
-	.rodata     start:0x802E96B8 end:0x802E98DC
+	.sdata      start:0x806CED48 end:0x806CED50
 
 game/DebugTextOutput.c:
 	extab       start:0x800058A0 end:0x800058B0
@@ -192,22 +186,21 @@ game/CObjCached.c:
 	.text       start:0x80030960 end:0x80030A48
 
 game/CObj_GlobalProjPushFrame.c:
-	extab       start:0x80005928 end:0x80005930
-	extabindex  start:0x8001F5C8 end:0x8001F5D4
-	.text       start:0x80030A48 end:0x80030A68
+	extab       start:0x80005928 end:0x80005950
+	extabindex  start:0x8001F5C8 end:0x8001F604
+	.text       start:0x80030A48 end:0x80030D24
+	.rodata     start:0x802E96B8 end:0x802E9780
+	.data       start:0x803F56B8 end:0x803F56D0
+	.sdata      start:0x806CED50 end:0x806CED58
 
-game/CObjDebugRender.c:
-	extab       start:0x80005930 end:0x80005940
-	extabindex  start:0x8001F5D4 end:0x8001F5EC
-	.text       start:0x80030A68 end:0x80030AEC
+game/autodata/sdata_806CED58.c:
+	.sdata      start:0x806CED58 end:0x806CED88
 
-game/Stub_NoOp_80030aec.c:
-	.text       start:0x80030AEC end:0x80030AF0
+game/autodata/data_803F56D0.c:
+	.data       start:0x803F56D0 end:0x803F5788
 
-game/Scene3D.c:
-	extab       start:0x80005940 end:0x80005950
-	extabindex  start:0x8001F5EC end:0x8001F604
-	.text       start:0x80030AF0 end:0x80030D24
+game/autodata/rodata_802E9780.c:
+	.rodata     start:0x802E9780 end:0x802E98DC
 
 game/LinkedNode_GetField10_OrFallback.c:
 	.text       start:0x80030D24 end:0x80030D48
