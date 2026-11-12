@@ -85,18 +85,20 @@ extern char data_80491988_data_806CFC98[];
 
 /* layout as declared in src/game/objview/fn_8018D82C.cpp */
 typedef struct TexWrap {
-    int pad0;
+    float depth;            /* fn_8018D6F0 reads the object as float[4] */
     unsigned char s;
     unsigned char t;
-    unsigned char pad6[10];
+    unsigned char pad6[2];
+    float u;
+    float v;
 } TexWrap;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 TexWrap lbl_80495E30[2] = {
-    { -1082130432, 2, 1, { 0, 0, 0, 0, 0, 0, 0xBD, 0xCC, 0xCC, 0xCD } },
-    { -1021968384, 3, 3, { 0, 0, 0, 0, 0, 0, 0xBD, 0xCC, 0xCC, 0xCD } }
+    { -1.0f, 2, 1, { 0, 0 }, 0.0f, -0.1f },
+    { -150.0f, 3, 3, { 0, 0 }, 0.0f, -0.1f }
 };
 void *lbl_80495E50[3] = {
     (void *)&lbl_80377F70,
