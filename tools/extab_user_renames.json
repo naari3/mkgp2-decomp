@@ -7,12 +7,6 @@
     "__vt__14SceneRoleOwner": "lbl_804EEFA4",
     "__vt__13SceneRoleBase": "lbl_803FE0C8"
   },
-  "src/game/ItemHolder_Init.cpp": {
-    "__vt__10ItemHolder": "lbl_804E4B44",
-    "__vt__20clEnemyItemInterface": "lbl_804E4AF0",
-    "__dt__20clEnemyItemInterfaceFv": "fn_801E89A0",
-    "__ct__10ItemHolderFUiiii": "ItemHolder_Init"
-  },
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
   "src/game/KartFxChargeIcon.cpp": {
     "@25": "jumptable_8041A36C",
@@ -3254,9 +3248,6 @@
     "@231": "@eti_80027F5C",
     "@289": "@etb_80014B70",
     "@290": "@eti_80027F68"
-  },
-  "src/game/fn_801E8D98.cpp": {
-    "Update__8ItemUserFv": "fn_801E8D98"
   },
   "src/game/fn_801F9CA8.cpp": {
     "__dl__FPv": "MemoryManager_TimedFree"
@@ -10852,7 +10843,7 @@
     "__vt__20clEnemyItemInterface": "lbl_804E4AF0",
     "__RTTI__20clEnemyItemInterface": "lbl_806CFFA0",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__6AIKartFPviii": "AI_KartInit",
+    "__ct__15EnemyItemAIKartFPviii": "AI_KartInit",
     "__ct__11AIResponderFP10AIPosition": "clItemBoxResponder_Ctor",
     "__dt__11AIResponderFv": "dtor_80060024",
     "__ct__15AIWarpResponderFv": "WarpZone_VtableTrim",
@@ -10871,21 +10862,21 @@
     "__dt__5AIAuxFv": "fn_801DEE38",
     "__ct__6AIRun2FP8AIDriverP9AITornadoiii": "EnemyRunType2_Init",
     "__ct__6AIRun1FP8AIDriverP9AITornadoiii": "EnemyRunType1_Init",
-    "__ct__6AIItemFP8AIDriverP9AITornadoii": "ItemHolder_Init",
+    "__ct__15clEnemyItemDeguFP8AIDriverP9AITornadoii": "ItemHolder_Init",
     "__dt__10AIPositionFv": "dtor_80036E40",
     "__dt__13AIOwn<5AIAux>Fv": "dtor_801E89E8",
     "__dt__19AIOwn<10AISteering>Fv": "dtor_801E8A64",
-    "__dt__14AIOwn<6AIItem>Fv": "dtor_801E8AE0",
+    "__dt__29AIOwn<20clEnemyItemInterface>Fv": "dtor_801E8AE0",
     "__dt__13AIOwn<5AIRun>Fv": "dtor_801E8B70",
     "__dt__15AIOwn<7AIExtra>Fv": "dtor_801E8C00",
     "__dt__15AIOwn<7AIAudio>Fv": "dtor_80052D40",
     "__dt__17AIOwn<9AITornado>Fv": "dtor_80052B50",
     "__dt__16AIOwn<8AIDriver>Fv": "dtor_80052C48",
-    "@296": "@etb_80016698",
-    "@297": "@eti_80028904",
-    "@378": "@etb_80016690",
-    "@379": "@eti_80028910",
-    "@380": "global:lbl_803BD7E8"
+    "@290": "@etb_80016698",
+    "@291": "@eti_80028904",
+    "@294": "@etb_80016690",
+    "@295": "@eti_80028910",
+    "@370": "global:lbl_803BD7E8"
   },
   "src/game/KartItemSubObject_Dtor.cpp": {
     "__dt__12C7ItemOwnersFv": "KartItemSubObject_Dtor",
@@ -18718,5 +18709,44 @@
     "__vt__22clKPCharaData_NokoPata": "CoursePropNodeA_vtable_804911E8",
     "__RTTI__22clKPCharaData_NokoPata": "data_804911C4_data_806CFA70",
     "__RTTI__13clKPCharaData": "extern:lbl_806CFA60"
+  },
+  "src/game/fn_801E8CB8.cpp": {
+    "__dt__15clEnemyItemDeguFv": "fn_801E8F5C",
+    "__ct__15clEnemyItemDeguFP8AIDriverP9AITornadoii": "ItemHolder_Init",
+    "__vt__15clEnemyItemDegu": "lbl_804E4B44",
+    "__RTTI__15clEnemyItemDegu": "lbl_806CFFB0",
+    "__RTTI__20clEnemyItemInterface": "lbl_806CFFA8",
+    "__vt__20clEnemyItemInterface": "lbl_804E4AF0",
+    "__dt__20clEnemyItemInterfaceFv": "fn_801E89A0",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "IsEnabled__15clEnemyItemDeguFv": "fn_801E8CB8",
+    "CanUse__15clEnemyItemDeguFv": "fn_801E8CC0",
+    "ResetTarget__15clEnemyItemDeguFv": "fn_801E8D04",
+    "Update__15clEnemyItemDeguFv": "fn_801E8D98",
+    "GetItemType__15clEnemyItemDeguFv": "ItemHolder_GetItemType",
+    "HasItem__15clEnemyItemDeguFv": "ItemHolder_HasItem",
+    "GetEffectCategory__15clEnemyItemDeguFv": "ItemHolder_GetEffectCategory",
+    "Cancel__15clEnemyItemDeguFv": "fn_801E9094",
+    "IsIdle__15clEnemyItemDeguFv": "fn_801E9290",
+    "Tick__15clEnemyItemDeguFv": "ItemHolder_Update",
+    "SetTarget__15clEnemyItemDeguFUi": "x10",
+    "SetItem__15clEnemyItemDeguFii": "ItemHolder_SetItem",
+    "@122": "lbl_803BD800",
+    "@124": "lbl_803BD810",
+    "@123": "lbl_804E4B38",
+    "@145": "@etb_80016A80",
+    "@146": "@eti_80028958",
+    "@169": "@etb_80016A88",
+    "@170": "@eti_80028964",
+    "@176": "@etb_80016A90",
+    "@177": "@eti_80028970",
+    "@188": "@etb_80016A98",
+    "@189": "@eti_8002897C",
+    "@203": "@etb_80016AA0",
+    "@204": "@eti_80028988",
+    "@220": "@etb_80016AA8",
+    "@221": "@eti_80028994",
+    "@238": "@etb_80016AB0",
+    "@239": "@eti_800289A0"
   }
 }

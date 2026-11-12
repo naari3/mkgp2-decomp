@@ -8940,7 +8940,7 @@ game/fn_801DAB20.cpp:
 	.sdata      start:0x806CFEE8 end:0x806CFEF0
 
 game/autodata/sdata_806CFEF0.c:
-	.sdata      start:0x806CFEF0 end:0x806CFFD8
+	.sdata      start:0x806CFEF0 end:0x806CFFA0
 
 game/autodata/data_8049BC30.c:
 	.data       start:0x8049BC30 end:0x8049D030
@@ -9335,9 +9335,6 @@ game/AI_UpdateItemEffects.c:
 	.text       start:0x801E5B50 end:0x801E6594
 	.data       start:0x804E4A78 end:0x804E4AF0
 
-game/autodata/data_804E4AF0.c:
-	.data       start:0x804E4AF0 end:0x804E4BE0
-
 game/fn_801E6594.c:
 	extab       start:0x800164A0 end:0x800164A8
 	extabindex  start:0x800287F0 end:0x800287FC
@@ -9457,7 +9454,7 @@ game/KartController_Update.cpp:
 	.rodata     start:0x803BD320 end:0x803BD7C8
 
 game/autodata/rodata_803BD7C8.c:
-	.rodata     start:0x803BD7C8 end:0x803BD828
+	.rodata     start:0x803BD7C8 end:0x803BD7E8
 
 game/KartController_TimedUpdate.cpp:
 	extab       start:0x80016570 end:0x80016588
@@ -9473,6 +9470,9 @@ game/AI_KartInit.cpp:
 	extab       start:0x80016690 end:0x800169B8
 	extabindex  start:0x80028904 end:0x8002891C
 	.text       start:0x801E83C8 end:0x801E89E8
+	.rodata     start:0x803BD7E8 end:0x803BD800
+	.data       start:0x804E4AF0 end:0x804E4B10
+	.sdata      start:0x806CFFA0 end:0x806CFFA8
 
 game/dtor_801E89E8.cpp:
 	extab       start:0x800169B8 end:0x800169E0
@@ -9506,52 +9506,19 @@ game/fn_801E8C7C.c:
 game/AI_AdjustThunks.cpp:
 	.text       start:0x801E8C90 end:0x801E8CB8
 
-game/fn_801E8CB8.c:
-	.text       start:0x801E8CB8 end:0x801E8D10
+game/fn_801E8CB8.cpp:
+	extab       start:0x80016A80 end:0x80016AB8
+	extabindex  start:0x80028958 end:0x800289AC
+	.text       start:0x801E8CB8 end:0x801E93AC
+	.rodata     start:0x803BD800 end:0x803BD825
+	.data       start:0x804E4B10 end:0x804E4B68
+	.sdata      start:0x806CFFA8 end:0x806CFFB8
 
-game/x10.c:
-	extab       start:0x80016A80 end:0x80016A88
-	extabindex  start:0x80028958 end:0x80028964
-	.text       start:0x801E8D10 end:0x801E8D98
+game/autodata/sdata_806CFFB8.c:
+	.sdata      start:0x806CFFB8 end:0x806CFFD8
 
-game/fn_801E8D98.cpp:
-	extab       start:0x80016A88 end:0x80016A90
-	extabindex  start:0x80028964 end:0x80028970
-	.text       start:0x801E8D98 end:0x801E8F5C
-
-game/fn_801E8F5C.c:
-	extab       start:0x80016A90 end:0x80016A98
-	extabindex  start:0x80028970 end:0x8002897C
-	.text       start:0x801E8F5C end:0x801E8FB8
-
-game/ItemHolder_Init.cpp:
-	extab       start:0x80016A98 end:0x80016AA0
-	extabindex  start:0x8002897C end:0x80028988
-	.text       start:0x801E8FB8 end:0x801E9070
-
-game/ItemHolder.c:
-	.text       start:0x801E9070 end:0x801E9094
-
-game/fn_801E9094.c:
-	extab       start:0x80016AA0 end:0x80016AA8
-	extabindex  start:0x80028988 end:0x80028994
-	.text       start:0x801E9094 end:0x801E90E0
-
-game/ItemHolder_SetItem.c:
-	extab       start:0x80016AA8 end:0x80016AB0
-	extabindex  start:0x80028994 end:0x800289A0
-	.text       start:0x801E90E0 end:0x801E9290
-
-game/fn_801E9290.c:
-	.text       start:0x801E9290 end:0x801E92A0
-
-game/ItemHolder_Update.cpp:
-	extab       start:0x80016AB0 end:0x80016AB8
-	extabindex  start:0x800289A0 end:0x800289AC
-	.text       start:0x801E92A0 end:0x801E93A0
-
-game/fn_801E93A0.c:
-	.text       start:0x801E93A0 end:0x801E93AC
+game/autodata/data_804E4B68.c:
+	.data       start:0x804E4B68 end:0x804E4BE0
 
 game/AI_CalcVSTargetSpeed.c:
 	extab       start:0x80016AB8 end:0x80016AC0

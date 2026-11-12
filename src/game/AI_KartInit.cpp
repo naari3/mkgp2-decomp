@@ -1,8 +1,8 @@
-#include "game/AIKartInitPrivate.h"
+#include "game/types/clEnemyItemAIKartPrivate.h"
+#include "game/types/clEnemyItemInterface.h"
 
 extern "C" {
 extern char lbl_804E4A34[];
-extern char lbl_804E4AF0[];
 extern char lbl_803BD7C8[];
 extern void *g_pathSystem;
 extern int g_roundIndex, g_cupId;
@@ -18,7 +18,7 @@ AITuning *GetKartTuningEntry(void *, int, int, int);
 int IsTimerModeEnabled();
 }
 
-AIKart::AIKart(void *owner, int id, int character, int arg)
+EnemyItemAIKart::EnemyItemAIKart(void *owner, int id, int character, int arg)
     : AIResponder(&position), AIWarpResponder() {
     AIResponder::vptr = lbl_804E4A34;
     AIWarpResponder::vptr = lbl_804E4A34 + 0x10;
@@ -71,13 +71,5 @@ AIKart::AIKart(void *owner, int id, int character, int arg)
     else
         run.reset(new AIRun1(driver.p, tornado.p, kartId, pathId, characterId));
     if (IsTimerModeEnabled() == 1)
-        item.reset(new AIItem(driver.p, tornado.p, kartId, characterId));
-}
-
-extern "C" void *fn_801E89A0(void *self, short flag) {
-    if (self) {
-        *(void **)self = lbl_804E4AF0;
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
+        item.reset(new clEnemyItemDegu(driver.p, tornado.p, kartId, characterId));
 }

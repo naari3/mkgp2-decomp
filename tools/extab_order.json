@@ -3857,5 +3857,27 @@
       "dtor_8005D834",
       "dtor_8005D8C4"
     ]
+  },
+  "src/game/fn_801E8CB8.cpp": {
+    "extab": [
+      "x10",
+      "fn_801E8D98",
+      "fn_801E8F5C",
+      "ItemHolder_Init",
+      "fn_801E9094",
+      "ItemHolder_SetItem",
+      "ItemHolder_Update",
+      "fn_801E89A0"
+    ],
+    "extabindex": [
+      "x10",
+      "fn_801E8D98",
+      "fn_801E8F5C",
+      "ItemHolder_Init",
+      "fn_801E9094",
+      "ItemHolder_SetItem",
+      "ItemHolder_Update",
+      "fn_801E89A0"
+    ]
   }
 }
