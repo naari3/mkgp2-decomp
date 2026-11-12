@@ -24,6 +24,14 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 21:50Z Float literal VALUES in Matching units are not checked by the build (postprocess_sdata2.py renames by position). 12 wrong constants and about 100 last-digit differences corrected; run tools/literal_value_audit.py after writing literals in a unit that does not own its .sdata2. See docs/notes/literal_values.md.
+- 2026-11-11 21:17Z 2026-11-11: port request 48. VSMode_FrameUpdate.c string pool is TEXT_WORDs; tools/port_abi/text_words.py also reads definitions that start with a section declspec.
+- 2026-11-11 21:12Z 2026-11-11: port request 47. pcb_link.h gains PCB_CHOICE_TRACK(h); clFlowCourse.cpp uses it for the received track choice.
+- 2026-11-11 21:03Z 2026-11-11: port request 46. include/dolphin/card.h: CARDRename and CARDRenameAsync name their third parameter newName, not new (C++ keyword).
+- 2026-11-11 20:08Z 2026-11-11: port request 45. fn_801BAA88.cpp reads the name-entry key tables (Shift-JIS text pools) with SJIS_WORD.
+- 2026-11-11 18:32Z (n3 correction): src/game/TransitionEffect.cpp is Matching now. The clScreenEffect conversion of 11-10 landed while the unit was NonMatching, so the original object was linked and `main.dol: OK` proved nothing for it; linked from source only the exception table order differed (tools/extab_order.json entry rewritten). The two gave_up.md rows of this unit were stale (both functions are 100%) and are removed. When converting a class, check that the unit is `Matching` in configure.py before trusting the DOL check.
+- 2026-11-11 18:19Z 2026-11-11: PORT_DATA_LOADED and types/port_hooks.h removed (port-only; mkgp2-pc carries them as a patch).
+- 2026-11-11 18:18Z 2026-11-11: port-only behaviour branches (ifndef __MWERKS__ that changes what a function does) do not belong in this repository; the request 43 fix and the value-less return values were removed again and live in mkgp2-pc as patches. Host-neutral macros (TEXT_WORD, BITFIELDS) stay. See docs/notes/port_abi.md, last section.
 - 2026-11-11 17:59Z 2026-11-11: port request 43. ItemObject_GetGroundTypeAt passes a float[3] for the ground normal outside MWCC; tools/port_abi/param_address.py; see docs/notes/port_abi.md, Out-pointer arguments smaller than what the callee writes.
 - 2026-11-11 14:43Z 2026-11-11: port request 42. ZoneObject lists (autodata/data_803F60B4.c) are ZoneObjectRow arrays; HALF_WORDS(a, b) added to text_word.h; see docs/notes/port_abi.md, Tables reached only through another table's pointer.
 - 2026-11-11 13:35Z Port readiness (n3): declarations of C library functions in src/game and include/game use the standard prototypes (double atan2(double, double), not float parameters; no void strlen()); tools/port_abi/libc_decls.py checks. Please declare them that way in new code. Byte-identical.

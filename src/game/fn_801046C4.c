@@ -201,7 +201,7 @@ void fn_801046C4(unsigned char *self, unsigned char *w)
             WF(0x14) = BuildOrientationFromYaw(0.034906577f + WF(0x14));
             break;
         case 3:
-            WF(0x14) = BuildOrientationFromYaw(0.07853980f + WF(0x14));
+            WF(0x14) = BuildOrientationFromYaw(0.078539796f + WF(0x14));
             break;
         }
         Vec2_RotateY(&rot, w + 0x34, WF(0x18) * (float)sin(WF(0x14)));

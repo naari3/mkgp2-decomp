@@ -1,4 +1,3 @@
-#include "game/types/port_hooks.h"
 /*
  * DVDLoad_OpenAllocReadRelocSync, 0x8007DD00..0x8007DFD4: loads a relocatable
  * archive synchronously. It reads the 0x20-byte header, checks the file size,
@@ -81,7 +80,6 @@ Archive *DVDLoad_OpenAllocReadRelocSync(const char *path)
     if (!FUN_8007dfe4(path, archive, 0x20, 0, 2)) {
         goto fail;
     }
-    PORT_DATA_LOADED(PORT_DATA_ARCHIVE_HEADER, archive, 0x20);
     if (DVDOpen(path, &info) == 0) {
         return 0;
     }
@@ -152,7 +150,6 @@ Archive *DVDLoad_OpenAllocReadRelocSync(const char *path)
     }
     memcpy(archive->name, path, length + 1);
 
-    PORT_DATA_LOADED(PORT_DATA_ARCHIVE, archive, data_size);
     ArchiveRelocate(archive);
     g_dvdLoadCallback(8);
     return archive;

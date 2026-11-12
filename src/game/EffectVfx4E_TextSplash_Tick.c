@@ -75,7 +75,7 @@ void EffectVfx4E_TextSplash_Tick(unsigned char *self)
             if (lbl_806D5424 < F(0x150)) {
                 F(0x150) = lbl_806D5424;
             }
-            F(0xB0) = 4.5f * (float)sin(0.017453292f * (90.0f * F(0x150)));
+            F(0xB0) = 4.5f * (float)sin(0.017453289f * (90.0f * F(0x150)));
             dirty = 1;
         }
         switch (FINISHED) {

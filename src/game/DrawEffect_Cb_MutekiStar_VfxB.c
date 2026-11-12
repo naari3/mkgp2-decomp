@@ -24,8 +24,8 @@ void DrawEffect_Cb_MutekiStar_VfxB(unsigned char *self)
         VfxSlot_ResolveJoint(SLOT(self), DrawEffect_Cb_MutekiStar_data_8041A334[Rand_RangeIntMax(0xF) % 3]);
         F(0x150) = 0.0f;
         GetSpawnPosition(V(0x120), 0.0f, Rand_RangeFloat(0.0f, 5.0f), Rand_RangeFloat(8.0f, 10.0f));
-        Vec2_RotateY(V(0x120), V(0x120), 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f));
-        F(0xA0) = 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
+        Vec2_RotateY(V(0x120), V(0x120), 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f));
+        F(0xA0) = 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
         F(0x154) = Rand_RangeFloat(0.5f, 1.2f);
         S8(0x190) = Rand_RangeIntMax(0xF) % 2;
         STATE++;
@@ -40,16 +40,16 @@ void DrawEffect_Cb_MutekiStar_VfxB(unsigned char *self)
     }
     Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(P(0x11C)));
     if (S8(0x190)) {
-        Vec2_RotateY(&r, V(0x120), 0.017453292f * (180.0f * F(0x150)));
+        Vec2_RotateY(&r, V(0x120), 0.017453289f * (180.0f * F(0x150)));
     } else {
-        Vec2_RotateY(&r, V(0x120), 0.017453292f * (-1.0f * (180.0f * F(0x150))));
+        Vec2_RotateY(&r, V(0x120), 0.017453289f * (-1.0f * (180.0f * F(0x150))));
     }
-    s = sin(0.017453292f * (180.0f * F(0x150)));
+    s = sin(0.017453289f * (180.0f * F(0x150)));
     Vec3_ScaleXZ(&r, &r, 0.5f * s + 0.5f);
     r.y = 10.0f * F(0x150) + r.y;
     local = r;
     Mtx44_TransformVec3(V(0x8C), root, &local);
-    F(0xA0) = BuildOrientationFromYaw(0.008726646f + F(0xA0));
+    F(0xA0) = BuildOrientationFromYaw(0.034906577f + F(0xA0));
     t = F(0x150);
     if (t < 0.2f) {
         s = t / 0.2f;

@@ -87,7 +87,7 @@ void TaruItem_OnGroundDriftTick_25(TaruItem *self, TaruTimers *timers)
 
     self->vel.y += -0.2f;
     Item_AccelClampVelocity(self, g_ccClass == 0 ? 12.0f : 17.0f, g_ccClass == 0 ? 1.0f : 2.0f);
-    self->spin = BuildOrientationFromYaw(0.2617994f + self->spin);
+    self->spin = BuildOrientationFromYaw(0.26179934f + self->spin);
     self->yaw = AngleStepTowards_Shortest(self->yaw, Vec3_ToYaw(&self->vel), 0.17453289f);
     Item_DecayVelocityScalar(self, 5.0f);
     if (Item_CheckWallCollision(self, &normal, 0)) {
@@ -96,11 +96,11 @@ void TaruItem_OnGroundDriftTick_25(TaruItem *self, TaruTimers *timers)
     if (Item_AdvanceFallingDrop(self, &landed, &groundY, 1.6f) && landed != 0) {
         self->vel.y *= -0.2f;
         self->pitch = Item_ProbeLateralGroundPitch(self->pos, self->yaw, 5.0f, self->pos.y - groundY);
-        if (0.2617994f < FAbs_FloatAsDouble(self->pitch)) {
+        if (0.26179934f < FAbs_FloatAsDouble(self->pitch)) {
             if (0.0f < self->pitch) {
-                Vec2_RotateY(&self->vel, &self->vel, 0.1f * -(self->pitch - 0.2617994f));
+                Vec2_RotateY(&self->vel, &self->vel, 0.1f * -(self->pitch - 0.26179934f));
             } else {
-                Vec2_RotateY(&self->vel, &self->vel, 0.1f * -(0.2617994f + self->pitch));
+                Vec2_RotateY(&self->vel, &self->vel, 0.1f * -(0.26179934f + self->pitch));
             }
         }
     }

@@ -248,8 +248,8 @@ extern "C" void fn_80227490(clDNBress *self, Particle *p) {
     p->v.z += p->dvz;
     p->c[1] = p->c[2] -= lbl_806DB46C;
     p->speed -= lbl_806DB470;
-    if (p->speed <= 0.0f) {
-        p->speed = 0.0f;
+    if (p->speed <= 0.1f) {
+        p->speed = 0.1f;
     }
     p->alpha -= lbl_806DB43C;
 }

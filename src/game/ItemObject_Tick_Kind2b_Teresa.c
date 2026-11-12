@@ -142,7 +142,7 @@ void ItemObject_Tick_Kind2b_Teresa(unsigned char *self)
             case 1:
                 break;
             }
-            if (Item_AdvanceTetherToJoint13(self, (float *)(sub + 0x14), SF(0x18), 0.08726645f, 0.08726645f) != 0) {
+            if (Item_AdvanceTetherToJoint13(self, (float *)(sub + 0x14), SF(0x18), 0.087266445f, 0.087266445f) != 0) {
                 self[0x28] = 0;
                 S8(0xC8) = 3;
                 S8(0xC9) = 0;
@@ -165,7 +165,7 @@ void ItemObject_Tick_Kind2b_Teresa(unsigned char *self)
                 break;
             }
             Item_DecayVelocityScalar(self, 1.0f);
-            if (Item_OrbitAnchorKart(self, sub + 0x34, SU32(0x4), 0.0f, 0.2617993f) != 0) {
+            if (Item_OrbitAnchorKart(self, sub + 0x34, SU32(0x4), 0.0f, 0.26179934f) != 0) {
                 self[0x28] = 0;
                 S8(0xC8) = 3;
                 S8(0xC9) = 0;

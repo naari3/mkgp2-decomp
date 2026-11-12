@@ -18,7 +18,7 @@ usage: python3 tools/port_abi/text_words.py [paths...]          list (default: s
 """
 import os, re, struct, sys
 
-DEF = re.compile(r'^((?![ \t]*")[^\n;{}()=#/]*?\b(\w+)[ \t]*(?:\[[^\]\n]*\][ \t]*)*(?:__attribute__\(\(aligned\(\d+\)\)\))?\s*=\s*\{)(.*?)(\s*\};)', re.M | re.S)
+DEF = re.compile(r'^((?:__declspec\(section[ \t]*"[^"\n]*"\)[ \t]*)?(?![ \t]*")[^\n;{}()=#/]*?\b(\w+)[ \t]*(?:\[[^\]\n]*\][ \t]*)*(?:__attribute__\(\(aligned\(\d+\)\)\))?\s*=\s*\{)(.*?)(\s*\};)', re.M | re.S)
 HEX = re.compile(r'^(?:\(\s*[\w \*]+\s*\)\s*)?(0x[0-9A-Fa-f]{6,8}|-?\d{7,10})[uUlL]*$')
 
 

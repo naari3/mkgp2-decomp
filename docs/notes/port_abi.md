@@ -626,6 +626,28 @@ clFlowRound.c are declared but not used. Every other reader of the link slot
 (18 units) uses byte views. `unsigned short name[6]` at slot offset 0x16 is
 copied as 16-bit codes on both ends.
 
+### VS mode string pool (request 48, 2026-11-11)
+
+`sdata_806CEFE0_rodata_80320D9C[247]` in `VSMode_FrameUpdate.c` was text
+written as words and had been missed: `tools/port_abi/text_words.py` did not
+look at definitions that start with `__declspec(section "...")`. The tool now
+does, and the pool is `TEXT_WORD`s. A second scan that ignores how a
+definition starts (any run of three or more hexadecimal text words anywhere
+under `src`) finds nothing else.
+
+### Track choice read (request 47, 2026-11-11)
+
+`clFlowCourse.cpp` read the chosen track as `(*(unsigned short *)recv >> 4) &
+0x7F`; it now uses `PCB_CHOICE_TRACK(h)` (same expression by default). Other
+reads of the received slot were checked: the rest are byte reads, byte-sized
+bit-fields (`BITFIELDSn`) or the macros above. Three reads take a whole 16- or
+32-bit value from the slot and were left as they are, because they are whole
+numbers and not fields crossing a byte boundary: `short voiceId` at 0x18
+(`sprite/fn_801A1798.c`), `*(int *)(recv + 4)` (`VSMode_FrameUpdate.c`, human
+player count) and `GtSync { int f0; int item; }`
+(`CSSceneGetTitle_8014ADB4.cpp`). Two hosts of the same byte order agree on
+them; a host linked to a real cabinet would have to swap them.
+
 ## Tables written as words whose readers take bytes
 
 `(void *)0x8000000` in a `void *[]` table is the byte 8 and three padding
@@ -862,3 +884,42 @@ local names that the tool confuses across functions of one file
 iterators) or one-pointer struct returns (`RaceDigitLap.cpp`). Nothing else
 writes past its target. Not covered: addresses of struct members and of
 array elements.
+
+## Port-only fixes do not live in this repository (2026-11-11)
+
+naari3, 2026-11-11: host-neutral spellings (`TEXT_WORD`, `BITFIELDSn` and the
+like, one code path, same behaviour as the original) are fine here; code that
+exists only for mkgp2-pc is not. So branches that make another compiler's
+build behave differently from the original were taken out again and are
+carried by mkgp2-pc as patches applied to its copy of these sources:
+
+- the request 43 fix (`float normal[3]` in `ItemObject_GetGroundTypeAt.c` and
+  `ItemObjectManager_RenderImpl.c`); the sources are the original text again
+  and still write three floats through the address of an `int`;
+- the value for value-less `return;` in non-void functions
+  (`ItemHandler_Star.c`, `Item_OrbitAnchorKart.c`, `NokoNoko_CheckHitAndKill.c`,
+  `sprite/fn_801A1798.c`).
+
+- `PORT_DATA_LOADED` (12 call sites after file reads) and
+  `include/game/types/port_hooks.h`: a hook that only the port defines.
+  `docs/notes/byte_order.md` still describes which files need converting.
+
+The analysis above and the detectors in `tools/port_abi/` stay, since they
+describe the original code. Do not add `#ifndef __MWERKS__` branches that
+change behaviour; report the finding and let the port patch it.
+
+### Tables indexed by KartCharacterParam_GetIdentityIndex (request 44, analysis only)
+
+The getter returns 0..12 (`KartCharacterParam.c`). Tables it indexes:
+
+| reader | table | entries | index 11, 12 read |
+|---|---|---|---|
+| `MukadeItem.c:135` | stack copy `float values[11]` | 11 | stale stack |
+| `GabyouItemHeld.cpp:284, 313, 397` | stack copy `Vec3 entry[11]` (`.y` used) | 11 | stale stack |
+| `GabyouItemReturn.cpp:88` | stack copy `float value[11]` | 11 | stale stack |
+| `KartFxBoost.cpp:152` | stack copy `Vec3 entries[11]` (whole vector copied) | 11 | stale stack |
+| `objview/fn_80198ABC.c:78` | `const float lbl_8037DD48[12]` | 12 (last is 0.0) | 11: 0.0; 12: first word of the next object, `DebugOverlay_KartPhysics_rodata_8037DD78[0]` = 1.0 |
+| `CarrotItemEffect_Update.c:102` | `Vec CarrotItemEffect_Update_data_8041A000[13]` | 13 | in range |
+| `fn_80114990.c:195` | `lbl_80421F20` (40 floats = 13 vectors + 1) | 13 | in range |
+
+The sources keep the original reads. The port patches its own copy.

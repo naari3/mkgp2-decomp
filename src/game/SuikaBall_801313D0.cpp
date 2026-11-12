@@ -670,7 +670,7 @@ static inline void Fireworks_Launch(ShotSet *fw, Vec3 *pos, float kx, float kz, 
         fw->shots[i].pos.z = pos->z;
         fw->shots[i].vel.x = 0.7f * LUT_Cosine(angle);
         fw->shots[i].vel.z = 0.7f * LUT_Sine(angle);
-        fw->shots[i].vel.y = 1.82f;
+        fw->shots[i].vel.y = 1.8199999f;
     }
 }
 

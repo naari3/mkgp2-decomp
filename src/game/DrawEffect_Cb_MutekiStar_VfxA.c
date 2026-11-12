@@ -24,8 +24,8 @@ void DrawEffect_Cb_MutekiStar_VfxA(unsigned char *self)
         VfxSlot_ResolveJoint(SLOT(self), DrawEffect_Cb_MutekiStar_data_8041A334[Rand_RangeIntMax(0xF) % 3]);
         F(0x150) = 0.0f;
         GetSpawnPosition(V(0x120), 0.0f, Rand_RangeFloat(0.0f, 5.0f), Rand_RangeFloat(8.0f, 10.0f));
-        Vec2_RotateY(V(0x120), V(0x120), 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f));
-        F(0xA0) = 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
+        Vec2_RotateY(V(0x120), V(0x120), 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f));
+        F(0xA0) = 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
         F(0x154) = Rand_RangeFloat(0.5f, 1.2f);
         GetSpawnPosition(V(0x12C), 0.0f, 0.0f, 0.0f);
         F(0x158) = 0.0f;
@@ -58,7 +58,7 @@ void DrawEffect_Cb_MutekiStar_VfxA(unsigned char *self)
     Vec3_Copy(V(0x12C), &follow);
     F(0x158) += 2.0f;
     Vec3_Add_DestFirst(V(0x8C), &follow, V(0x120));
-    F(0xA0) = BuildOrientationFromYaw(0.008726646f + F(0xA0));
+    F(0xA0) = BuildOrientationFromYaw(0.034906577f + F(0xA0));
     t = F(0x150);
     if (t < 0.2f) {
         s = 0.8f * (t / 0.2f);

@@ -2685,44 +2685,25 @@
     "VolumeCalibration_Dtor",
     "VolumeCalibration_Ctor"
   ],
-  "src/game/TransitionEffect.cpp": {
-    "extab": [
-      "dtor_80080330",
-      "dtor_8008036C",
-      "dtor_800803A8",
-      "dtor_80080444",
-      "dtor_800804C0",
-      "dtor_8008051C",
-      "dtor_80080578",
-      "dtor_800805D4",
-      "dtor_80080630",
-      "dtor_8008068C",
-      "TransitionEffect_Tick",
-      "TransitionEffect_GetOrCreate",
-      "TransitionEffect_RenderPass",
-      "TransitionEffect_DrawCarRouletteOverlay",
-      "TransitionEffect_DrawCarRouletteAndQuad",
-      "__dt__11ScopedTimerFv"
-    ],
-    "extabindex": [
-      "TransitionEffect_Tick",
-      "TransitionEffect_GetOrCreate",
-      "TransitionEffect_RenderPass",
-      "TransitionEffect_DrawCarRouletteOverlay",
-      "TransitionEffect_DrawCarRouletteAndQuad",
-      "dtor_80080330",
-      "dtor_8008036C",
-      "dtor_800803A8",
-      "dtor_80080444",
-      "dtor_800804C0",
-      "dtor_8008051C",
-      "dtor_80080578",
-      "dtor_800805D4",
-      "dtor_80080630",
-      "dtor_8008068C",
-      "__dt__11ScopedTimerFv"
-    ]
-  },
+  "src/game/TransitionEffect.cpp": [
+    "TransitionEffect_Dtor",
+    "dtor_80080330",
+    "dtor_8008036C",
+    "dtor_800803A8",
+    "dtor_80080444",
+    "dtor_800804C0",
+    "dtor_8008051C",
+    "dtor_80080578",
+    "dtor_800805D4",
+    "dtor_80080630",
+    "dtor_8008068C",
+    "TransitionEffect_Tick",
+    "TransitionEffect_GetOrCreate",
+    "TransitionEffect_RenderPass",
+    "TransitionEffect_DrawCarRouletteOverlay",
+    "TransitionEffect_DrawCarRouletteAndQuad",
+    "__dt__11ScopedTimerFv"
+  ],
   "src/game/fn_801DEF94.cpp": {
     "extab": [
       "dtor_801E2BD0",

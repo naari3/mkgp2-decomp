@@ -1,4 +1,3 @@
-#include "game/types/port_hooks.h"
 /* CollisionFile_Load @ 0x801F9954 is the CECollision constructor.
  * Native member initialization plus the inline type-count helper recover
  * the shared zero and indexed table walk. Remaining mismatch: the two
@@ -63,7 +62,6 @@ CECollision::CECollision(const char *path) : size(0), data(0), collision(0) {
         result = DVDReadPrio(&file, self->data, length, 0, 2);
         DVDLoad_RecordOpStart(last);
         if (result >= 0) {
-            PORT_DATA_LOADED(PORT_DATA_COLLISION, self->data, length);
             self->collision = CollisionFile_FixupPointers(self->data);
             goto close;
         }

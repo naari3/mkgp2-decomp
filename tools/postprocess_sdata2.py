@@ -38,6 +38,7 @@ STB_GLOBAL = 1
 STT_NOTYPE = 0
 SHN_UNDEF = 0
 ANON_RE = re.compile(r"^@\d+$")
+LIT_LOG = __import__("os").environ.get("MKGP2_LIT_LOG")
 
 
 def read_elf_meta(data: bytes):
@@ -233,6 +234,14 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
         if rel is not None and rel in target_relocs:
             # prefer the function-relative match when both exist
             expected = target_relocs[rel]  # type: ignore[index]
+        if LIT_LOG and expected is not None:
+            # tools/literal_value_audit.py: the rename below is by position
+            # only, so record the value the source wrote for this use.
+            _v, _sz = struct.unpack_from(en + "II", data, sym_off + 4)
+            _sh = shdrs[st_shndx]
+            _b = b"" if _sh[1] == 8 else bytes(data[_sh[4] + _v:_sh[4] + _v + _sz])  # 8 = SHT_NOBITS
+            with open(LIT_LOG, "a") as _f:
+                _f.write(f"{in_path}\t{rel[0] if rel else ''}\t{rel[1] if rel else r_off}\t{expected}\t{_sz}\t{_b.hex()}\n")
         if expected is None:
             own = owned_relocs.get(r_off)
             if rel is not None and rel in owned_relocs:

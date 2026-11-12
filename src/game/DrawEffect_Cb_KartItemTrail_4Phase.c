@@ -56,7 +56,7 @@ void DrawEffect_Cb_KartItemTrail_4Phase(unsigned char *self)
             } else {
                 F(0x15C) = 1.0f / Rand_RangeFloat(70.0f, 80.0f);
             }
-            F(0xA0) = 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
+            F(0xA0) = 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
             U32(0x180) = 90;
             S8(0x192) = 1;
             S8(0xB5)++;
@@ -115,7 +115,7 @@ void DrawEffect_Cb_KartItemTrail_4Phase(unsigned char *self)
             GetSpawnPosition(V(0xA4), 0.0f, 0.0f, 0.0f);
             F(0x154) = 0.0f;
             F(0x158) = F(0xB0);
-            F(0x15C) = 0.017453292f * Rand_RangeFloat(-5.0f, 5.0f);
+            F(0x15C) = 0.017453289f * Rand_RangeFloat(-5.0f, 5.0f);
             if (S8(0x190) == 0) {
                 S8(0x191) = 0;
             }

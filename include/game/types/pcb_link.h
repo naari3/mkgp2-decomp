@@ -38,6 +38,10 @@
 #ifndef PCB_CHOICE_SET_TRACK
 #define PCB_CHOICE_SET_TRACK(c, v) ((c).half.track = (v))
 #endif
+/* h: the vote result's first two bytes as an unsigned short lvalue */
+#ifndef PCB_CHOICE_TRACK
+#define PCB_CHOICE_TRACK(h) (((h) >> 4) & 0x7F)
+#endif
 /* f: the slot flags union; view: its 16-bit bit-field member (half or ids) */
 #ifndef PCB_FLAGS_ID
 #define PCB_FLAGS_ID(f, view) ((f).view.id)

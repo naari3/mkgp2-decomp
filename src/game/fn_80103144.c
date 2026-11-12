@@ -69,7 +69,7 @@ void fn_80103144(unsigned char *self, unsigned char *w)
             if (*(int *)(self + 0x8) != 0x5B) {
                 GabyouItem_BuildLocalTransformFromHandJoint(self, 1, 3.0f, -0.785398f, 1.2f);
             } else {
-                GabyouItem_BuildLocalTransformFromHandJoint(self, 1, 3.0f, -0.2617993f, 1.2f);
+                GabyouItem_BuildLocalTransformFromHandJoint(self, 1, 3.0f, -0.26179934f, 1.2f);
             }
             if (FinalLapCoinJump_CheckActiveForObject(WP(0x98))) {
                 self[0x28] = 0;
