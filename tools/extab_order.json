@@ -2263,8 +2263,11 @@
       "fn_80240CFC",
       "fn_80240D8C",
       "fn_80241A5C",
+      "fn_80241B84",
+      "fn_80241BE0",
       "AddAnimated",
-      "AddTracks"
+      "AddTracks",
+      "__dt__11ChildVectorFv"
     ],
     "extabindex": [
       "fn_802400A4",
@@ -2277,8 +2280,11 @@
       "fn_80240D8C",
       "fn_80241A5C",
       "dtor_80241B3C",
+      "fn_80241B84",
+      "fn_80241BE0",
       "AddAnimated",
-      "AddTracks"
+      "AddTracks",
+      "__dt__11ChildVectorFv"
     ]
   },
   "src/game/CourseEnvironment.cpp": {

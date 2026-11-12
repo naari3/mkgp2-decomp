@@ -4,9 +4,6 @@ typedef struct Obj {
     int f_8;
 } Obj;
 
-void fn_80241C04(void) {
-}
-
 Obj *fn_80241C08(Obj *obj) {
     obj->f_0 = 0;
     obj->f_4 = 0;

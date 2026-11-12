@@ -566,9 +566,8 @@ config.libs = [
             Object(Matching, "game/CountdownOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/TaskBucketsCast.cpp", extab_padding=b""),
             Object(Matching, "game/TaskBuckets.cpp", extab_padding=b""),
-            Object(Matching, "game/JointTracks.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-rostr", "-inline deferred"]),
+            Object(Matching, "game/JointTracks.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-rostr", "-inline deferred", "-RTTI on"]),
             Object(Matching, "game/fn_8023F5B4.cpp", extab_padding=b""),
-            Object(Matching, "game/fn_80241B84.c"),
             Object(Matching, "game/fn_80242DEC.c"),
             Object(Matching, "game/fn_80242E04.c"),
             # 1 TU = 1 dtk reversed-extab group bundle (6 functions).
@@ -755,7 +754,6 @@ config.libs = [
             Object(Matching, "game/SceneRoleTransitions.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred,auto", "-rostr"]),
             Object(Matching, "game/ContinueSceneTick.cpp", extab_padding=b"\xC7\x02", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ContinueSceneDraw.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_80241BE0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80218F1C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80218B5C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8020E3AC.c", extra_cflags=["-Cpp_exceptions on"]),

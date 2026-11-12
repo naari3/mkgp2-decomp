@@ -1,5 +1,5 @@
 #include "game/types/text_word.h"
-#include "game/JointTracksPrivate.h"
+#include "game/types/clMapAnim.h"
 /* --- owned .rodata 0x803E5D38..0x803EEE30 (tools/own_data.py) --- */
 extern "C" char lbl_806DBDD8[];
 #pragma force_active on
@@ -4084,29 +4084,15 @@ extern "C" const void *const lbl_803EEC78[13] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const char lbl_803EECAC[] = "clMapAnim";
-extern "C" const char JointTracks_rodata_803EECB8[] = "clMapAnimBase";
 #pragma force_active reset
 
 // -inline deferred: functions are emitted in reverse source order.
-JointTask::~JointTask() { vtable = lbl_804EE6C0; }
+clMapAnimBase::~clMapAnimBase() {}
 
-extern "C" void *fn_80241A5C(TrackTask *self, short destroy) {
-    if (self) {
-        self->vtable = JointTracks_data_804EE68C;
-        for (MatrixChild **it = self->children.start; it != self->children.End(); ++it)
-            delete *it;
-        if (&self->children) {
-            if (&self->children) {
-                if (&self->children) {
-                    if (self->children.start) MemoryManager_TimedFree(self->children.start);
-                }
-            }
-        }
-        if (self) self->vtable = lbl_804EE6C0;
-        if (destroy > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
+clMapAnim::~clMapAnim() {
+    for (MatrixChild **it = children.start; it != children.End(); ++it)
+        delete *it;
+
 }
 
 static inline float StepTrack(const TrackKey *keys, TrackState *state) {
@@ -4148,54 +4134,54 @@ static inline void SetScale(HSD_JObj *j, float v, int component, int line) {
     if (!(j->flags & 0x02000000)) DirtyMatrix(j);
 }
 
-extern "C" void fn_80240D8C(TrackTask *self) {
-    if (self->tracks->channels[0]) {
-        float v = StepTrack(self->tracks->channels[0], &self->state[0]);
-        SetTranslation(self->joint, v, 0, 0x3B8);
+void clMapAnim::Update() {
+    if (this->tracks->channels[0]) {
+        float v = StepTrack(this->tracks->channels[0], &this->state[0]);
+        SetTranslation(this->joint, v, 0, 0x3B8);
     }
-    if (self->tracks->channels[1]) {
-        float v = StepTrack(self->tracks->channels[1], &self->state[1]);
-        SetTranslation(self->joint, v, 1, 0x3C6);
+    if (this->tracks->channels[1]) {
+        float v = StepTrack(this->tracks->channels[1], &this->state[1]);
+        SetTranslation(this->joint, v, 1, 0x3C6);
     }
-    if (self->tracks->channels[2]) {
-        float v = StepTrack(self->tracks->channels[2], &self->state[2]);
-        SetTranslation(self->joint, v, 2, 0x3D4);
+    if (this->tracks->channels[2]) {
+        float v = StepTrack(this->tracks->channels[2], &this->state[2]);
+        SetTranslation(this->joint, v, 2, 0x3D4);
     }
-    if (self->tracks->channels[3]) {
-        float v = StepTrack(self->tracks->channels[3], &self->state[3]);
+    if (this->tracks->channels[3]) {
+        float v = StepTrack(this->tracks->channels[3], &this->state[3]);
         v = lbl_806DBE00 * v;
-        SetRotation(self->joint, v, 0, 0x2A4);
+        SetRotation(this->joint, v, 0, 0x2A4);
     }
-    if (self->tracks->channels[4]) {
-        float v = StepTrack(self->tracks->channels[4], &self->state[4]);
+    if (this->tracks->channels[4]) {
+        float v = StepTrack(this->tracks->channels[4], &this->state[4]);
         v = lbl_806DBE00 * v;
-        SetRotation(self->joint, v, 1, 0x2B8);
+        SetRotation(this->joint, v, 1, 0x2B8);
     }
-    if (self->tracks->channels[5]) {
-        float v = StepTrack(self->tracks->channels[5], &self->state[5]);
+    if (this->tracks->channels[5]) {
+        float v = StepTrack(this->tracks->channels[5], &this->state[5]);
         v = lbl_806DBE00 * v;
-        SetRotation(self->joint, v, 2, 0x2CC);
+        SetRotation(this->joint, v, 2, 0x2CC);
     }
-    if (self->tracks->channels[6]) {
-        float v = StepTrack(self->tracks->channels[6], &self->state[6]);
-        SetScale(self->joint, v, 0, 0x325);
+    if (this->tracks->channels[6]) {
+        float v = StepTrack(this->tracks->channels[6], &this->state[6]);
+        SetScale(this->joint, v, 0, 0x325);
     }
-    if (self->tracks->channels[7]) {
-        float v = StepTrack(self->tracks->channels[7], &self->state[7]);
-        SetScale(self->joint, v, 1, 0x333);
+    if (this->tracks->channels[7]) {
+        float v = StepTrack(this->tracks->channels[7], &this->state[7]);
+        SetScale(this->joint, v, 1, 0x333);
     }
-    if (self->tracks->channels[8]) {
-        float v = StepTrack(self->tracks->channels[8], &self->state[8]);
-        SetScale(self->joint, v, 2, 0x341);
+    if (this->tracks->channels[8]) {
+        float v = StepTrack(this->tracks->channels[8], &this->state[8]);
+        SetScale(this->joint, v, 2, 0x341);
     }
 }
 
-extern "C" void fn_80240CFC(TrackTask *self) {
-    if (self->children.count != 0) {
-        HSD_JObjClearFlagsAll(self->joint, 0x10);
-        for (MatrixChild **it = self->children.start; it != self->children.End(); ++it)
+void clMapAnim::Draw() {
+    if (this->children.count != 0) {
+        HSD_JObjClearFlagsAll(this->joint, 0x10);
+        for (MatrixChild **it = this->children.start; it != this->children.End(); ++it)
             HSD_JObjDispAll((*it)->joint, 0, 7, 0);
-        HSD_JObjSetFlagsAll(self->joint, 0x10);
+        HSD_JObjSetFlagsAll(this->joint, 0x10);
     }
 }
 
@@ -4237,16 +4223,16 @@ static inline const TrackKey *GetTrack(const TrackSet *tracks, int channel) {
     return tracks->channels[channel];
 }
 
-extern "C" void fn_80240810(TrackTask *self, int frame) {
-    SeekTrack(GetTrack(self->tracks, 0), &self->state[0], frame);
-    SeekTrack(GetTrack(self->tracks, 1), &self->state[1], frame);
-    SeekTrack(GetTrack(self->tracks, 2), &self->state[2], frame);
-    SeekTrack(GetTrack(self->tracks, 3), &self->state[3], frame);
-    SeekTrack(GetTrack(self->tracks, 4), &self->state[4], frame);
-    SeekTrack(GetTrack(self->tracks, 5), &self->state[5], frame);
-    SeekTrack(GetTrack(self->tracks, 6), &self->state[6], frame);
-    SeekTrack(GetTrack(self->tracks, 7), &self->state[7], frame);
-    SeekTrack(GetTrack(self->tracks, 8), &self->state[8], frame);
+void clMapAnim::Seek(int frame) {
+    SeekTrack(GetTrack(this->tracks, 0), &this->state[0], frame);
+    SeekTrack(GetTrack(this->tracks, 1), &this->state[1], frame);
+    SeekTrack(GetTrack(this->tracks, 2), &this->state[2], frame);
+    SeekTrack(GetTrack(this->tracks, 3), &this->state[3], frame);
+    SeekTrack(GetTrack(this->tracks, 4), &this->state[4], frame);
+    SeekTrack(GetTrack(this->tracks, 5), &this->state[5], frame);
+    SeekTrack(GetTrack(this->tracks, 6), &this->state[6], frame);
+    SeekTrack(GetTrack(this->tracks, 7), &this->state[7], frame);
+    SeekTrack(GetTrack(this->tracks, 8), &this->state[8], frame);
 }
 
 extern "C" {
@@ -4331,13 +4317,13 @@ static void AddTracks(TaskBucket *self, const TrackGroup *entry, int group, void
             DebugPrintf("  [ Anim Data ] getJoint Error! - joint[ %s ] - imamura/MapAnim.cpp %d\n", cursor->name, 0x18E);
             continue;
         }
-        TrackTask *task = new TrackTask(joint, cursor->tracks);
+        clMapAnim *task = new clMapAnim(joint, cursor->tracks);
         Append(&self[group], task);
     }
 }
 
 void fn_802400A4(TaskBucket *self, const ChildBinding *binding, int group, void *model) {
-    TrackTask *owner;
+    clMapAnim *owner;
     const char **name;
     const ChildBinding *cursor;
     TaskBucket *bucket;
@@ -4350,7 +4336,7 @@ void fn_802400A4(TaskBucket *self, const ChildBinding *binding, int group, void 
             DebugPrintf("  [ Instance Original ] getJoint Error! - joint[ %s ] - imamura/MapAnim.cpp %d\n", cursor->name, 0x1B1);
             continue;
         }
-        TrackTask *task = new TrackTask(joint, (const TrackSet *)JointTracks_rodata_803E5D44);
+        clMapAnim *task = new clMapAnim(joint, (const TrackSet *)JointTracks_rodata_803E5D44);
         Append(bucket, task);
         for (name = cursor->children; *name; ++name) {
             HSD_JObj *child = ResolveJointByName(model, *name);
@@ -4375,7 +4361,7 @@ static void AddAnimated(TaskBucket *self, const char **animated, int group, void
             DebugPrintf("  [ Anim HSD Data ] getJoint Error! - joint[ %s ] - imamura/MapAnim.cpp %d\n", *cursor, 0x1ED);
             continue;
         }
-        AnimTask *task = new AnimTask(joint);
+        clMapAnimHSD *task = new clMapAnimHSD(joint);
         TaskBucket *bucket = &self[group];
         Append(bucket, task);
     }
