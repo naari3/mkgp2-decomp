@@ -11495,7 +11495,7 @@ game/autodata/data_804EE760.c:
 	.data       start:0x804EE760 end:0x804EE784
 
 game/autodata/rodata_803EF418.c:
-	.rodata     start:0x803EF418 end:0x803EF658
+	.rodata     start:0x803EF418 end:0x803EF63C
 
 game/fn_80242DE0.c:
 	.text       start:0x80242DE0 end:0x80242DEC
@@ -11531,46 +11531,13 @@ game/fn_802437AC.cpp:
 	.data       start:0x804EE784 end:0x804EE79C
 	.sdata      start:0x806D0818 end:0x806D0828
 
-game/autodata/sdata_806D0828.c:
-	.sdata      start:0x806D0828 end:0x806D0838
-
-game/autodata/data_804EE79C.c:
-	.data       start:0x804EE79C end:0x804EE7B8
-
 game/fn_80244524.cpp:
-	extab       start:0x8001D230 end:0x8001D248
-	extabindex  start:0x8002B19C end:0x8002B1A8
-	.text       start:0x80244524 end:0x80244840
-
-game/ItemUseEffectUpdate.cpp:
-	extab       start:0x8001D248 end:0x8001D250
-	extabindex  start:0x8002B1A8 end:0x8002B1B4
-	.text       start:0x80244840 end:0x80244CE0
-
-game/ItemUseEffectTrigger.cpp:
-	extab       start:0x8001D250 end:0x8001D2A4
-	extabindex  start:0x8002B1B4 end:0x8002B1C0
-	.text       start:0x80244CE0 end:0x80244F68
-
-game/ItemUseEffectDtor.cpp:
-	extab       start:0x8001D2A4 end:0x8001D33C
-	extabindex  start:0x8002B1C0 end:0x8002B1CC
-	.text       start:0x80244F68 end:0x8024514C
-
-game/ItemUseEffectCtor.cpp:
-	extab       start:0x8001D33C end:0x8001D3BC
-	extabindex  start:0x8002B1CC end:0x8002B1D8
-	.text       start:0x8024514C end:0x80245420
-
-game/fn_80245420.cpp:
-	extab       start:0x8001D3BC end:0x8001D3D4
-	extabindex  start:0x8002B1D8 end:0x8002B1E4
-	.text       start:0x80245420 end:0x802455EC
-
-game/fn_802455EC.cpp:
-	extab       start:0x8001D3D4 end:0x8001D430
-	extabindex  start:0x8002B1E4 end:0x8002B1F0
-	.text       start:0x802455EC end:0x80245700
+	extab       start:0x8001D230 end:0x8001D430
+	extabindex  start:0x8002B19C end:0x8002B1F0
+	.text       start:0x80244524 end:0x80245700
+	.rodata     start:0x803EF63C end:0x803EF658
+	.data       start:0x804EE79C end:0x804EE7B8
+	.sdata      start:0x806D0828 end:0x806D0838
 
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704

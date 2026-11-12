@@ -807,7 +807,7 @@ config.libs = [
             Object(Matching, "game/fn_80243464.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_80242E80.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_802437AC.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-use_lmw_stmw on", "-inline deferred,noauto"]),
-            Object(Matching, "game/fn_80244524.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/fn_80244524.cpp", extab_padding=b"\x00\x00" * 3, extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred,noauto", "-rostr"], mw_version="GC/2.6"),
 
             Object(Matching, "game/fn_80226640.c"),
             Object(Matching, "game/fn_8020F268.c"),
@@ -836,10 +836,6 @@ config.libs = [
             Object(Matching, "game/fn_80190658.c"),
             Object(Matching, "game/fn_801805AC.c"),
             Object(Matching, "game/fn_80089F9C.c"),
-            Object(Matching, "game/ItemUseEffectUpdate.cpp", mw_version="GC/2.6", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/ItemUseEffectTrigger.cpp", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/ItemUseEffectDtor.cpp", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/ItemUseEffectCtor.cpp", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_80245700.c"),
             Object(Matching, "game/HudSelectionUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HudFlow20Factory.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -2357,8 +2353,6 @@ config.libs = [
             Object(Matching, "game/CardCharLookup.c", mw_version="GC/2.6"),
             Object(Matching, "game/CardCharLookup_tail.c"),
             Object(Matching, "game/HudSelectionStep.c"),
-            Object(Matching, "game/fn_80245420.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
-            Object(Matching, "game/fn_802455EC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_80245704.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_80245780.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr"]),
             Object(Matching, "game/fn_801F6574.c"),
@@ -3512,6 +3506,7 @@ def _inject_data_align4_tus() -> None:
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
     "game/mapobject/fn_8017CE1C",
+    "game/fn_80244524",
     "game/fn_802437AC",
     "game/KartPreview",
     "game/Scene_801622C8",

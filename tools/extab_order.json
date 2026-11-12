@@ -3917,5 +3917,35 @@
       "JumpDistanceMode_Init",
       "dtor_80036E40"
     ]
+  },
+  "src/game/fn_80244524.cpp": {
+    "extab": [
+      "fn_80244524",
+      "fn_80244840",
+      "fn_80244CE0",
+      "fn_80244F68",
+      "fn_8024514C",
+      "fn_80245420",
+      "fn_802455EC",
+      "dtor_80082960",
+      "dtor_801F2724",
+      "fn_801F26C8",
+      "dtor_801F4A80",
+      "TweenInterp_Dtor"
+    ],
+    "extabindex": [
+      "fn_80244524",
+      "fn_80244840",
+      "fn_80244CE0",
+      "fn_80244F68",
+      "fn_8024514C",
+      "fn_80245420",
+      "fn_802455EC",
+      "dtor_80082960",
+      "dtor_801F2724",
+      "fn_801F26C8",
+      "dtor_801F4A80",
+      "TweenInterp_Dtor"
+    ]
   }
 }
