@@ -1,39 +1,265 @@
-#include "game/types/c_region.h"
-C_REGION_BEGIN
-/* === extracted from EffectSteering === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* nsEffectSteering action family, 0x8005B288..0x8005D954.
+ *
+ * Nondeferred code generation preserves address-order function definitions.
+ * Each derived destructor is the first non-inline virtual (the vtable key).
+ * The base destructor becomes inline before the derived destructors are
+ * generated: its first vptr reference is therefore lazy. The class-action
+ * stack emits Delay/Scale/InputViscosity/Shake/Split/Viscosity/Vibrate/base/Lock.
+ * Keep the base definition here and the derived destructors in target order.
+ *
+ * The constructor's cleanup references emit the weak base destructor after
+ * the constructor. ESRing's extra weak destructor and EH are discarded by
+ * MWLD. All Reset/Step slots below are real members.
+ *
+ * The original constructor/destructor views of the enclosing steering owner
+ * retain their distinct ownership wrappers and existing external bridges.
+ */
+#include "game/types/size_t.h"
+void *operator new(size_t); void *operator new[](size_t);
+void operator delete(void *); void operator delete[](void *);
+#include "game/types/nsEffectSteering_clAction.h"
+inline nsEffectSteering::clAction::~clAction() {}
+struct ESKart { char pad0[0x9C]; float speed; };
+struct ESCtor;
+struct ESCounter {
+    int start, end, cur, step;
+    unsigned char active;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void DebugPrintf(const char *, ...);
-extern void KartItem_ResetStrPcbToIdle(void *owner);
-extern void *StrPcb_GetInstance(void);
-extern float StrPcb_GetIntensityScale(void *pcb);
-extern void KartItem_SetStrPcbCmd2dFromFloat(void *kart, float value);
-extern void KartItem_SetStrPcbCmd2eFromFloat(void *kart, float value);
-extern unsigned int lbl_806D2984;
-extern unsigned int lbl_806D2988;
+    unsigned char Tick()
+    {
+        if (!active) {
+            return 0;
+        }
+        cur += step;
+        if (step > 0) {
+            if (end < cur) {
+                active = 0;
+                cur = end;
+            }
+        } else if (end > cur) {
+            active = 0;
+            cur = end;
+        }
+        return active;
+    }
+};
+struct ESRing {
+    ESRing(int n) : count(n)
+    {
+        if (count < 3) count = 3;
+        count++;
+        samples = 0;
+        samples = new float[count];
+        writeIndex = 0;
+        readIndex = 0;
+        remaining = 0;
+    }
+    ~ESRing() { delete[] samples; samples = 0; }
+    int count;
+    float *samples;
+    int writeIndex, readIndex, remaining;
+
+    int Next(int i) { int n = i + 1; if (n >= count) n = 0; return n; }
+    unsigned char IsFull() { return Next(writeIndex) == readIndex; }
+    unsigned char IsEmpty() { return readIndex == writeIndex; }
+
+    void Pop(float *out)
+    {
+        if (IsFull() == 1 && IsEmpty() != 1) {
+            *out = samples[readIndex++];
+            if (readIndex >= count) {
+                readIndex = 0;
+            }
+            remaining--;
+        }
+    }
+
+    void Push(float in)
+    {
+        if (IsFull() != 1) {
+            samples[writeIndex++] = in;
+            if (writeIndex >= count) {
+                writeIndex = 0;
+            }
+            remaining++;
+        }
+    }
+};
+namespace nsEffectSteering {
+
+struct clActionDelay : clAction {
+    virtual ~clActionDelay();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    ESRing ring;
+    int field1C;
+    clActionDelay(ESCtor*p,int n):owner(p),ring(n){}
+};
+
+struct clActionScale : clAction {
+    virtual ~clActionScale();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    float scale;
+    clActionScale(ESCtor*p):owner(p){}
+};
+
+struct clActionInputViscosity : clAction {
+    virtual ~clActionInputViscosity();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    float value,target,hi,lo,out;
+    clActionInputViscosity(ESCtor*p):owner(p){}
+};
+
+struct clActionShake : clAction {
+    virtual ~clActionShake();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    float amp;
+    int period;
+    ESCounter counter;
+    float accum,out;
+    clActionShake(ESCtor*p):owner(p){counter.start=0;counter.end=0;counter.step=0;counter.active=0;}
+};
+
+struct clActionSplit : clAction {
+    virtual ~clActionSplit();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    int steps,value,timer;
+    clActionSplit(ESCtor*p):owner(p){} unsigned char SetValue(int v);
+};
+
+struct clActionViscosity : clAction {
+    virtual ~clActionViscosity();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    float value,hi,lo,vel,out;
+    clActionViscosity(ESCtor*p):owner(p){}
+};
+
+struct clActionVibrate : clAction {
+    virtual ~clActionVibrate();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    ESCounter counter;
+    float amp;
+    int field20;
+    clActionVibrate(ESCtor*p):owner(p) {counter.start=0;counter.end=0;counter.step=0;counter.active=0;}
+};
+
+struct clActionLock : clAction {
+    virtual ~clActionLock();
+    virtual void Reset();
+    virtual void Step();
+    ESCtor *owner;
+    float offset;
+    clActionLock(ESCtor*p):owner(p){}
+};
+}
+using namespace nsEffectSteering;
+struct ESOwn1 {clActionLock *p; ESOwn1(ESCtor*s):p(new clActionLock(s)){} ~ESOwn1() throw();};
+struct ESOwn2 {clActionVibrate *p; ESOwn2(ESCtor*s):p(new clActionVibrate(s)){} ~ESOwn2() throw();};
+struct ESOwn3 {clActionViscosity *p; ESOwn3(ESCtor*s):p(new clActionViscosity(s)){} ~ESOwn3() throw();};
+struct ESOwn4 {clActionSplit *p; ESOwn4(ESCtor*s):p(new clActionSplit(s)){} ~ESOwn4() throw();};
+struct ESOwn5 {clActionShake *p; ESOwn5(ESCtor*s):p(new clActionShake(s)){} ~ESOwn5() throw();};
+struct ESOwn6 {clActionInputViscosity *p; ESOwn6(ESCtor*s):p(new clActionInputViscosity(s)){} ~ESOwn6() throw();};
+struct ESOwn7 {clActionScale *p; ESOwn7(ESCtor*s):p(new clActionScale(s)){} ~ESOwn7() throw();};
+struct ESCtor {
+ESKart *owner; unsigned char mode; char pad5[3]; int field8,fieldC,field10,field14;
+unsigned char active; char pad19[3]; int field1C,field20;
+ESOwn1 scale;ESOwn2 shake;ESOwn3 split;ESOwn4 viscosity;ESOwn5 vibrate;ESOwn6 lock;ESOwn7 range;
+clActionDelay *delay; float out44,out48;
+ESCtor(void*,unsigned char); float Speed(){return owner->speed;}
+};
+template <class T> struct ESOwn {
+    T *p;
+    ~ESOwn() throw() { delete p; }
+};
+
+struct ESListener {
+    virtual void f0();
+    virtual void Release();
+};
+
+struct ESDtor {
+    void *owner; unsigned char mode; char pad5[3];
+    int field8, fieldC, field10, field14;
+    unsigned char active; char pad19[3]; int field1C; ESListener *listener;
+    ESOwn<clActionLock> scale; ESOwn<clActionVibrate> shake; ESOwn<clActionViscosity> split; ESOwn<clActionSplit> viscosity;
+    ESOwn<clActionShake> vibrate; ESOwn<clActionInputViscosity> lock; ESOwn<clActionScale> range; ESOwn<clActionDelay> delay;
+    float value;
+    ~ESDtor();
+};
+
+extern "C" {
+void KartItem_ResetStrPcbToIdle(void *kart);
+void KartItem_SetStrPcbIntensityFromSpeed(void *kart, float value);
+void KartItem_SetStrPcbCmd2dFromFloat(void *kart, float value);
+void KartItem_SetStrPcbCmd2eFromFloat(void *kart, float value);
+void KartItem_SetStrPcbCmd2fFromFloat(void *kart, float value);
+void *StrPcb_GetInstance(void);
+float StrPcb_GetIntensityScale(void *pcb);
+float Saturate_Double(float v, float lo, float hi);
+int Clamp_Int(int v, int lo, int hi);
+int abs(int v);
+
+extern const float lbl_806D297C; /* 0.0f */
+extern const float lbl_806D2984; /* 0.7f */
+extern const float lbl_806D2988; /* 1.0f */
+extern const float lbl_806D2990; /* 0.01f */
+extern const float lbl_806D2994; /* -0.01f */
+extern const float lbl_806D2998; /* 1000.0f */
+}
+
+static inline void ESCmd2d(ESCtor *s, float v)
+{
+    KartItem_SetStrPcbCmd2dFromFloat(s->owner, v * StrPcb_GetIntensityScale(StrPcb_GetInstance()));
+}
+
+static inline void ESCmd2e(ESCtor *s, float v)
+{
+    KartItem_SetStrPcbCmd2eFromFloat(s->owner, v * StrPcb_GetIntensityScale(StrPcb_GetInstance()));
+}
+
+static inline void ESCmd2f(ESCtor *s, float v)
+{
+    KartItem_SetStrPcbCmd2fFromFloat(s->owner, v * StrPcb_GetIntensityScale(StrPcb_GetInstance()));
+}
+
+
+
+extern "C" void DebugPrintf(const char *, ...);
+extern "C" void KartItem_ResetStrPcbToIdle(void *owner);
+extern "C" void *StrPcb_GetInstance(void);
+extern "C" float StrPcb_GetIntensityScale(void *pcb);
+extern "C" void KartItem_SetStrPcbCmd2dFromFloat(void *kart, float value);
+extern "C" void KartItem_SetStrPcbCmd2eFromFloat(void *kart, float value);
+extern "C" const float lbl_806D2984;
+extern "C" const float lbl_806D2988;
 
 /* --- extern decls: sda21-referenced data --- */
-extern const float lbl_806D2978;
-extern unsigned int lbl_806D297C;
-extern char lbl_806D298C;
-extern const float lbl_806D2980;
+extern "C" const float lbl_806D2978;
+extern "C" const float lbl_806D297C;
+extern "C" char lbl_806D298C;
+extern "C" const float lbl_806D2980;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int jumptable_803F99E0[];
-extern unsigned int jumptable_803F9A08[];
-extern unsigned int lbl_802EDD98[];
+extern "C" unsigned int jumptable_803F99E0[];
+extern "C" unsigned int jumptable_803F9A08[];
+extern "C" unsigned int lbl_802EDD98[];
 
-/* --- function index (1 fns, .text 0x8005B288..0x8005B43C) ---
- * [  0] 0x8005B288 size:0x1B4   global EffectSteering_InitForDelay
- */
 
-/* --- forward decls --- */
 /* Reset callbacks use the enclosing steering state and its output at +0x48. */
 typedef struct EffectSteeringResetState {
     void *owner;
@@ -50,9 +276,6 @@ typedef struct EffectActionResetState {
     int field18;
 } EffectActionResetState;
 
-void ActionDelay_Reset(EffectActionResetState *self);
-C_REGION_END
-#pragma cplusplus on
 struct EffectInputDelay {
     /* As with Scale/Shake, reset is the second virtual slot (+0x0C). */
     virtual void v0();
@@ -111,58 +334,16 @@ struct EffectInputVibrate {
 extern "C" int EffectSteering_InitForDelay(EffectSteeringScale *self, int sample_count, float duration);
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value);
 extern "C" int EffectSteering_InitForShake(EffectSteeringScale *self, float duration, float value, float cycle, float final_value);
-#pragma cplusplus off
-C_REGION_BEGIN
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForDelay[8] = {
-    0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForDelay = {
-    (void *)&EffectSteering_InitForDelay, 0x000001B4, (void *)extab_EffectSteering_InitForDelay
-};
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ActionDelay_Reset[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ActionDelay_Reset = {
-    (void *)&ActionDelay_Reset, 0x00000054, (void *)extab_ActionDelay_Reset
-};
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForScale[8] = {
-    0x08, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForScale = {
-    (void *)&EffectSteering_InitForScale, 0x00000198, (void *)extab_EffectSteering_InitForScale
-};
 
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForShake[8] = {
-    0x09, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForShake = {
-    (void *)&EffectSteering_InitForShake, 0x00000258, (void *)extab_EffectSteering_InitForShake
-};
 
-/* Function bodies follow target .text order. Manual EH records are retained. */
-C_REGION_END
-#pragma cplusplus on
+/* Initialization methods and Reset slots follow target text order. */
 extern "C" int EffectSteering_InitForDelay(EffectSteeringScale *self, int sample_count, float duration) {
     unsigned char ok;
     EffectInputDelay *input;
@@ -200,21 +381,17 @@ selected_delay:
     input->reset();
     return 1;
 }
-#pragma cplusplus off
-C_REGION_BEGIN
-void ActionDelay_Reset(EffectActionResetState *self) { /* 0x8005B43C size:0x54 */
-    EffectSteeringResetState *owner = self->owner;
-    KartItem_ResetStrPcbToIdle(owner->owner);
-    owner->output = *(float *)&lbl_806D297C;
-    self->field10 = 0;
-    self->field14 = 0;
-    self->field18 = 0;
+void clActionDelay::Reset() { /* 0x8005B43C size:0x54 */
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = *(float *)&lbl_806D297C;
+    ring.writeIndex = 0;
+    ring.readIndex = 0;
+    ring.remaining = 0;
 }
 
 
 
-C_REGION_END
-#pragma cplusplus on
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value) {
     unsigned char ok;
     if (self->mode != 0) {
@@ -310,18 +487,109 @@ shake_reset:
 done:
     return 1;
 }
-#pragma cplusplus off
-C_REGION_BEGIN
 
 /* Exact asm_fn bridges for the contiguous partial-matching range. */
-#include "src/game/TmpActionShake.inc"
-C_REGION_END
-#include "src/game/TmpSplit.inc"
-C_REGION_BEGIN
-#include "src/game/TmpActionSplit.inc"
+typedef struct ActionShakeResetState {
+    void *vtable;
+    EffectSteeringResetState *owner;
+    float field8;
+    int fieldC;
+    unsigned char pad10[0x14];
+    float field24;
+} ActionShakeResetState;
 
-C_REGION_END
-#pragma cplusplus on
+
+
+
+
+void clActionShake::Reset() { /* 0x8005B880 size:0x4C */
+    ESCtor *s;
+    /* The shared zero literal can be loaded in the function prologue. */
+    float zero = 0.0f;
+    amp = zero;
+    period = 0;
+    accum = zero;
+    s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = *(float *)&lbl_806D297C;
+}
+
+
+struct EffectInputSplit {
+    virtual void v0();
+    virtual void reset();
+    EffectSteeringResetState *owner;
+    int value;
+};
+static inline void SplitCmd2d(EffectSteeringResetState *owner, float value) {
+    KartItem_SetStrPcbCmd2dFromFloat(owner->owner,
+        value * StrPcb_GetIntensityScale(StrPcb_GetInstance()));
+}
+static inline void SplitCmd2e(EffectSteeringResetState *owner, float value) {
+    KartItem_SetStrPcbCmd2eFromFloat(owner->owner,
+        value * StrPcb_GetIntensityScale(StrPcb_GetInstance()));
+}
+extern "C" int EffectSteering_InitForSplit(EffectSteeringScale *self, int value, float duration) {
+    unsigned char ok;
+    EffectInputSplit *input;
+    if (self->mode != 0) self->input->reset();
+    self->mode = 5;
+    if (self->step > 0) {
+        if (self->end >= self->start) goto reset_split;
+        goto no_reset_split;
+    } else if (self->end > self->start) goto no_reset_split;
+reset_split:
+    self->start = 0;
+    self->current = self->start;
+    self->end = (int)(lbl_806D2978 * duration);
+    self->step = 1;
+    self->active = 1;
+no_reset_split:
+    switch (self->mode) {
+    case 1: self->input = self->inputs[0]; break;
+    case 2:
+    case 4: self->input = self->inputs[1]; break;
+    case 3: self->input = self->inputs[2]; break;
+    case 5: self->input = self->inputs[3]; break;
+    case 6: self->input = self->inputs[4]; break;
+    case 7: self->input = self->inputs[5]; break;
+    case 8: self->input = self->inputs[6]; break;
+    case 9: self->input = self->inputs[7]; break;
+    default: DebugPrintf((const char *)lbl_802EDD98); ok = 0; goto selected_split;
+    }
+    ok = 1;
+selected_split:
+    if (!ok) return 0;
+    input = (EffectInputSplit *)self->inputs[3];
+    input->reset();
+    input->value = value;
+    SplitCmd2d(input->owner, 0.7f);
+    SplitCmd2e(input->owner, 1.0f);
+    return 1;
+}
+
+typedef struct ActionSplitResetState {
+    void *vtable;
+    EffectSteeringResetState *owner;
+    unsigned char pad8[4];
+    int fieldC;
+    int field10;
+} ActionSplitResetState;
+
+
+
+
+
+void clActionSplit::Reset() { /* 0x8005BAB0 size:0x50 */
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = *(float *)&lbl_806D297C;
+    value = 0;
+    timer = 0;
+}
+
+
+
 
 extern "C" void EffectSteering_InputViscosity_SetFieldC(EffectSteeringScale *self, float value) {
     ((EffectInputViscosity *)self->inputs[5])->fieldC = value;
@@ -331,14 +599,6 @@ extern "C" int EffectSteering_InitForViscosity(EffectSteeringScale *self, float 
                                                 float value8, float value10,
                                                 float valueC, float value14,
                                                 float value18);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForViscosity[8] = {
-    0x09, 0x8A, 0, 0, 0, 0, 0, 0
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForViscosity = {
-    (void *)&EffectSteering_InitForViscosity, 0x1F8, (void *)extab_EffectSteering_InitForViscosity
-};
 
 extern "C" int EffectSteering_InitForViscosity(EffectSteeringScale *self, float duration,
                                                 float value8, float value10,
@@ -385,14 +645,6 @@ selected_viscosity:
 
 extern "C" int EffectSteering_InitForViscosity_Uniform(EffectSteeringScale *self, float duration,
                                                         float uniform_value, float value18);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForViscosity_Uniform[8] = {
-    0x08, 0xCA, 0, 0, 0, 0, 0, 0
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForViscosity_Uniform = {
-    (void *)&EffectSteering_InitForViscosity_Uniform, 0x1C0, (void *)extab_EffectSteering_InitForViscosity_Uniform
-};
 
 extern "C" int EffectSteering_InitForViscosity_Uniform(EffectSteeringScale *self, float duration,
                                                         float uniform_value, float value18) {
@@ -438,14 +690,6 @@ selected_uniform:
 }
 
 extern "C" int EffectSteering_InitForVibrate_Sub(EffectSteeringScale *self, float duration, float value);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForVibrate_Sub[8] = {
-    0x08, 0x8A, 0, 0, 0, 0, 0, 0
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForVibrate_Sub = {
-    (void *)&EffectSteering_InitForVibrate_Sub, 0x200, (void *)extab_EffectSteering_InitForVibrate_Sub
-};
 
 extern "C" int EffectSteering_InitForVibrate_Sub(EffectSteeringScale *self, float duration, float value) {
     unsigned char ok;
@@ -494,23 +738,21 @@ reset_input_vibrate:
 done_vibrate_sub:
     return 1;
 }
-#pragma cplusplus off
-C_REGION_BEGIN
 
-#include "src/game/TmpActionVibrate.inc"
 
-C_REGION_END
-#pragma cplusplus on
+
+
+
+void clActionVibrate::Reset() { /* 0x8005C0C4 size:0x38 */
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = *(float *)&lbl_806D297C;
+}
+
+
+
 extern "C" int EffectSteering_InitForVibrate(EffectSteeringScale *self, float duration,
                                               float value, float input_duration);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForVibrate[8] = {
-    0x08, 0xCA, 0, 0, 0, 0, 0, 0
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForVibrate = {
-    (void *)&EffectSteering_InitForVibrate, 0x23C, (void *)extab_EffectSteering_InitForVibrate
-};
 
 extern "C" int EffectSteering_InitForVibrate(EffectSteeringScale *self, float duration,
                                               float value, float input_duration) {
@@ -566,14 +808,6 @@ done_input_vibrate:
 }
 
 extern "C" int EffectSteering_InitForLock(EffectSteeringScale *self, float duration, float value);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForLock[8] = {
-    0x08, 0x8A, 0, 0, 0, 0, 0, 0
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForLock = {
-    (void *)&EffectSteering_InitForLock, 0x1AC, (void *)extab_EffectSteering_InitForLock
-};
 
 extern "C" int EffectSteering_InitForLock(EffectSteeringScale *self, float duration, float value) {
     unsigned char ok;
@@ -611,21 +845,172 @@ selected_lock:
     input->field8 = value;
     return 1;
 }
-#pragma cplusplus off
-C_REGION_BEGIN
 
-void ActionLock_Reset(EffectActionResetState *self);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ActionLock_Reset[8] = {
-    0x08, 0x0A, 0, 0, 0, 0, 0, 0
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ActionLock_Reset = {
-    (void *)&ActionLock_Reset, 0x38, (void *)extab_ActionLock_Reset
-};
-void ActionLock_Reset(EffectActionResetState *self) {
-    EffectSteeringResetState *owner = self->owner;
-    KartItem_ResetStrPcbToIdle(owner->owner);
-    owner->output = *(float *)&lbl_806D297C;
+void clActionLock::Reset() {
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = *(float *)&lbl_806D297C;
 }
-C_REGION_END
+
+ESDtor::~ESDtor()
+{
+    if (field1C != 0) {
+        listener->Release();
+    }
+}
+
+clActionLock::~clActionLock() {}
+clActionVibrate::~clActionVibrate() {}
+clActionViscosity::~clActionViscosity() {}
+clActionSplit::~clActionSplit() {}
+clActionShake::~clActionShake() {}
+clActionInputViscosity::~clActionInputViscosity() {}
+clActionScale::~clActionScale() {}
+clActionDelay::~clActionDelay() {}
+ESCtor::ESCtor(void *p, unsigned char m)
+    : owner((ESKart*)p), mode(m), field8(0), fieldC(0), field14(0), active(0),
+      field1C(0), field20(0), scale(this), shake(this), split(this),
+      viscosity(this), vibrate(this), lock(this), range(this)
+{
+    delay = new clActionDelay(this, 13);
+    out44 = lbl_806D297C;
+}
+inline unsigned char clActionSplit::SetValue(int v)
+    {
+        unsigned char grew = 0;
+        if (abs(v) > abs(value)) {
+            grew = 1;
+        }
+        value = v;
+        return grew;
+    }
+void clActionDelay::Step() {
+    volatile float out = lbl_806D297C;
+
+    ring.Pop((float *)&out);
+    ring.Push(owner->owner->speed);
+    owner->out44 = out;
+}
+void clActionScale::Reset() {
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = lbl_806D297C;
+}
+void clActionScale::Step() {
+    owner->out44 = scale * owner->Speed();
+}
+void clActionInputViscosity::Reset() {
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = lbl_806D297C;
+}
+void clActionInputViscosity::Step() {
+    value = Saturate_Double(value + (target > value ? lbl_806D2990 : lbl_806D2994),
+                                  lo, hi);
+    ESCmd2e(owner, value);
+    owner->out44 = owner->owner->speed;
+    owner->out48 = lbl_806D297C;
+    ESCmd2d(owner, out);
+}
+void clActionShake::Step() {
+    if (!counter.Tick()) {
+        int period = this->period;
+        if (counter.step > 0) {
+            if (counter.end >= counter.start) {
+                goto reset;
+            }
+            goto skip;
+        } else if (counter.end > counter.start) {
+            goto skip;
+        }
+    reset:
+        counter.start = 0;
+        counter.cur = counter.start;
+        counter.end = period;
+        counter.step = 1;
+        counter.active = 1;
+    skip:
+        amp = -amp;
+    }
+    accum += amp;
+    KartItem_SetStrPcbIntensityFromSpeed(owner->owner, accum);
+    owner->out44 = owner->owner->speed;
+    owner->out48 = accum;
+    ESCmd2d(owner, out);
+}
+void clActionSplit::Step() {
+    float k = lbl_806D2998;
+    ESCtor *s = owner;
+    float speed = s->owner->speed;
+    int t = k * speed;
+
+    if (t != 0) {
+        int q = 1000 / steps;
+        int n = t / q;
+        s->out44 = (float)(n * q) / k;
+    } else {
+        s->out44 = lbl_806D297C;
+    }
+    if (SetValue(Clamp_Int(speed * steps, -steps, steps)) == 1) {
+        timer = 2;
+        ESCmd2e(owner, lbl_806D297C);
+        owner->out48 = lbl_806D297C;
+        ESCmd2d(owner, lbl_806D297C);
+    }
+    if (timer > 0) {
+        timer--;
+        if (timer <= 0) {
+            timer = 0;
+            s = owner;
+            KartItem_ResetStrPcbToIdle(s->owner);
+            s->out48 = lbl_806D297C;
+            ESCmd2d(owner, lbl_806D2984);
+            ESCmd2e(owner, lbl_806D2988);
+        }
+    }
+}
+void clActionViscosity::Reset() {
+    ESCtor *s = owner;
+    KartItem_ResetStrPcbToIdle(s->owner);
+    s->out48 = lbl_806D297C;
+}
+void clActionViscosity::Step() {
+    float v = value + vel;
+
+    if (v > hi) {
+        value = hi;
+        vel = -vel;
+    } else if (v < lo) {
+        value = lo;
+        vel = -vel;
+    } else {
+        value = v;
+    }
+    ESCmd2e(owner, value);
+    owner->out44 = owner->owner->speed;
+    owner->out48 = lbl_806D297C;
+    ESCmd2d(owner, out);
+}
+void clActionVibrate::Step() {
+    if (!counter.Tick()) {
+        amp = -amp;
+        counter.cur = counter.start;
+        counter.active = 1;
+    }
+    owner->out44 = owner->owner->speed;
+    ESCmd2f(owner, amp);
+    owner->out48 = amp;
+    ESCmd2d(owner, lbl_806D297C);
+}
+void clActionLock::Step() {
+    owner->out44 = owner->owner->speed - offset;
+    owner->out48 = owner->owner->speed - offset;
+    KartItem_SetStrPcbIntensityFromSpeed(owner->owner, -offset);
+}
+ESOwn7::~ESOwn7() throw() { delete p; }
+ESOwn6::~ESOwn6() throw() { delete p; }
+ESOwn5::~ESOwn5() throw() { delete p; }
+ESOwn4::~ESOwn4() throw() { delete p; }
+ESOwn3::~ESOwn3() throw() { delete p; }
+ESOwn2::~ESOwn2() throw() { delete p; }
+ESOwn1::~ESOwn1() throw() { delete p; }
