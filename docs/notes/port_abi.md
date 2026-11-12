@@ -932,3 +932,20 @@ The getter returns 0..12 (`KartCharacterParam.c`). Tables it indexes:
 | `fn_80114990.c:195` | `lbl_80421F20` (40 floats = 13 vectors + 1) | 13 | in range |
 
 The sources keep the original reads. The port patches its own copy.
+
+## The sign of plain `char` (2026-11-12)
+
+MWCC's default is **signed** plain `char` (`-char signed  # chars are signed;
+default` in its help; `lbz; extsb` in the code). `configure.py` passes
+`-char unsigned` only for `src/triforce` and for most of the Dolphin SDK
+(`cflags_dolphin`; `demo`, `dvd` and `mtx` are set back to signed, MSL names
+`-char signed` itself). Everything else, the game's own code included, has
+signed `char`. A host build has to say the same per directory
+(`-fsigned-char` / `-funsigned-char`): "PowerPC EABI char is unsigned" does
+not hold for this compiler.
+
+What it decides in the game is small: one comparison,
+`end[-2] == -1 && end[-1] == -0x27` in `NamCam_GetImageHandle.c` (the FF D9
+end of the camera's JPEG), which is never true with unsigned `char`. The
+port's census of the rest: mkgp2-pc `docs/port/char_sign.md`,
+`port/tools/char_sign_census.py`.
