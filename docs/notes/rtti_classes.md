@@ -383,3 +383,8 @@ r8_c16 observation: clKPCharaData_MKoopa and NokoPata can convert independently 
 Source: Codex worker r8_c17_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clMiyazaki uses the approved uncalled diagnostic member to emit its trailing labels. A TU already in DATA_ALIGN4_TUS must move to DATA_ALIGN4_WEAK_TUS when it needs MWLD dead stripping: the ordinary alignment hook removes .comment and therefore retains the otherwise unused diagnostic and EH. The keep-comment hook restored the original DOL. This follows the existing hooks, not a newly traced compiler rule.
+
+## r8_c28_20261112
+Source: Codex worker r8_c28_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clRsCardT1 converts without merging the nondeferred setup and deferred transition TUs: declare Finish first so its existing definition in SceneRoleTransitions selects the vtable key owner, ahead of the continue-family data. Canonical shared class/header, existing extern ancestor bridges and DATA_ALIGN4_WEAK_TUS preserve 35 primary functions, owned sections, exact linked addresses and full DOL SHA-1. Existing-mechanism object/link observation, not a new compiler-source rule.

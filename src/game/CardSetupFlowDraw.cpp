@@ -2,14 +2,7 @@
 #include "game/types/clSceneInterface.h"
 struct SetupReceipt;
 
-struct PrintKart {
-    int busy, layout;
-    char pad08[0x18];
-    unsigned char visible, active;
-    char pad22[0x68 - 0x22];
-    PrintKart();
-    ~PrintKart();
-};
+#include "game/types/clRsCardT1.h"
 extern "C" void fn_801D9F88(PrintKart *, short);
 struct PrintKartHolder {
     PrintKart *p;
@@ -118,15 +111,6 @@ void fn_8020F35C();
 void card_force_backup_now();
 void PreloadResource(int);
 }
-struct CardPrintFlow : FlowTask {
-    VHolder<FlowSceneList> list;
-    VHolder<FlowFaderI> fader;
-    VHolder<PrintKart> kart;
-    int phase;
-    int error;
-    virtual void _key4();
-    ~CardPrintFlow();
-};
 extern "C" {
 void fn_801D919C(PrintKart *);
 void clFlowKart_SetupTextLayout(PrintKart *, int);
@@ -139,33 +123,25 @@ int fn_8020F270();
 int fn_8020F268();
 unsigned char card_is_ejected();
 int card_rw_get_substate();
-void fn_8024B924(CardPrintFlow *);
-void fn_8024B77C(CardPrintFlow *);
 void DebugPrintf(const char *, ...);
 /* read-only for the card flow views (only CardPrintConfig writes it, with its own
-   non-const declaration); const lets GC/2.6 hoist its load over self-> stores. */
+   non-const declaration); const lets GC/2.6 hoist its load over member stores. */
 extern const int lbl_806D1AB0;
 }
-struct SetupPrintTask : FlowTask {
-    VHolder<FlowSceneList> list;
-    VHolder<FlowFaderI> fader;
-    PrintKartHolder panel;
-    int phase, error;
-    virtual void Key();
-    SetupPrintTask() : FlowTask(3), list(new SceneListImpl), fader(new FlowFaderI), panel(new PrintKart), phase(0) {
-        PreloadResource(0x1ECD);
-        PreloadResource(0x72F);
-        PreloadResource(0x734);
-        fader.p->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
-        panel.p->visible = 1;
-        panel.p->active = 0;
-        if (fn_8020F280() == 1) clFlowKart_SetupTextLayout((PrintKart *)panel.p, 2);
-        else clFlowKart_SetupTextLayout((PrintKart *)panel.p, 5);
-        fn_8020F3F0();
-        fn_8020F38C(1);
-        fn_8020F35C();
-    }
-};
+inline clRsCardT1::clRsCardT1() : clMnTaskInterface(3), list(new SceneListImpl), fader(new FlowFaderI), kart(new PrintKart), phase(0) {
+    PreloadResource(0x1ECD);
+    PreloadResource(0x72F);
+    PreloadResource(0x734);
+    fader.p->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
+    kart.p->visible = 1;
+    kart.p->active = 0;
+    if (fn_8020F280() == 1) clFlowKart_SetupTextLayout((PrintKart *)kart.p, 2);
+    else clFlowKart_SetupTextLayout((PrintKart *)kart.p, 5);
+    fn_8020F3F0();
+    fn_8020F38C(1);
+    fn_8020F35C();
+}
+
 
 
 void clRsCard::Draw() {
@@ -245,7 +221,7 @@ void clRsCard::Receipt() {
                 } else this->state = 5;
             } else {
                 FlowSceneList *list = this->list.p;
-                fn_801F4DF0(list, new SetupPrintTask, 0);
+                fn_801F4DF0(list, (FlowTask *)new clRsCardT1, 0);
                 this->state = 6;
             }
         } else this->state = 13;
@@ -273,7 +249,7 @@ void clRsCard::Result() {
         if (task) fn_801FFFF4(fn_80271340(task, 0, lbl_806D0908, lbl_806D08F8, 0));
         if (this->selection == 0) {
             FlowSceneList *list = this->list.p;
-            fn_801F4DF0(list, new SetupPrintTask, 0);
+            fn_801F4DF0(list, (FlowTask *)new clRsCardT1, 0);
             this->state = 6;
         } else if ((int)g_playerData.byte1D9 == 2) {
             this->state = 13;
@@ -281,7 +257,7 @@ void clRsCard::Result() {
             ResultPlayerSnapshot *player = &g_playerData;
             *player = SetCourseParams_bss_805D275C;
             FlowSceneList *list = this->list.p;
-            fn_801F4DF0(list, new SetupPrintTask, 0);
+            fn_801F4DF0(list, (FlowTask *)new clRsCardT1, 0);
             this->state = 6;
         }
     }
@@ -291,7 +267,7 @@ void clRsCard::Name() {
     fn_801BE170(this->name);
     if (this->name->Done() == 1) {
         FlowSceneList *list = this->list.p;
-        fn_801F4DF0(list, new SetupPrintTask, 0);
+        fn_801F4DF0(list, (FlowTask *)new clRsCardT1, 0);
         this->state = 6;
         card_force_backup_now();
         fn_8020AAD4(ItemDisplay_GetOrCreate());
@@ -363,7 +339,7 @@ void clRsCard::Initial() {
         }
     } else {
         FlowSceneList *list = this->list.p;
-        fn_801F4DF0(list, new SetupPrintTask, 0);
+        fn_801F4DF0(list, (FlowTask *)new clRsCardT1, 0);
         this->state = 6;
     }
 }
@@ -385,56 +361,54 @@ clRsCard::clRsCard() : list(new SceneListImpl), fader(new FlowFaderI),
     kart.p->active = 0;
 }
 
-extern "C" void fn_8024B544(CardPrintFlow *self) {
-    fn_801D9A2C(self->kart.p);
+void clRsCardT1::Draw() {
+    fn_801D9A2C(this->kart.p);
 }
 
-extern "C" {
-extern const char lbl_803EFDE8[], lbl_803EFE0C[];
+extern "C" { extern const char lbl_803EFDE8[], lbl_803EFE0C[]; }
 
-void fn_8024B568(CardPrintFlow *self) {
+void clRsCardT1::Update() {
     InputState *input = GetInput();
-    switch (self->phase) {
+    switch (this->phase) {
     case 0:
         if (!fn_8020F288()) DebugPrintf(lbl_803EFDE8);
-        else { DebugPrintf(lbl_803EFE0C); self->phase = 7; }
+        else { DebugPrintf(lbl_803EFE0C); this->phase = 7; }
         break;
-    case 7: fn_8024B924(self); break;
+    case 7: CheckErrors(); break;
     case 8:
         if (card_rw_get_substate() == 5) {
-            fn_801D919C(self->kart.p);
-            self->fader.p->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
-            self->phase = 9;
+            fn_801D919C(this->kart.p);
+            this->fader.p->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
+            this->phase = 9;
         }
         break;
     case 9:
-        self->fader.p->Step();
-        if (self->fader.p->Done()) {
-            fn_801D919C(self->kart.p);
-            self->phase = 10;
+        this->fader.p->Step();
+        if (this->fader.p->Done()) {
+            fn_801D919C(this->kart.p);
+            this->phase = 10;
         }
         break;
     case 10:
-        if (self->kart.p->busy == 0) {
+        if (this->kart.p->busy == 0) {
             if ((signed char)g_playerData.byte198 <= 0) {
-                clFlowKart_SetupTextLayout(self->kart.p, 8);
-                self->fader.p->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
-                self->phase = 11;
-            } else { fn_801D919C(self->kart.p); self->phase = 14; }
+                clFlowKart_SetupTextLayout(this->kart.p, 8);
+                this->fader.p->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
+                this->phase = 11;
+            } else { fn_801D919C(this->kart.p); this->phase = 14; }
         }
         break;
     case 11:
-        self->fader.p->Step();
-        if (self->fader.p->Done() || input->held == 1) {
-            fn_801D919C(self->kart.p);
-            self->phase = 14;
+        this->fader.p->Step();
+        if (this->fader.p->Done() || input->held == 1) {
+            fn_801D919C(this->kart.p);
+            this->phase = 14;
         }
         break;
     case 14:
-        if (self->kart.p->busy == 0) { self->field0C = 1; self->phase = -1; }
+        if (this->kart.p->busy == 0) { this->field0C = 1; this->phase = -1; }
         break;
-    case -1: fn_8024B77C(self); break;
+    case -1: DrawError(); break;
     }
-    fn_801D9B70(self->kart.p, 0);
-}
+    fn_801D9B70(this->kart.p, 0);
 }

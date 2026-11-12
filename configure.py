@@ -753,7 +753,6 @@ config.libs = [
             Object(Matching, "game/fn_80146188.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80146160.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardSetupFlowDraw.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-use_lmw_stmw on", "-i src/game"]),
-            Object(Matching, "game/autodata/data_804EEE84.cpp", extra_cflags=["-lang=c", "-sdata 0", "-sdata2 0"]),
             Object(Matching, "game/CardPrintFlowRender.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowErrors.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowLifetime.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
@@ -3427,7 +3426,6 @@ DATA_ALIGN4_TUS = [
     "game/autodata/data_8048E34C",
     "game/autodata/data_80490B14",
     "game/autodata/data_804EE79C",
-    "game/autodata/data_804EEE84",
     "game/SetCourseParams",
     "game/MenuScene_Dispatch",
     "game/RaceDigitUpdate",
@@ -3507,6 +3505,7 @@ def _inject_data_align4_tus() -> None:
 DATA_ALIGN4_WEAK_TUS = [
     "game/mapobject/fn_8017CE1C",
     "game/fn_80244524",
+    "game/SceneRoleTransitions",
     "game/fn_802437AC",
     "game/KartPreview",
     "game/Scene_801622C8",

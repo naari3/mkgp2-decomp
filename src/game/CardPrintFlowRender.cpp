@@ -10,8 +10,9 @@ void fn_8011FAFC(ResCtrl *, int);
 const char *GetTextureByIdAndLang(int, int);
 void *fn_801F8E58();
 void fn_801F8A34(void *, TextManager *, int);
-void fn_8024B77C(CardPrintFlow *self) {
-    int error = self->error - 100;
+}
+void clRsCardT1::DrawError() {
+    int error = this->error - 100;
     if (error < 0) error = 0;
     if (error > 6) error = 0;
     ResCtrl ctrl;
@@ -37,5 +38,4 @@ void fn_8024B77C(CardPrintFlow *self) {
     TexMgr_SetTexture(&text, lbl_806DBFC0, CardPrintFlowRender_rodata_803EFD6C[error].code);
     fn_801F8E90(&text);
     fn_801F8A34(fn_801F8E58(), &text, 7);
-}
 }

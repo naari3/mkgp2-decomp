@@ -11706,7 +11706,7 @@ game/autodata/data_804EED20.c:
 	.data       start:0x804EED20 end:0x804EEDE4
 
 game/autodata/rodata_803EF950.c:
-	.rodata     start:0x803EF950 end:0x803EFE48
+	.rodata     start:0x803EF950 end:0x803EFE3C
 
 game/CardSetupFlowDraw.cpp:
 	extab       start:0x8001DD64 end:0x8001E1D4
@@ -11714,12 +11714,6 @@ game/CardSetupFlowDraw.cpp:
 	.text       start:0x80249E0C end:0x8024B77C
 	.data       start:0x804EEDE4 end:0x804EEE84
 	.sdata      start:0x806D0930 end:0x806D0940
-
-game/autodata/sdata_806D0940.c:
-	.sdata      start:0x806D0940 end:0x806D0948
-
-game/autodata/data_804EEE84.cpp:
-	.data       start:0x804EEE84 end:0x804EEEB0
 
 game/CardPrintFlowRender.cpp:
 	extab       start:0x8001E1D4 end:0x8001E1FC
@@ -11744,9 +11738,9 @@ game/SceneRoleTransitions.cpp:
 	extab       start:0x8001E26C end:0x8001E570
 	extabindex  start:0x8002B52C end:0x8002B610
 	.text       start:0x8024BE64 end:0x8024CFE8
-	.rodata     start:0x803EFE48 end:0x803EFEA0
-	.data       start:0x804EEEB0 end:0x804EEF78
-	.sdata      start:0x806D0948 end:0x806D0970
+	.rodata     start:0x803EFE3C end:0x803EFEA0
+	.data       start:0x804EEE84 end:0x804EEF78
+	.sdata      start:0x806D0940 end:0x806D0970
 
 game/autodata/sdata_806D0970.c:
 	.sdata      start:0x806D0970 end:0x806D09A8

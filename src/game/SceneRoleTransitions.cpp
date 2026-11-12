@@ -1,3 +1,4 @@
+#include "game/types/clRsCardT1.h"
 #include "game/types/clRsContinue.h"
 struct ContinueSettings { char pad[12]; float value; };
 extern "C" {
@@ -252,4 +253,4 @@ void clRsContinueBT::Finish(int route) {
     }
 }
 
-extern "C" void fn_8024BE64(VObject *p) { delete p; }
+void clRsCardT1::Finish() { delete this; }

@@ -1,18 +1,5 @@
 #include "game/FlowScene.h"
-struct PrintKart {
-    int busy;
-    int layout;
-    ~PrintKart();
-};
-struct CardPrintFlow : FlowTask {
-    VHolder<FlowSceneList> list;
-    VHolder<FlowFaderI> fader;
-    VHolder<PrintKart> kart;
-    int phase;
-    int error;
-    virtual void _key4();
-    ~CardPrintFlow();
-};
+#include "game/types/clRsCardT1.h"
 extern "C" {
 void fn_801D919C(PrintKart *);
 void clFlowKart_SetupTextLayout(PrintKart *, int);
@@ -25,8 +12,6 @@ int fn_8020F270();
 int fn_8020F268();
 unsigned char card_is_ejected();
 int card_rw_get_substate();
-void fn_8024B924(CardPrintFlow *);
-void fn_8024B77C(CardPrintFlow *);
 void DebugPrintf(const char *, ...);
 /* read-only for the card flow views (only CardPrintConfig writes it, with its own
    non-const declaration); const lets GC/2.6 hoist its load over self-> stores. */
