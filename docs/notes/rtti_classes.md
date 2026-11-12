@@ -378,3 +378,8 @@ r8_c11: clCSPartsPlatform converts in PodiumPose.c without merging the surroundi
 Source: Codex worker r8_c16_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 r8_c16 observation: clKPCharaData_MKoopa and NokoPata can convert independently of their base table by leaving CoursePropCtor.cpp separate (RTTI off), merging append+MKoopa Update, and retaining NokoPata Update separately. Existing extern: bridges reuse the original base RTTI/name. DATA_ALIGN4_TUS dropped .comment and kept +32-byte duplicate pools; existing #align4 on .rodata,.data preserves symbol chunk information and gives an exact full DOL. This is an object/link observation, not a compiler-source rule.
+
+## r8_c17_20261112
+Source: Codex worker r8_c17_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clMiyazaki uses the approved uncalled diagnostic member to emit its trailing labels. A TU already in DATA_ALIGN4_TUS must move to DATA_ALIGN4_WEAK_TUS when it needs MWLD dead stripping: the ordinary alignment hook removes .comment and therefore retains the otherwise unused diagnostic and EH. The keep-comment hook restored the original DOL. This follows the existing hooks, not a newly traced compiler rule.

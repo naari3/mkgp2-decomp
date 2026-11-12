@@ -3879,5 +3879,23 @@
       "ItemHolder_Update",
       "fn_801E89A0"
     ]
-  }
+  },
+  "src/game/mapobject/fn_8017CE1C.cpp": [
+    "fn_8017CE1C",
+    "fn_8017D660",
+    "fn_8017DF00",
+    "fn_8017E6A8",
+    "fn_8017E750",
+    "fn_8017E824",
+    "fn_8017EB58",
+    "fn_8017EC90",
+    "fn_8017EFFC",
+    "fn_8017F1E8",
+    "fn_8017F538",
+    "fn_8017FAFC",
+    "fn_8017FB5C",
+    "fn_8017FCAC",
+    "fn_8017FD68",
+    "PrintPool__10clMiyazakiFPCc"
+  ]
 }
