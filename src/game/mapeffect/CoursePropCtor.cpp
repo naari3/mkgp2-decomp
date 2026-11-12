@@ -1,3 +1,4 @@
+#include "game/types/clKPCharaData.h"
 #include "game/mapobject/mapobject.h"
 
 #include "game/types/CoursePropData.h"
@@ -44,22 +45,9 @@ struct CoursePropBase {
     CoursePropBase() { vtable = lbl_80490FE0; }
     ~CoursePropBase();
 };
-struct CoursePropNode {
-    CoursePropNode *next;
-    int reserved;
-    CoursePropData *data;
-    float frame;
-    virtual void Update();
-    CoursePropNode(CoursePropData *d) : next(0), reserved(0), data(d), frame(0.0f) {}
-};
-struct CoursePropNodeA : CoursePropNode {
-    virtual void Update();
-    CoursePropNodeA(CoursePropData *d) : CoursePropNode(d) {}
-};
-struct CoursePropNodeB : CoursePropNode {
-    virtual void Update();
-    CoursePropNodeB(CoursePropData *d) : CoursePropNode(d) {}
-};
+typedef clKPCharaData CoursePropNode;
+typedef clKPCharaData_NokoPata CoursePropNodeA;
+typedef clKPCharaData_MKoopa CoursePropNodeB;
 struct CoursePropList : CoursePropBase {
     clNormal3D *models[3];
     CoursePropNode *nodes;

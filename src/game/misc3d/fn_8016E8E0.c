@@ -1,15 +1,10 @@
+#include "game/types/clKPCharaData.h"
 #include "game/types/Vec3.h"
 typedef float Mtx[3][4];
 
 #include "game/types/KartDriver.h"
 
-typedef struct Gate {
-    int pad0;
-    int state;
-    Vec3 *pos;
-    float t;
-} Gate;
-
+extern "C" {
 extern KartDriver *GetKartSlotKartVariant(int slot);
 extern Mtx *KartDriver_GetKartRootMtx(KartDriver *k);
 extern void Vec3_Subtract(const Vec3 *a, const Vec3 *b, Vec3 *out);
@@ -25,7 +20,9 @@ extern const float lbl_806D8BC4;
 extern const float lbl_806D8BC8;
 extern const float lbl_806D8BCC;
 
-void fn_8016E8E0(Gate *g) {
+}
+
+void clKPCharaData_NokoPata::Update() {
     KartDriver *k;
     unsigned char near = 0;
     int i;
@@ -37,47 +34,47 @@ void fn_8016E8E0(Gate *g) {
             v.x = (*KartDriver_GetKartRootMtx(k))[0][3];
             v.y = (*KartDriver_GetKartRootMtx(k))[1][3];
             v.z = (*KartDriver_GetKartRootMtx(k))[2][3];
-            Vec3_Subtract(&v, g->pos, &v);
+            Vec3_Subtract(&v, (const Vec3 *)data, &v);
             if (PSVECSquareMag(&v) < lbl_806D8BB4) near = 1;
             break;
         }
     }
-    switch (g->state) {
+    switch (reserved) {
     case 0:
         if (near) {
-            g->state = 1;
-            g->t = lbl_806D8BB8;
+            reserved = 1;
+            frame = lbl_806D8BB8;
         } else {
-            nt = g->t + lbl_806D8BAC; g->t = nt;
-            if (nt > lbl_806D8BBC) g->t = lbl_806D8BA8;
+            nt = frame + lbl_806D8BAC; frame = nt;
+            if (nt > lbl_806D8BBC) frame = lbl_806D8BA8;
         }
         break;
     case 1:
-        nt = g->t + lbl_806D8BAC; g->t = nt;
+        nt = frame + lbl_806D8BAC; frame = nt;
         if (nt > lbl_806D8BB0) {
-            g->state = 2;
-            g->t = lbl_806D8BC0;
+            reserved = 2;
+            frame = lbl_806D8BC0;
         }
         break;
     case 2:
         if (!near) {
-            g->state = 3;
-            g->t = lbl_806D8BC4;
+            reserved = 3;
+            frame = lbl_806D8BC4;
         } else {
-            nt = g->t + lbl_806D8BAC; g->t = nt;
-            if (nt > lbl_806D8BC8) g->t = lbl_806D8BC0;
+            nt = frame + lbl_806D8BAC; frame = nt;
+            if (nt > lbl_806D8BC8) frame = lbl_806D8BC0;
         }
         break;
     case 3:
-        nt = g->t + lbl_806D8BAC; g->t = nt;
+        nt = frame + lbl_806D8BAC; frame = nt;
         if (nt > lbl_806D8BCC) {
-            g->state = 0;
-            g->t = lbl_806D8BA8;
+            reserved = 0;
+            frame = lbl_806D8BA8;
         }
         break;
     default:
-        g->state = 0;
-        g->t = lbl_806D8BA8;
+        reserved = 0;
+        frame = lbl_806D8BA8;
         break;
     }
 }

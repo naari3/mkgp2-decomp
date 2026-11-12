@@ -373,3 +373,8 @@ clCSSceneNextRace converted using existing mechanisms: own name pool at 80369684
 Source: Codex worker r8_c11_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 r8_c11: clCSPartsPlatform converts in PodiumPose.c without merging the surrounding CSParts units. As already observed for r7_c13, base-list-first is not proof of deferred mode when the canonical base vtable is external: nondeferred ordinary source order preserves the existing eager PoseChar asm ctor. An approved marked uncalled diagnostic member pools RTTI names before ceremony/trpy/flower filenames. Split the existing 80360B81 padding+pointer-table symbol at 80360B84 and the resource filename pool at 80360C44/54/64; this removes synthetic R_PPC_NONE objdiff mismatches. Six sections, ten retained functions, clang and full source-linked SHA-1 exact. This is an application of existing rules and object/link evidence, not a new compiler-source trace.
+
+## r8_c16_20261112
+Source: Codex worker r8_c16_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+r8_c16 observation: clKPCharaData_MKoopa and NokoPata can convert independently of their base table by leaving CoursePropCtor.cpp separate (RTTI off), merging append+MKoopa Update, and retaining NokoPata Update separately. Existing extern: bridges reuse the original base RTTI/name. DATA_ALIGN4_TUS dropped .comment and kept +32-byte duplicate pools; existing #align4 on .rodata,.data preserves symbol chunk information and gives an exact full DOL. This is an object/link observation, not a compiler-source rule.

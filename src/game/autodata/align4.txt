@@ -43,3 +43,6 @@ game/autodata/rodata_803C6CBC
 game/autodata/rodata_803F08B4
 game/autodata/rodata_803F1C9C
 game/autodata/sdata2_806D51BC
+
+game/autodata/data_804911F4
+game/autodata/rodata_8036D8F4

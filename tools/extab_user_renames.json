@@ -11303,6 +11303,9 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/mapeffect/CoursePropCtor.cpp": {
+    "__vt__13clKPCharaData": "lbl_804911F4",
+    "__vt__20clKPCharaData_MKoopa": "CoursePropNodeB_vtable_804911D0",
+    "__vt__22clKPCharaData_NokoPata": "CoursePropNodeA_vtable_804911E8",
     "normalProps": "global:CoursePropCtor_data_80491150",
     "reverseProps": "lbl_8049116C",
     "longProps": "lbl_80491188",
@@ -18730,5 +18733,25 @@
     "Draw__17clCSScenePlayDemoFv": "fn_801636B4",
     "__RTTI__17clCSScenePlayDemo": "data_80490DEC_data_806CF988",
     "__RTTI__16clSceneInterface": "data_80490DEC_data_806CF980"
+  },
+  "src/game/misc3d/fn_8016E7E4.c": {
+    "#align4": ".rodata,.data",
+    "@57": "lbl_8036D8DC",
+    "@59": "extern:lbl_8036D8F4",
+    "@58": "sdata_806CF750_data_804911C4",
+    "Update__20clKPCharaData_MKoopaFv": "fn_8016E8B8",
+    "__vt__20clKPCharaData_MKoopa": "CoursePropNodeB_vtable_804911D0",
+    "__RTTI__20clKPCharaData_MKoopa": "data_804911C4_data_806CFA68",
+    "__RTTI__13clKPCharaData": "extern:lbl_806CFA60"
+  },
+  "src/game/misc3d/fn_8016E8E0.c": {
+    "#align4": ".rodata,.data",
+    "@40": "lbl_8036D904",
+    "@42": "extern:lbl_8036D8F4",
+    "@41": "sdata_806CF750_data_804911DC",
+    "Update__22clKPCharaData_NokoPataFv": "fn_8016E8E0",
+    "__vt__22clKPCharaData_NokoPata": "CoursePropNodeA_vtable_804911E8",
+    "__RTTI__22clKPCharaData_NokoPata": "data_804911C4_data_806CFA70",
+    "__RTTI__13clKPCharaData": "extern:lbl_806CFA60"
   }
 }
