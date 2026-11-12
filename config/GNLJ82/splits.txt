@@ -16,11 +16,8 @@ Sections:
 game/autodata/sdata2_806D2260.c:
 	.sdata2     start:0x806D2260 end:0x806D22C0
 
-game/autodata/sdata_806CED20.c:
-	.sdata      start:0x806CED20 end:0x806CED38
-
 game/autodata/rodata_802E89A0.c:
-	.rodata     start:0x802E89A0 end:0x802E8F44
+	.rodata     start:0x802E89A0 end:0x802E8F38
 
 game/Flow_TransitionTo.cpp:
 	extab       start:0x80005600 end:0x80005608
@@ -32,9 +29,6 @@ game/DebugOverlay_Dispatch.cpp:
 	extabindex  start:0x8001F3AC end:0x8001F3B8
 	.text       start:0x8002BE18 end:0x8002C554
 	.data       start:0x803F5620 end:0x803F5658
-
-game/autodata/data_803F5658.c:
-	.data       start:0x803F5658 end:0x803F5670
 
 game/FlowDispatcher_Dtor.cpp:
 	extab       start:0x80005610 end:0x80005618
@@ -64,13 +58,16 @@ game/Vtable_CallSlot2.cpp:
 	extabindex  start:0x8001F3F4 end:0x8001F400
 	.text       start:0x8002CDC8 end:0x8002CDF4
 
-game/ObjectBase.c:
+game/ObjectBase.cpp:
 	extab       start:0x80005700 end:0x80005708
 	extabindex  start:0x8001F400 end:0x8001F40C
-	.text       start:0x8002CDF4 end:0x8002CE3C
+	.text       start:0x8002CDF4 end:0x8002CE4C
+	.rodata     start:0x802E8F38 end:0x802E8F44
+	.data       start:0x803F5658 end:0x803F566C
+	.sdata      start:0x806CED20 end:0x806CED28
 
-game/GameMode_Base.c:
-	.text       start:0x8002CE3C end:0x8002CE4C
+game/autodata/sdata_806CED28.c:
+	.sdata      start:0x806CED28 end:0x806CED38
 
 game/Debug.c:
 	extab       start:0x80005708 end:0x80005720

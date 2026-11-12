@@ -3,8 +3,8 @@
 
 struct clJobRunner {
     clJobRunner();
-    virtual int Update();
-    virtual void Draw();
+    virtual int Update() = 0;
+    virtual void Draw() = 0;
     virtual ~clJobRunner();
 };
 

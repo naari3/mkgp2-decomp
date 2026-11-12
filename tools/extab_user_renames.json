@@ -18498,5 +18498,15 @@
     "__vt__9clMslDisp": "lbl_804EE7B8",
     "__RTTI__9clMslDisp": "lbl_806D0838",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/ObjectBase.cpp": {
+    "@7": "@etb_80005700",
+    "@8": "@eti_8001F400",
+    "@13": "lbl_802E8F38",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__vt__11clJobRunner": "ObjectBase_vtable_803F5658",
+    "__RTTI__11clJobRunner": "ObjectBase_data_806CED20",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
