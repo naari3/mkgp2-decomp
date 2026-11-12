@@ -671,7 +671,7 @@ game/Camera_Create.cpp:
 	.sdata      start:0x806CEDA8 end:0x806CEDB8
 
 game/autodata/sdata_806CEDB8.c:
-	.sdata      start:0x806CEDB8 end:0x806CEF58
+	.sdata      start:0x806CEDB8 end:0x806CEEB8
 
 game/autodata/data_803F5910.c:
 	.data       start:0x803F5910 end:0x803F5BF4
@@ -1606,10 +1606,10 @@ game/clItemBox.cpp:
 	.data       start:0x803F9C60 end:0x803F9CD8
 
 game/autodata/data_803F9CD8.c:
-	.data       start:0x803F9CD8 end:0x803F9DAC
+	.data       start:0x803F9CD8 end:0x803F9D00
 
 game/autodata/rodata_802EDFD8.c:
-	.rodata     start:0x802EDFD8 end:0x802EE028
+	.rodata     start:0x802EDFD8 end:0x802EE010
 
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
@@ -1642,15 +1642,19 @@ game/clItemBoxResponder.c:
 game/clItemBoxResponder_CmdGroup.c:
 	.text       start:0x8005FFF0 end:0x80060024
 
-game/dtor_80060024.c:
-	extab       start:0x80007DB0 end:0x80007DB8
-	extabindex  start:0x80020D44 end:0x80020D50
-	.text       start:0x80060024 end:0x800600B0
+game/dtor_80060024.cpp:
+	extab       start:0x80007DB0 end:0x80007DC0
+	extabindex  start:0x80020D44 end:0x80020D5C
+	.text       start:0x80060024 end:0x8006012C
+	.rodata     start:0x802EE010 end:0x802EE028
+	.data       start:0x803F9D00 end:0x803F9D10
+	.sdata      start:0x806CEEB8 end:0x806CEEC0
 
-game/clItemBoxResponder_Ctor.c:
-	extab       start:0x80007DB8 end:0x80007DC0
-	extabindex  start:0x80020D50 end:0x80020D5C
-	.text       start:0x800600B0 end:0x8006012C
+game/autodata/sdata_806CEEC0.c:
+	.sdata      start:0x806CEEC0 end:0x806CEF58
+
+game/autodata/data_803F9D10.c:
+	.data       start:0x803F9D10 end:0x803F9DAC
 
 game/ItemSelect_Pending.c:
 	extab       start:0x80007DC0 end:0x80007DD8
