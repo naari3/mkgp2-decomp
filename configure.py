@@ -2124,7 +2124,7 @@ config.libs = [
             Object(Matching, "game/RankPanelBase_801461B0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
             Object(Matching, "game/CourseObjects_801375D8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/1.3"),
             Object(Matching, "game/CourseObjects_80138CE4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/NokoNoko_801287F8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/NokoNoko_801287F8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr"]),
             Object(Matching, "game/fn_8012A71C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8012B48C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CGameCoin_8012BF5C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -3475,6 +3475,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
     "game/autodata/data_803F9C3C",
+    "game/autodata/data_8048E34C",
     "game/autodata/data_804EE79C",
     "game/autodata/data_804EEE84",
     "game/SetCourseParams",

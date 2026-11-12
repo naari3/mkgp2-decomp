@@ -358,3 +358,8 @@ clEnemyFace/clEFace3D converted in EnemyFace_exact2.cpp + EnemyFace_nm4.cpp: fou
 Source: Codex worker r7_c47_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clMnCardRenew: if carving all ancestor names would leave an 8-aligned autodata tail at 803EF454, the existing extern: string rename mechanism can leave the ancestor names in autodata and carve only the derived name (803EF408..418). Tail 803EF418 is 8 aligned; compiler still emits all RTTI records/base lists and the derived vtable. DATA_ALIGN4_TUS only pins .data and does not fix a .rodata tail. All sections, ten functions and full DOL SHA-1 exact.
+
+## r8_c9_20261112
+Source: Codex worker r8_c9_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clCGameDK can convert independently of CoinBase/DKCoin in the same code TU: keep nondeferred address-order definitions and the old Coin aliases, and own only .data 8048E318..34C / .sdata 806CF548..560. Approved uncalled PrintTypeNames pools the DK/JobRunner names at the original position; compiler RTTI reuses the literal strings. Exact pool symbol boundaries remove pseudo-relocation mismatches. All seven methods/EH/data and full source-linked DOL verified. Existing mechanisms, not a compiler-source rule.

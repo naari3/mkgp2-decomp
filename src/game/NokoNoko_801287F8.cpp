@@ -64,6 +64,43 @@ struct TimeTrialMode {
     VObj *x44;
 };
 
+
+#include "game/types/clJobRunner.h"
+extern "C" const float lbl_806D7070;
+struct CarObject; struct LakituStart; struct InputManager; struct Scene3D; struct ChallengeGoalCamera; struct Camera; struct HUD; struct IconSet; struct MapWaterEffect; struct CoinShots;
+struct clCGame : clJobRunner {
+    float x4;
+    clCGame() {
+        x4 = lbl_806D7070;
+    }
+    virtual ~clCGame();
+};
+
+
+struct clCGameDK : clCGame {
+    virtual int Update();
+    virtual void Draw();
+    virtual ~clCGameDK();
+    CarObject *car;
+    LakituStart *lakitu;
+    void *input;
+    Scene3D *scene;
+    ChallengeGoalCamera *goalCam;
+    Camera *camera;
+    int renderTarget;
+    int x24;
+    HUD *hud;
+    IconSet *icons;
+    MapWaterEffect *water;
+    unsigned char x34, x35, x36;
+    int x38, x3C;
+    int count;
+    CoinShots *shots;
+    clCGameDK();
+    void PrintTypeNames();
+};
+
+
 /* TOP-END */
 
 extern "C" {
@@ -285,11 +322,16 @@ static const IconPos s_iconPos[8] = {
     { 520.0f, 421.25f }, { 450.0f, 419.25f }, { 485.0f, 421.25f }, { 515.0f, 419.25f },
     { 545.0f, 419.25f }, { 565.0f, 426.25f }, { 580.0f, 433.25f }, { 598.0f, 433.25f },
 };
-extern "C" const char lbl_80356658[] = "clCGameDK";
-extern "C" const char NokoNoko_801287F8_rodata_80356664[] = "clJobRunner";
+/* Fakematch: an uncalled diagnostic retains the original RTTI-name pool order. */
+extern "C" void DebugPrintf(const char *, ...);
+void clCGameDK::PrintTypeNames() {
+    DebugPrintf("clCGameDK");
+    DebugPrintf("clJobRunner");
+}
 
-extern "C" void TimeTrial_Render(TimeTrialMode *self)
+void clCGameDK::Draw()
 {
+    TimeTrialMode *self = (TimeTrialMode *)this;
     if (self->x34 == 0) {
         return;
     }
@@ -585,7 +627,7 @@ static inline int NkShouldHoldBrake(float accel, float brake) {
     return holding;
 }
 
-extern "C" int NokoNokoChallenge_Update(NkView *self)
+int clCGameDK::Update()
 {
     NkInput *input;
     float accel, brake;
@@ -595,8 +637,8 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
     NkVec dir;
     int defeated;
 
-    if (self->active == 0) {
-        self->active = 1;
+    if (x34 == 0) {
+        x34 = 1;
     }
     ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     input = InputMgr_GetPlayer(GetInputManager(), 0);
@@ -608,41 +650,41 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
         }
         brake = input->brake();
         int holding = NkShouldHoldBrake(accel, brake);
-        if (NokoNokoChallenge_HandleBrakeInput(self, holding) == 1) {
+        if (NokoNokoChallenge_HandleBrakeInput(((NkView *)this), holding) == 1) {
             accel = lbl_806D7058;
         }
-        CarObject_ApplyInput(self->car, input->steering(), accel, brake, IsRaceStarted());
-        CarObject_FrameUpdate(self->car, 0);
-        KartItem_UpdateShadowBillboardAndViewport(self->car, self->camera, 0);
+        CarObject_ApplyInput(car, input->steering(), accel, brake, IsRaceStarted());
+        CarObject_FrameUpdate(car, 0);
+        KartItem_UpdateShadowBillboardAndViewport(car, scene, 0);
     } else {
-        CarObject_ApplyInput(self->car, lbl_806D7070, lbl_806D7070, lbl_806D7070, 1);
-        KartMovement_SetSpeedScale(self->car, lbl_806D7074);
-        CarObject_FrameUpdate(self->car, 0);
-        if (self->endDelay > 0) {
-            KartItem_UpdateShadowBillboardAndViewport(self->car, self->camera, 0);
+        CarObject_ApplyInput(car, lbl_806D7070, lbl_806D7070, lbl_806D7070, 1);
+        KartMovement_SetSpeedScale(car, lbl_806D7074);
+        CarObject_FrameUpdate(car, 0);
+        if (x38 > 0) {
+            KartItem_UpdateShadowBillboardAndViewport(car, scene, 0);
         } else {
-            ChallengeGoalCamera_Update(self->goalCam, self->camera, KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car)));
+            ChallengeGoalCamera_Update(goalCam, scene, KartDriver_GetKartRootMtx(CarObject_GetRenderObj(car)));
         }
     }
-    if (IsRaceStarted() == 1 && g_raceEnded != 1 && KartMovement_CanReceiveItem(CarObject_GetRenderObj(self->car), 1)) {
-        RenderObj_UseItem(CarObject_GetRenderObj(self->car), 0, 0);
-        NkGetRender(self)->x290 = -1;
+    if (IsRaceStarted() == 1 && g_raceEnded != 1 && KartMovement_CanReceiveItem(CarObject_GetRenderObj(car), 1)) {
+        RenderObj_UseItem(CarObject_GetRenderObj(car), 0, 0);
+        NkGetRender(((NkView *)this))->x290 = -1;
     }
     Fog_UpdateFromCourseScene3D();
-    LakituStart_UpdateCountdown(self->lakitu);
-    CourseEnvironment_UpdateAndCullZones_Timed(self->env);
-    self->water->Update();
+    LakituStart_UpdateCountdown(lakitu);
+    CourseEnvironment_UpdateAndCullZones_Timed(this->input);
+    ((NkVObj *)water)->Update();
 
-    mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car));
+    mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(car));
     pos.x = mtx[0][3];
     pos.y = mtx[1][3];
     pos.z = mtx[2][3];
     NkVelVec vel;
     NkVec target;
-    NkCheckHit(self, &pos, lbl_806D7078, hit, dir, vel);
+    NkCheckHit(((NkView *)this), &pos, lbl_806D7078, hit, dir, vel);
 
     {
-        NkSlot *slot = KartItem_GetCurrentISESlot(CarObject_GetRenderObj(self->car));
+        NkSlot *slot = KartItem_GetCurrentISESlot(CarObject_GetRenderObj(car));
         NkModel *obj = slot != 0 ? slot->obj : 0;
         if (obj != 0 && obj->model != 0) {
             NkJObj *joint = ResolveJointByName(obj->model, "item_center_joint");
@@ -651,7 +693,7 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
                 pos.x = joint->mtx[0][3];
                 pos.y = joint->mtx[1][3];
                 pos.z = joint->mtx[2][3];
-                NkCheckHit(self, &pos, lbl_806D7094, hit, dir, vel);
+                NkCheckHit(((NkView *)this), &pos, lbl_806D7094, hit, dir, vel);
             }
         }
     }
@@ -659,15 +701,15 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
     NokoNoko_UpdateAll();
     if (g_raceEnded != 1) {
         defeated = NokoNoko_CountDefeated();
-        NkSetCounter(self->icons, Clamp_Int(defeated, 0, self->count));
-        if (defeated >= self->count) {
+        NkSetCounter(((NkIcons *)icons), Clamp_Int(defeated, 0, count));
+        if (defeated >= count) {
             NokoNoko_StopAllAlive();
-            self->won = 1;
-            self->endDelay = 30;
-            NkGetRender(self)->x290 = 0;
+            x36 = 1;
+            x38 = 30;
+            NkGetRender(((NkView *)this))->x290 = 0;
             g_raceEnded = 1;
         } else {
-            mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car));
+            mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(car));
             pos.x = mtx[0][3];
             pos.y = mtx[1][3];
             pos.z = mtx[2][3];
@@ -680,26 +722,26 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
                 Vec3_Normalize(&pos, &pos);
                 float dot = Vec3_Dot(&target, &pos);
                 if (dot > lbl_806D7098) {
-                    NkGetRender(self)->x294 = lbl_806D7070;
+                    NkGetRender(((NkView *)this))->x294 = lbl_806D7070;
                 } else if (dot > lbl_806D709C) {
                     pos.x = mtx[0][0];
                     pos.y = mtx[1][0];
                     pos.z = mtx[2][0];
                     Vec3_Normalize(&pos, &pos);
                     if (Vec3_Dot(&target, &pos) > lbl_806D7070) {
-                        NkGetRender(self)->x294 = lbl_806D7058;
+                        NkGetRender(((NkView *)this))->x294 = lbl_806D7058;
                     } else {
-                        NkGetRender(self)->x294 = lbl_806D7054;
+                        NkGetRender(((NkView *)this))->x294 = lbl_806D7054;
                     }
                 } else {
-                    NkGetRender(self)->x294 = lbl_806D7070;
+                    NkGetRender(((NkView *)this))->x294 = lbl_806D7070;
                 }
             }
         }
     }
-    self->shots->Update();
-    CObj_LoadProjMatrix(self->camera, &NokoNokoChallenge_Update_bss_80677C58);
-    CObj_ApplyScissor(self->camera, &NokoNokoChallenge_Update_bss_80677C64);
+    ((NkShots *)shots)->Update();
+    CObj_LoadProjMatrix(scene, &NokoNokoChallenge_Update_bss_80677C58);
+    CObj_ApplyScissor(scene, &NokoNokoChallenge_Update_bss_80677C64);
     ItemObjectManager_Update();
     VfxSlotMgr_Update(NokoNokoChallenge_Update_bss_80677C58, NokoNokoChallenge_Update_bss_80677C64);
     if (IsRaceStarted() == 1 && g_raceEnded != 1) {
@@ -708,48 +750,48 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
             if (g_raceTimeRemaining < 0.0f) {
                 g_raceTimeRemaining = 0.0f;
                 NokoNoko_StopAllAlive();
-                NkGetRender(self)->x290 = 0;
+                NkGetRender(((NkView *)this))->x290 = 0;
                 g_raceEnded = 1;
             }
         }
     }
-    fn_80253FD8(self->hud, g_raceTimeRemaining);
-    fn_80253EBC(self->hud, lbl_806D70A4 * CarObject_CalcSpeedRatio(self->car));
-    fn_80253EC0(self->hud, KartItem_GetCurrentSpeedWithBonus(self->car));
-    HUD_FrameUpdate(self->hud);
-    NkUpdateIcons(self->icons);
+    fn_80253FD8(hud, g_raceTimeRemaining);
+    fn_80253EBC(hud, lbl_806D70A4 * CarObject_CalcSpeedRatio(car));
+    fn_80253EC0(hud, KartItem_GetCurrentSpeedWithBonus(car));
+    HUD_FrameUpdate(hud);
+    NkUpdateIcons(((NkIcons *)icons));
     TransitionEffect_Tick(SINGLETON_INSTANCE(lbl_806D109C));
     if (g_raceEnded == 1) {
-        if (self->endDelay > 0) {
-            self->endDelay--;
+        if (x38 > 0) {
+            x38--;
         } else {
-            if (self->resultFrames == 0) {
+            if (x3C == 0) {
                 int coins = 0;
                 int *divisor = NokoNokoChallenge_GetCoinDivisor();
                 if (divisor != 0) {
                     coins = NokoNoko_CountDefeated();
-                    if (coins > self->count) {
-                        coins = self->count;
+                    if (coins > count) {
+                        coins = count;
                     }
                     coins /= *divisor;
                     SetCoinCount(coins);
                 }
-                if (self->won != 0) {
-                    fn_80253C74(self->hud, 1, NokoNokoChallenge_CalcResultText(self, 1, 0), Clamp_Int(NokoNoko_CountDefeated(), 0, self->count));
-                    self->icons->exiting = 1;
-                    KartMovement_ResetOnGoal(CarObject_GetRenderObj(self->car));
+                if (x36 != 0) {
+                    fn_80253C74(hud, 1, NokoNokoChallenge_CalcResultText(((NkView *)this), 1, 0), Clamp_Int(NokoNoko_CountDefeated(), 0, count));
+                    ((NkIcons *)icons)->exiting = 1;
+                    KartMovement_ResetOnGoal(CarObject_GetRenderObj(car));
                 } else {
-                    fn_80253C74(self->hud, 0, NokoNokoChallenge_CalcResultText(self, 0, 0), Clamp_Int(NokoNoko_CountDefeated(), 0, self->count));
-                    self->icons->exiting = 1;
-                    KartMovement_ResetOnTimeout(CarObject_GetRenderObj(self->car));
+                    fn_80253C74(hud, 0, NokoNokoChallenge_CalcResultText(((NkView *)this), 0, 0), Clamp_Int(NokoNoko_CountDefeated(), 0, count));
+                    ((NkIcons *)icons)->exiting = 1;
+                    KartMovement_ResetOnTimeout(CarObject_GetRenderObj(car));
                 }
-                NokoNokoChallenge_SaveResult(self, coins, self->won);
-                Object_SetByte10_Return1(self->camera, 1);
+                NokoNokoChallenge_SaveResult(((NkView *)this), coins, x36);
+                Object_SetByte10_Return1(scene, 1);
                 g_lakituStartAnimDone = 0;
-            } else if (fn_80253C40(self->hud)) {
-                return NokoNokoChallenge_TransitionToResult(self);
+            } else if (fn_80253C40(hud)) {
+                return NokoNokoChallenge_TransitionToResult(((NkView *)this));
             }
-            self->resultFrames++;
+            x3C++;
         }
     }
     if (g_weatherSystem != 0) {
@@ -786,10 +828,9 @@ static inline void ObjUnref(HsdObj *o)
     }
 }
 
-extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
+clCGameDK::~clCGameDK()
 {
-    if (self) {
-        self->vt = NokoNokoChallenge_vtable_8048E338;
+        TimeTrialMode *self = (TimeTrialMode *)this;
         if (g_weatherSystem != 0) {
             fn_8016C634(g_weatherSystem, 1);
             g_weatherSystem = 0;
@@ -831,12 +872,6 @@ extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
         clRom_PurgeAll();
         delete lbl_806D10AC;
         lbl_806D10AC = 0;
-        dtor_80122FD8(self, 0);
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
 }
 
 /* NokoNokoChallenge_Init (0x80129938): constructor of the Noko Noko
@@ -959,39 +994,9 @@ struct CoinShots : CoinShotBase {
     virtual ~CoinShots();
 };
 
-#include "game/types/GameModeBase.h"
-
-struct ModeBase : GameModeBase {
-    float x4;
-    ModeBase() {
-        x4 = lbl_806D7070;
-    }
-    virtual void _key2();
-    virtual ~ModeBase();
-};
 
 
-struct NokoNokoChallenge : ModeBase {
-    virtual void _key3();
-    CarObject *car;
-    LakituStart *lakitu;
-    InputManager *input;
-    Scene3D *scene;
-    ChallengeGoalCamera *goalCam;
-    Camera *camera;
-    int renderTarget;
-    int x24;
-    HUD *hud;
-    IconSet *icons;
-    MapWaterEffect *water;
-    unsigned char x34, x35, x36;
-    int x38, x3C;
-    int count;
-    CoinShots *shots;
-    NokoNokoChallenge();
-};
-
-NokoNokoChallenge::NokoNokoChallenge() {
+clCGameDK::clCGameDK() {
     float x, z;
     float camA, camB;
     float *course;
@@ -1167,4 +1172,3 @@ extern "C" ModelPair *fn_8012A52C(ModelPair *self, short flag)
     }
     return self;
 }
-

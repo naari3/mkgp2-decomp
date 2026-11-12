@@ -5877,17 +5877,19 @@ game/ChallengeDemoUra.cpp:
 	.data       start:0x8048E2E0 end:0x8048E318
 	.sdata      start:0x806CF520 end:0x806CF548
 
-game/autodata/sdata_806CF548.c:
-	.sdata      start:0x806CF548 end:0x806CF5C8
-
-game/autodata/data_8048E318.c:
-	.data       start:0x8048E318 end:0x8048E3D8
-
 game/NokoNoko_801287F8.cpp:
 	extab       start:0x8000C444 end:0x8000C688
 	extabindex  start:0x800249BC end:0x80024A10
 	.text       start:0x801287F8 end:0x8012A5AC
 	.rodata     start:0x803561E8 end:0x80356708
+	.data       start:0x8048E318 end:0x8048E34C
+	.sdata      start:0x806CF548 end:0x806CF560
+
+game/autodata/sdata_806CF560.c:
+	.sdata      start:0x806CF560 end:0x806CF5C8
+
+game/autodata/data_8048E34C.c:
+	.data       start:0x8048E34C end:0x8048E3D8
 
 game/autodata/rodata_80356708.c:
 	.rodata     start:0x80356708 end:0x80356730

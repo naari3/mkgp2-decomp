@@ -1256,7 +1256,8 @@
     "TimeTrial_Destroy",
     "fn_8012A52C",
     "NokoNokoChallenge_Init",
-    "dtor_80036E40"
+    "dtor_80036E40",
+    "PrintTypeNames__9clCGameDKFv"
   ],
   "src/game/fn_8012A71C.cpp": [
     "fn_8012A71C"
