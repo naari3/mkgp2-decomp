@@ -941,12 +941,10 @@ static const char lbl_80367590[] = "cream_l.dat";
 static const char lbl_8036759C[] = "eff_plate_cream_s.dat";
 static const char lbl_803675B4[] = "MAIN  BD ID %s";
 static const char lbl_803675C4[] = "MEDIA BD ID %s";
-static const unsigned int lbl_803675D4[21] = {
-    TEXT_WORD('e', '_', 'a', 't'), TEXT_WORD('_', 's', 'p', '_'), TEXT_WORD('n', 'i', 'n', 't'), TEXT_WORD('e', 'n', 'd', 'o'), TEXT_WORD('.', 't', 'p', 'l'), 0x00000000,
-    TEXT_WORD('a', 't', '_', 's'), TEXT_WORD('p', '_', 'n', 'i'), TEXT_WORD('n', 't', 'e', 'n'), TEXT_WORD('d', 'o', '_', 'j'), TEXT_WORD('.', 't', 'p', 'l'), 0x00000000,
-    TEXT_WORD('e', '_', 'a', 't'), TEXT_WORD('_', 's', 'p', '_'), TEXT_WORD('n', 'a', 'm', 'c'), TEXT_WORD('o', '.', 't', 'p'), TEXT_WORD('l', 0, 0, 0), TEXT_WORD('a', 't', '_', 's'),
-    TEXT_WORD('p', '_', 'n', 'a'), TEXT_WORD('m', 'c', 'o', '.'), TEXT_WORD('t', 'p', 'l', 0),
-};
+static const char lbl_803675D4[] = "e_at_sp_nintendo.tpl";
+static const char lbl_803675EC[] = "at_sp_nintendo_j.tpl";
+static const char lbl_80367604[] = "e_at_sp_namco.tpl";
+static const char lbl_80367618[] = "at_sp_namco.tpl";
 static const unsigned int lbl_80367628[4] = {
     TEXT_WORD('L', 'o', 'o', 'p'), TEXT_WORD('C', 'o', 'u', 'n'), TEXT_WORD('t', ' ', ':', ' '), TEXT_WORD('%', 'd', 0, 0),
 };

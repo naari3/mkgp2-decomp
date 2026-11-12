@@ -2789,3 +2789,45 @@ So a function-wide pragma that section 99 calls a suspect can still be the
 fix; expect to repair its side effects one by one.
 
 Rule `propagation-off-load-local-before-constant`.
+
+## 101. Saved registers swapped in one switch case, and the source reaches the TU's pool through a hand-made `char *base`: name the real objects (fn_8014E804, 99.775 parked -> 100, 11-12)
+
+StatusScene update, 600 instructions, everything equal except case 7
+(`new AttractScene`): scene temp r29 and NamCam temp r30, target the other way
+round. Parked through four threads; the diag was right every time (the
+do-while's `table` pointer opens r29 before the scene temps @574/@645 are
+coloured, so they reuse r29 instead of sharing r30 with the dead pool anchor),
+and every lever tried kept the same source shape:
+
+    char *base = (char *)Scene_8014E0C4_rodata_80363D30;   // hand-made anchor
+    #define STATUS_TABLE ((StatusEntry *)(base + 0x3758))
+    ... new StatusLogoScene(base) ...                       // base + 0x38A4 inside the ctor
+    StatusEntry *table = STATUS_TABLE; do { ... table[self->index] ... } while (...);
+
+That shape is the thing matching_rules section 5 says not to write. The target's
+`addi rX, r30, N` values are the first bytes of real objects of this TU's
+`.rodata`: the status table (already defined, `Scene_8014E0C4_rodata_80367488`)
+and four `.tpl` file names that sat inside one `unsigned int[21]` blob.
+
+Fix, in two steps:
+
+1. Split the blob into four `static const char[]` strings (symbols.txt too),
+   use them and the table by name, drop `base` and the ctor parameter. The
+   compiler now makes the anchor itself (`...rodata.0`, a `toc` object in the
+   trace). Code unchanged, still 99.775: `table` is still a named local.
+2. Drop the `table` local of the do-while and index the object directly
+   (`STATUS_TABLE[self->index].kind`). The loop-invariant address is then
+   hoisted by the backend (`addi r29, r30, 0x3758` stays, as in the target)
+   and is a backend temp. Trace (`tracesweep.py trace`): colouring order
+   `self r31, anchor r30, @574 r30, @645 r30, hoisted address r29, ...`; before
+   it was `self, anchor, table r29, @574 r29, @645 r29`.
+
+Step 2 alone had been tried on the hand-made anchor ("STATUS_TABLE used
+directly, 99.0, loses the addi"): with `base + 0x3758` the offset folds into
+the load and the hoisted `addi` disappears. It only works on a real object.
+
+Sign: a near miss whose source has `(char *)<first rodata/data symbol of the TU>`
+plus constants, and a named pointer local initialised from it that only
+feeds indexed reads in a loop. Do section 5 first, then un-name the pointer.
+
+Rule `real-pool-objects-then-unnamed-table`.
