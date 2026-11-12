@@ -1079,7 +1079,6 @@ config.libs = [
             Object(Matching, "game/DrawEffect_Cb_UVScroll_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartHaloPlate_Init.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_TrailDot_Spawn.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/DbgMenu_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DbgScene_InitAnimSlotArray.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DbgScene_CopyMatrix3x4Transpose.c"),  #g2
             Object(Matching, "game/Mtx_TransposeToMtx44.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1199,7 +1198,7 @@ config.libs = [
             Object(Matching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
             Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr"]),  #g2
             Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(Matching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr"], extab_padding=b""),  #g2
+            Object(Matching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr", "-inline deferred,auto"], extab_padding=b""),  #g2
             Object(NonMatching, "game/ShadowAreaMgr.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx13or14_MushroomDust_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx6D_KartSmokeSpark_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2

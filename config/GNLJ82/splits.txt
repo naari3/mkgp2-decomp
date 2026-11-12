@@ -3850,7 +3850,7 @@ game/DrawEffect_Cb_RalySmokeVariant_Tick.c:
 	.rodata     start:0x8032A7E0 end:0x8032A890
 
 game/autodata/rodata_8032A890.c:
-	.rodata     start:0x8032A890 end:0x8032E648
+	.rodata     start:0x8032A890 end:0x8032D04C
 
 game/DrawEffect_Cb_RalySmokeSpawner_4Wheel.c:
 	extab       start:0x8000AA78 end:0x8000AA80
@@ -3988,7 +3988,7 @@ game/DrawEffect_KartDustRing_Update.c:
 	.data       start:0x8041A4D0 end:0x8041A4F4
 
 game/autodata/data_8041A4F8.c:
-	.data       start:0x8041A4F8 end:0x8041C9B0
+	.data       start:0x8041A4F8 end:0x8041C990
 
 game/DrawEffect_TrailDot_Spawn.c:
 	extab       start:0x8000AB78 end:0x8000AB80
@@ -4085,23 +4085,22 @@ game/CoinJumpFxSpawn.cpp:
 	extabindex  start:0x80023378 end:0x80023384
 	.text       start:0x800CE2A8 end:0x800CE4C4
 
-game/DbgMenu_Dtor.c:
-	extab       start:0x8000AC10 end:0x8000AC18
-	extabindex  start:0x80023384 end:0x80023390
-	.text       start:0x800CE4C4 end:0x800CE54C
-
 game/DbgMenu.cpp:
-	extab       start:0x8000AC18 end:0x8000B0BC
-	extabindex  start:0x80023390 end:0x800236A8
-	.text       start:0x800CE54C end:0x800D2BEC
-	.data       start:0x8041C9B0 end:0x8041C9E8
-	.sdata      start:0x806CF330 end:0x806CF34C
+	extab       start:0x8000AC10 end:0x8000B0BC
+	extabindex  start:0x80023384 end:0x800236A8
+	.text       start:0x800CE4C4 end:0x800D2BEC
+	.rodata     start:0x8032D04C end:0x8032D098
+	.data       start:0x8041C990 end:0x8041CB88
+	.sdata      start:0x806CF330 end:0x806CF3B4
 
-game/autodata/sdata_806CF34C.c:
-	.sdata      start:0x806CF34C end:0x806CF470
+game/autodata/sdata_806CF3B4.c:
+	.sdata      start:0x806CF3B4 end:0x806CF470
 
-game/autodata/data_8041C9E8.c:
-	.data       start:0x8041C9E8 end:0x8041E8B0
+game/autodata/data_8041CB88.c:
+	.data       start:0x8041CB88 end:0x8041E8B0
+
+game/autodata/rodata_8032D098.c:
+	.rodata     start:0x8032D098 end:0x8032E648
 
 game/DbgScene_InitAnimSlotArray.c:
 	extab       start:0x8000B0BC end:0x8000B0C4

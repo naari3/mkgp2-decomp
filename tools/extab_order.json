@@ -1,6 +1,7 @@
 {
   "src/game/DbgMenu.cpp": {
     "extab": [
+      "DbgMenu_Dtor",
       "dtor_800D2B98",
       "DbgMenu_TickSubScene",
       "DbgMenu_HandleInput",
@@ -70,6 +71,7 @@
       "dtor_80082960"
     ],
     "extabindex": [
+      "DbgMenu_Dtor",
       "DbgMenu_TickSubScene",
       "DbgMenu_HandleInput",
       "DbgScene00_SpriteViewer_Ctor",
