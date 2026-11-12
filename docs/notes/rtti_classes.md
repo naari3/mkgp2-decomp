@@ -363,3 +363,8 @@ clMnCardRenew: if carving all ancestor names would leave an 8-aligned autodata t
 Source: Codex worker r8_c9_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clCGameDK can convert independently of CoinBase/DKCoin in the same code TU: keep nondeferred address-order definitions and the old Coin aliases, and own only .data 8048E318..34C / .sdata 806CF548..560. Approved uncalled PrintTypeNames pools the DK/JobRunner names at the original position; compiler RTTI reuses the literal strings. Exact pool symbol boundaries remove pseudo-relocation mismatches. All seven methods/EH/data and full source-linked DOL verified. Existing mechanisms, not a compiler-source rule.
+
+## r8_c14_20261112
+Source: Codex worker r8_c14_20261112 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clCSSceneNextRace converted using existing mechanisms: own name pool at 80369684 needs #align4 .rodata in its bridge, while autodata tail 803696AC independently needs align4.txt. Own six sections and six functions 100%, exact linked addresses and full DOL SHA-1 verified. This is an object/link observation; no new compiler-source rule.

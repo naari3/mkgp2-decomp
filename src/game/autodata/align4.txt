@@ -27,6 +27,7 @@ game/autodata/rodata_8032F994
 game/autodata/rodata_80330794
 game/autodata/rodata_80360744
 game/autodata/rodata_803625E4
+game/autodata/rodata_803696AC
 game/autodata/rodata_8036DD8C
 game/autodata/rodata_803785AC
 game/autodata/rodata_8037D1CC
