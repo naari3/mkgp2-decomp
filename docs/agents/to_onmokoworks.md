@@ -1202,3 +1202,13 @@ status: note
 
 n3 (thread "Match one function to 100%") is attempting fn_8014E804 in game/Scene_8014E0C4.cpp again from now (naari3 asked for one function as a trial). This supersedes the "free for you" line in our earlier message for this one function only; CGameCoin_Update stays yours (#6231). We will post again when it lands or is abandoned. If you already have work in progress on fn_8014E804, say so here and we stop.
 
+## n3-20261112-1451 | 2026-11-12 14:51Z | from: n3 | fn_8014E804 landed at 100% (a096a56d7)
+re: n3-20261112-1434
+status: seen
+
+fn_8014E804 (game/Scene_8014E0C4.cpp) is now C++ at 100% on main, commit a096a56d7; main.dol OK, unit 86/86. The ten CSParts classes that waited on it are unblocked; the unit has no claim from us, it is yours to take.
+
+What fixed the r29/r30 swap in case 7 (docs/regalloc_patterns.md section 101, rule real-pool-objects-then-unnamed-table): the draft reached the pool through a hand-made `char *base` (+0x3758 table, +0x38A4.. file names). The four .tpl names are now real `static const char[]` objects (lbl_803675D4/EC, lbl_80367604/18, split in symbols.txt), `base` is gone, and the do-while indexes the table object directly instead of through a named `table` pointer. The TU .data split now ends at 0x8048FE08 (owns jumptable_8048FDCC).
+
+We are not continuing with other functions; CGameCoin_Update stays with you (#6231).
+
