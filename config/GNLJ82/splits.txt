@@ -3983,7 +3983,7 @@ game/DrawEffect_Cb_KartTwoPlaneRing_Tick.c:
 	.sdata2     start:0x806D5640 end:0x806D5658
 
 game/autodata/sdata2_806D5658.c:
-	.sdata2     start:0x806D5658 end:0x806D7900
+	.sdata2     start:0x806D5658 end:0x806D7040
 
 game/DrawEffect_SmokePuff_Update.c:
 	extab       start:0x8000AB20 end:0x8000AB28
@@ -5854,14 +5854,18 @@ game/NokoNoko_801287F8.cpp:
 	extabindex  start:0x800249BC end:0x80024A10
 	.text       start:0x801287F8 end:0x8012A5AC
 	.rodata     start:0x803561E8 end:0x80356708
-	.data       start:0x8048E318 end:0x8048E34C
-	.sdata      start:0x806CF548 end:0x806CF560
+	.data       start:0x8048E318 end:0x8048E380
+	.sdata      start:0x806CF548 end:0x806CF570
+	.sdata2     start:0x806D7040 end:0x806D7048
 
-game/autodata/sdata_806CF560.c:
-	.sdata      start:0x806CF560 end:0x806CF5C8
+game/autodata/sdata2_806D7048.c:
+	.sdata2     start:0x806D7048 end:0x806D7900
 
-game/autodata/data_8048E34C.c:
-	.data       start:0x8048E34C end:0x8048E3D8
+game/autodata/sdata_806CF570.c:
+	.sdata      start:0x806CF570 end:0x806CF5C8
+
+game/autodata/data_8048E380.c:
+	.data       start:0x8048E380 end:0x8048E3D8
 
 game/autodata/rodata_80356708.c:
 	.rodata     start:0x80356708 end:0x80356730

@@ -775,17 +775,7 @@ struct CoinShot {
     CoinShotTrail trail[20];
 };
 
-struct clCGameCoinBase {
-    virtual ~clCGameCoinBase();
-    virtual void Update() = 0;
-    virtual void Draw() = 0;
-    clNormal3D *model;
-    clNormal3D *trailModel;
-    int xC, x10;
-    CoinShot shots[6];
-    int trailCount;
-    clCGameCoinBase(const char *modelFile, const char *trailFile);
-};
+#include "game/types/clCGameCoinBase.h"
 
 inline clCGameCoinBase::clCGameCoinBase(const char *modelFile, const char *trailFile) {
     xC = 0;
@@ -811,6 +801,8 @@ inline clCGameCoinBase::clCGameCoinBase(const char *modelFile, const char *trail
         trailCount = 19;
     }
 }
+
+
 
 inline clCGameCoinBase::~clCGameCoinBase() {
     Object_DtorWithGXSync(model, 1);

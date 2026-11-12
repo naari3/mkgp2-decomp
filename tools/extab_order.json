@@ -1253,7 +1253,9 @@
     "fn_8012A52C",
     "NokoNokoChallenge_Init",
     "dtor_80036E40",
-    "PrintTypeNames__9clCGameDKFv"
+    "PrintTypeNames__9clCGameDKFv",
+    "dtor_8012A5AC",
+    "CheckType__15clCGameCoinBaseFP11clJobRunner"
   ],
   "src/game/fn_8012A71C.cpp": [
     "fn_8012A71C"

@@ -67,7 +67,7 @@ struct TimeTrialMode {
 
 #include "game/types/clJobRunner.h"
 extern "C" const float lbl_806D7070;
-struct CarObject; struct LakituStart; struct InputManager; struct Scene3D; struct ChallengeGoalCamera; struct Camera; struct HUD; struct IconSet; struct MapWaterEffect; struct CoinShots;
+struct CarObject; struct LakituStart; struct InputManager; struct Scene3D; struct ChallengeGoalCamera; struct Camera; struct HUD; struct IconSet; struct MapWaterEffect; struct clCGameDKCoin;
 struct clCGame : clJobRunner {
     float x4;
     clCGame() {
@@ -95,9 +95,9 @@ struct clCGameDK : clCGame {
     unsigned char x34, x35, x36;
     int x38, x3C;
     int count;
-    CoinShots *shots;
+    clCGameDKCoin *shots;
     clCGameDK();
-    void PrintTypeNames();
+    static clCGameDK *CheckType(clJobRunner *);
 };
 
 
@@ -324,47 +324,14 @@ static const IconPos s_iconPos[8] = {
 };
 /* Fakematch: an uncalled diagnostic retains the original RTTI-name pool order. */
 extern "C" void DebugPrintf(const char *, ...);
-void clCGameDK::PrintTypeNames() {
-    DebugPrintf("clCGameDK");
-    DebugPrintf("clJobRunner");
-}
+clCGameDK *clCGameDK::CheckType(clJobRunner *p) { return dynamic_cast<clCGameDK *>(p); }
+static const char NkCoinStartFormat[] = "Start to DKCoin.  %s - %d\n";
+static const char NkCoinHeaderName[] = "CGameCoin.hpp";
+static const char NkCourseHeaderName[] = "item_center_joint";
 
-void clCGameDK::Draw()
-{
-    TimeTrialMode *self = (TimeTrialMode *)this;
-    if (self->x34 == 0) {
-        return;
-    }
-    if (self->scene->IsReady() == 1) {
-        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
-        clDrawMan_SetMaxClipZ(SINGLETON_INSTANCE(lbl_806D10AC), lbl_806D7048);
-        TransparentDraw_SortAndDispatch();
-        CObj_DebugVizPathFlush(self->scene);
-        fn_8016B0C4();
-        KartItem_RenderPipelinedWithEffects(self->car, 0);
-        Object_RenderJObjIfWithinRange(self->lakitu);
-        CourseEnvironment_RenderObjects_Timed(self->env);
-        NokoNoko_Render();
-        self->x44->Draw();
-        clItemBoxManager_Draw(SINGLETON_INSTANCE(lbl_806D10D0));
-        Subsystem36c_DispatchPass2_Timed(self->env);
-        ItemObjectManager_Render();
-        self->x30->Draw();
-        DrawEffect_TickAndCull();
-        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
-        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
-        Subsystem36c_DispatchPass4_Timed(self->env);
-        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
-        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
-        fn_80253448(self->hud, lbl_806DC1B0 | lbl_806DC190);
-        fn_8011F994(1);
-        self->scene->Draw();
-    }
-    fn_80253448(self->hud, lbl_806DC1B8);
-    fn_802535D4(self->hud);
-    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
-    HSD_StateInvalidate(0x7f);
-}
+
+
+
 
 #pragma exceptions on
 #pragma readonly_strings on
@@ -557,7 +524,7 @@ static inline int NkFindFreeShot(NkShots *s) {
 
 static inline void NkFireShot(NkShots *s, NkVec *pos, NkVec *dir) {
     if (IsCardValid()) {
-        DebugPrintf("Start to DKCoin.  %s - %d\n", "CGameCoin.hpp", 0x386);
+        DebugPrintf(NkCoinStartFormat, NkCoinHeaderName, 0x386);
         if (fn_8016C360(0xab) == 1) {
             fn_8016C394(0xab);
         }
@@ -627,6 +594,390 @@ static inline int NkShouldHoldBrake(float accel, float brake) {
     return holding;
 }
 
+
+static const char s_lakituFile[20] = "jyugemu_start.dat";
+static const char s_coinFile[16] = "mario_coin.dat";
+static const char s_kiraFile[16] = "k_kira13.dat";
+#pragma exceptions reset
+
+static inline int RefDec(HsdObj *o)
+{
+    int ret = o->ref == (unsigned short)-1;
+    if (ret) {
+        return ret;
+    }
+    return o->ref-- == 0;
+}
+
+static inline void ObjUnref(HsdObj *o)
+{
+    if (o == 0) {
+        return;
+    }
+    if (RefDec(o)) {
+        if (o != 0) {
+            o->info->release(o);
+            o->info->destroy(o);
+        }
+    }
+}
+
+
+
+/* NokoNokoChallenge_Init (0x80129938): constructor of the Noko Noko
+ * challenge mode, the same minigame-ctor shape as JumpDistanceMode_Init.
+ * The TU owns .rodata 0x803561E8..0x80356708, so the icon table and the
+ * model file names are addressed off one pool base (r30). Mangled names
+ * are mapped in tools/extab_user_renames.json. */
+#pragma exceptions on
+
+#include "game/types/KartDriver.h"
+
+#include "game/types/InputManager.h"
+#include "game/types/Camera.h"
+#include "game/types/CarObject.h"
+static inline int GetChara() { return g_characterId; }
+struct PlayerCar : CarObject {
+    PlayerCar(const float *x, const float *z, int chara)
+        : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 1, 0, 0, *x, *z, GetCourseStartYaw()) {}
+};
+#include "game/types/LakituStart.h"
+#include "game/types/Scene3D.h"
+#include "game/types/ChallengeGoalCamera.h"
+struct MapWaterEffect { char data[0x10]; MapWaterEffect(); };
+#include "game/types/HUD.h"
+#include "game/types/WeatherSystem.h"
+#include "game/types/clNormal3D.h"
+
+struct ResCtrl {
+    int id;
+    char pad4[0xC];
+    unsigned char x10;
+    char pad11[3];
+    float x14, x18, x1C;
+    char pad20[0xC];
+    float x2C, x30;
+    char pad34[0x24];
+    ResCtrl();
+    void Set(float x, float y) { x10 = 1; x14 = x; x18 = y; x1C = lbl_806D7058; }
+    ~ResCtrl();
+};
+
+
+struct IconSet {
+    ResCtrl icons[8];
+    unsigned char x2C0;
+    float x2C4;
+    IconSet(int count, const IconPos *pos) {
+        PreloadResource(0x14B9);
+        PreloadResource(0x14C4);
+        PreloadResource(0x14BA);
+        icons[0].id = 0x14B9;
+        icons[1].id = 0x14C7;
+        icons[2].id = 0x14C5;
+        icons[3].id = 0x1ECD;
+        icons[4].id = 0x14BA;
+        icons[5].id = 0x14C4;
+        icons[6].id = count / 10 + 0x14BA;
+        icons[7].id = count % 10 + 0x14BA;
+        icons[5].x2C = lbl_806D7068;
+        icons[5].x30 = lbl_806D7068;
+        icons[6].x2C = lbl_806D70C0;
+        icons[6].x30 = lbl_806D70C0;
+        icons[7].x2C = lbl_806D70C0;
+        icons[7].x30 = lbl_806D70C0;
+        for (int i = 0; i < 8; i++) {
+            icons[i].Set(pos[i].x, pos[i].y);
+        }
+        x2C0 = 0;
+        x2C4 = lbl_806D7070;
+    }
+};
+
+struct ShotVec {
+    float x, y, z;
+    void Zero() { x = y = z = lbl_806D7070; }
+};
+struct CoinShotTrail { int age; ShotVec pos; };
+struct CoinShot {
+    int active;
+    int x4;
+    int timer;
+    ShotVec pos;
+    ShotVec vel;
+    float rot;
+    float alpha;
+    CoinShotTrail trail[20];
+};
+
+#include "game/types/clCGameCoinBase.h"
+
+
+/* Fakematch: parse-time RTTI diagnostic preserves the original name pool. */
+clCGameCoinBase *clCGameCoinBase::CheckType(clJobRunner *p) { return dynamic_cast<clCGameCoinBase *>(p); }
+inline clCGameCoinBase::clCGameCoinBase(const char *modelFile, const char *trailFile) {
+    xC = 0;
+    x10 = 0;
+    trailCount = 5;
+    model = new clNormal3D(modelFile, 1);
+    clNormal3D_SetFlags(model, 0x40000000, 0);
+    trailModel = new clNormal3D(trailFile, 1);
+    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
+    for (int i = 0; i < 6; i++) {
+        shots[i].active = 0;
+        shots[i].timer = 0;
+        shots[i].rot = lbl_806D7070;
+        shots[i].alpha = lbl_806D7070;
+        shots[i].x4 = 0;
+        shots[i].pos.Zero();
+        shots[i].vel.Zero();
+        for (int j = 0; j < 20; j++) {
+            shots[i].trail[j].age = -1;
+        }
+    }
+    if (trailCount >= 20) {
+        trailCount = 19;
+    }
+}
+
+
+
+inline clCGameCoinBase::~clCGameCoinBase() {
+    Object_DtorWithGXSync(model, 1);
+    Object_DtorWithGXSync(trailModel, 1);
+}
+
+struct clCGameDKCoin : clCGameCoinBase {
+    clCGameDKCoin(const char *modelFile, const char *trailFile) : clCGameCoinBase(modelFile, trailFile) {
+        Object_SetJObjScaleXYZ(model, lbl_806D70C4, lbl_806D70C4, lbl_806D70C4);
+    }
+    virtual ~clCGameDKCoin();
+    virtual void Update();
+    virtual void Draw();
+};
+
+
+
+
+
+
+
+static inline bool Trail_Spawn(Trail *t, float a, float b)
+{
+    if (t->age >= 0) {
+        return false;
+    }
+    t->age = 0;
+    t->pos.x = 5.0f * LUT_Sin12Bit(360.0f * a);
+    t->pos.y = 10.0f * b;
+    t->pos.z = 5.0f * fn_80186960(360.0f * a);
+    return true;
+}
+
+
+
+
+
+
+clCGameDKCoin::~clCGameDKCoin() {}
+
+void clCGameDKCoin::Update()
+{
+    Shot *s;
+    Trail *trails;
+    int i;
+    int j;
+
+    for (i = 0; i < 6; i++) {
+        s = &((ShotSet *)this)->shots[i];
+        if (s->active) {
+            trails = s->trail;
+            s->pos.x += s->vel.x;
+            s->pos.y += s->vel.y;
+            s->pos.z += s->vel.z;
+            s->vel.y -= 0.1f;
+            float ground = 0.0f;
+            if (Terrain_GetGroundHeightWithPenetration(&s->pos, &ground, 0, 0, 10.0f) == 1 && s->pos.y < ground) {
+                s->vel.y = 0.85f * -s->vel.y;
+            }
+            s->rot += 5.0f;
+            if (s->rot > 360.0f) {
+                s->rot -= 360.0f;
+            }
+            s->alpha = 1.0f - s->timer / 90.0f;
+            for (j = 0; j < trailCount; j++) {
+                if (trails[j].age >= 0) {
+                    trails[j].pos.y -= 2.0f;
+                    if (++trails[j].age > 10) {
+                        trails[j].age = -1;
+                    }
+                }
+            }
+            if ((s->timer & 3) == 0) {
+                for (j = 0; j < trailCount; j++) {
+                    if (Trail_Spawn(&trails[j], lbl_80495994[xC], lbl_80495A94[x10]) == 1) {
+                        trails[j].pos.x += s->pos.x;
+                        trails[j].pos.y += s->pos.y;
+                        trails[j].pos.z += s->pos.z;
+                        break;
+                    }
+                }
+                if (++xC >= 0x40) {
+                    xC = 0;
+                }
+                if (++x10 >= 0x30) {
+                    x10 = 0;
+                }
+            }
+            if (++s->timer >= 0x5a) {
+                s->active = 0;
+            }
+        }
+    }
+}
+
+void clCGameDKCoin::Draw()
+{
+    for (int i = 0; i < 6; i++) {
+        if (((ShotSet *)this)->shots[i].active) {
+            Object_SetJObjPositionVec(model, &((ShotSet *)this)->shots[i].pos);
+            Object_SetJObjRotationY(model, lbl_806D704C * ((ShotSet *)this)->shots[i].rot);
+            Object_SetColorAlphaOnly(model, 0, ((ShotSet *)this)->shots[i].alpha);
+            Object_RenderJObjEx(model, LinkedNode_GetField10_OrFallback(model, 0), 7);
+            LNode *n = LinkedNode_GetField10_OrFallback(model, 0);
+            Object_RenderJObjEx(model, n == 0 ? 0 : n->f8, 7);
+            for (int j = 0; j < trailCount; j++) {
+                float f = ((ShotSet *)this)->shots[i].trail[j].age / lbl_806D7050;
+                float sc = lbl_806D7054 - f;
+                Object_SetJObjPositionVec(trailModel, &((ShotSet *)this)->shots[i].trail[j].pos);
+                Object_SetJObjScaleXYZ(trailModel, sc, sc, sc);
+                Object_SetColorAlphaOnly(trailModel, 0, (lbl_806D7058 - f) * ((ShotSet *)this)->shots[i].alpha);
+                Object_RenderJObjTree(trailModel, 7);
+            }
+        }
+    }
+}
+
+clCGameDK::clCGameDK() {
+    float x, z;
+    float camA, camB;
+    float *course;
+    float speed;
+
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    input = new InputManager;
+    renderTarget = HSD_LObjLoadDesc(GetCourseDataPtr());
+    camera = new Camera ARGS_ORDER((lbl_806D70BC, lbl_806D706C, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, lbl_806D70BC, lbl_806D706C));
+    SetActiveCamera(0, camera);
+    g_raceCamera = camera;
+    ProcessSystemTick(0);
+    RankingTable_Init(GetRaceContextPtr());
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    GetStartPosition(0, &x, 0, &z);
+    car = new PlayerCar(&x, &z, GetChara());
+    {
+        KartDriver *r = CarObject_GetRenderObj(car);
+        r->visible_238 = 1;
+    }
+    {
+        KartDriver *r = CarObject_GetRenderObj(car);
+        r->forceDraw = 1;
+    }
+    SetPlayerCarObject(car);
+    KartMovement_EquipItem(CarObject_GetRenderObj(car), 6);
+    lakitu = new LakituStart(s_lakituFile, 0, lbl_806D70B0, lbl_806D7070, lbl_806D7070);
+    scene = new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
+    goalCam = new ChallengeGoalCamera;
+    water = new MapWaterEffect;
+    ProcessSystemTick(0);
+    Scene3D_GetCameraPos(scene, &camA, &camB);
+    camA += lbl_806D7050;
+    Scene3D_SetupProjection(scene, camA, camB);
+    hud = new HUD(0);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    g_raceEnded = 0;
+    x34 = 0;
+    x36 = 0;
+    x38 = 0;
+    x3C = 0;
+    g_raceTimeRemaining = MiniGame_GetTimerValue();
+    PreloadEffectResources(2);
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    course = MiniGame_GetCourseData();
+    count = 15;
+    speed = lbl_806D7058;
+    if (course != 0) {
+        speed = course[0];
+        count = ((int *)course)[1];
+    }
+    NokoNoko_Init(speed);
+    icons = new IconSet(count, s_iconPos);
+    shots = new clCGameDKCoin(s_coinFile, s_kiraFile);
+    if (g_weatherSystem == 0) {
+        g_weatherSystem = new WeatherSystem(1);
+    }
+    SetResourceLoadingFlag(1);
+}
+
+clCGameDK::~clCGameDK()
+{
+        TimeTrialMode *self = (TimeTrialMode *)this;
+        if (g_weatherSystem != 0) {
+            fn_8016C634(g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        delete self->x44;
+        delete self->scene;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->goalCam, 1);
+        delete self->x30;
+        SetPlayerCarObject(0);
+        delete self->car;
+        g_raceCamera = 0;
+        if (self->camera != 0) {
+            delete self->camera;
+        }
+        if (self->lights != 0) {
+            ObjUnref(self->lights);
+        }
+        CourseEnvironment_Dtor(self->env, 1);
+        void *icons = self->icons;
+        if (icons != 0) {
+            fn_80121210();
+            __destroy_arr(icons, (void *)dtor_80082960, 0x58, 8);
+            MemoryManager_TimedFree(icons);
+        }
+        fn_80254134(self->hud, 1);
+        fn_80188DA8();
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        RankingTable_Init(GetRaceContextPtr());
+        delete lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete lbl_806D10AC;
+        lbl_806D10AC = 0;
+}
+
 int clCGameDK::Update()
 {
     NkInput *input;
@@ -687,7 +1038,7 @@ int clCGameDK::Update()
         NkSlot *slot = KartItem_GetCurrentISESlot(CarObject_GetRenderObj(car));
         NkModel *obj = slot != 0 ? slot->obj : 0;
         if (obj != 0 && obj->model != 0) {
-            NkJObj *joint = ResolveJointByName(obj->model, "item_center_joint");
+            NkJObj *joint = ResolveJointByName(obj->model, NkCourseHeaderName);
             if (joint != 0) {
                 NkSetupMatrix(joint);
                 pos.x = joint->mtx[0][3];
@@ -799,376 +1150,40 @@ int clCGameDK::Update()
     }
     return -2;
 }
-static const char s_lakituFile[20] = "jyugemu_start.dat";
-static const char s_coinFile[16] = "mario_coin.dat";
-static const char s_kiraFile[16] = "k_kira13.dat";
-extern "C" const char lbl_803566E4[] = "clCGameCoinBase";
-extern "C" const char lbl_803566F4[] = "clCGameDKCoin";
-#pragma exceptions reset
 
-static inline int RefDec(HsdObj *o)
+void clCGameDK::Draw()
 {
-    int ret = o->ref == (unsigned short)-1;
-    if (ret) {
-        return ret;
-    }
-    return o->ref-- == 0;
-}
-
-static inline void ObjUnref(HsdObj *o)
-{
-    if (o == 0) {
+    TimeTrialMode *self = (TimeTrialMode *)this;
+    if (self->x34 == 0) {
         return;
     }
-    if (RefDec(o)) {
-        if (o != 0) {
-            o->info->release(o);
-            o->info->destroy(o);
-        }
+    if (self->scene->IsReady() == 1) {
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_SetMaxClipZ(SINGLETON_INSTANCE(lbl_806D10AC), lbl_806D7048);
+        TransparentDraw_SortAndDispatch();
+        CObj_DebugVizPathFlush(self->scene);
+        fn_8016B0C4();
+        KartItem_RenderPipelinedWithEffects(self->car, 0);
+        Object_RenderJObjIfWithinRange(self->lakitu);
+        CourseEnvironment_RenderObjects_Timed(self->env);
+        NokoNoko_Render();
+        self->x44->Draw();
+        clItemBoxManager_Draw(SINGLETON_INSTANCE(lbl_806D10D0));
+        Subsystem36c_DispatchPass2_Timed(self->env);
+        ItemObjectManager_Render();
+        self->x30->Draw();
+        DrawEffect_TickAndCull();
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        Subsystem36c_DispatchPass4_Timed(self->env);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+        fn_80253448(self->hud, lbl_806DC1B0 | lbl_806DC190);
+        fn_8011F994(1);
+        self->scene->Draw();
     }
-}
-
-clCGameDK::~clCGameDK()
-{
-        TimeTrialMode *self = (TimeTrialMode *)this;
-        if (g_weatherSystem != 0) {
-            fn_8016C634(g_weatherSystem, 1);
-            g_weatherSystem = 0;
-        }
-        SetActiveCamera(0, 0);
-        delete self->x44;
-        delete self->scene;
-        LakituStart_Dtor(self->lakitu, 1);
-        fn_80124C84(self->goalCam, 1);
-        delete self->x30;
-        SetPlayerCarObject(0);
-        delete self->car;
-        g_raceCamera = 0;
-        if (self->camera != 0) {
-            delete self->camera;
-        }
-        if (self->lights != 0) {
-            ObjUnref(self->lights);
-        }
-        CourseEnvironment_Dtor(self->env, 1);
-        void *icons = self->icons;
-        if (icons != 0) {
-            fn_80121210();
-            __destroy_arr(icons, (void *)dtor_80082960, 0x58, 8);
-            MemoryManager_TimedFree(icons);
-        }
-        fn_80254134(self->hud, 1);
-        fn_80188DA8();
-        ItemObjectManager_Reset();
-        VfxSlotMgr_Shutdown();
-        ClRomTable_PurgeAll();
-        RankingTable_Init(GetRaceContextPtr());
-        delete lbl_806D10D0;
-        lbl_806D10D0 = 0;
-        SceneDrawList_Reset();
-        delete lbl_806D109C;
-        lbl_806D109C = 0;
-        SetResourceLoadingFlag(0);
-        clRom_PurgeAll();
-        delete lbl_806D10AC;
-        lbl_806D10AC = 0;
-}
-
-/* NokoNokoChallenge_Init (0x80129938): constructor of the Noko Noko
- * challenge mode, the same minigame-ctor shape as JumpDistanceMode_Init.
- * The TU owns .rodata 0x803561E8..0x80356708, so the icon table and the
- * model file names are addressed off one pool base (r30). Mangled names
- * are mapped in tools/extab_user_renames.json. */
-#pragma exceptions on
-
-#include "game/types/KartDriver.h"
-
-#include "game/types/InputManager.h"
-#include "game/types/Camera.h"
-#include "game/types/CarObject.h"
-static inline int GetChara() { return g_characterId; }
-struct PlayerCar : CarObject {
-    PlayerCar(const float *x, const float *z, int chara)
-        : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 1, 0, 0, *x, *z, GetCourseStartYaw()) {}
-};
-#include "game/types/LakituStart.h"
-#include "game/types/Scene3D.h"
-#include "game/types/ChallengeGoalCamera.h"
-struct MapWaterEffect { char data[0x10]; MapWaterEffect(); };
-#include "game/types/HUD.h"
-#include "game/types/WeatherSystem.h"
-#include "game/types/clNormal3D.h"
-
-struct ResCtrl {
-    int id;
-    char pad4[0xC];
-    unsigned char x10;
-    char pad11[3];
-    float x14, x18, x1C;
-    char pad20[0xC];
-    float x2C, x30;
-    char pad34[0x24];
-    ResCtrl();
-    void Set(float x, float y) { x10 = 1; x14 = x; x18 = y; x1C = lbl_806D7058; }
-    ~ResCtrl();
-};
-
-
-struct IconSet {
-    ResCtrl icons[8];
-    unsigned char x2C0;
-    float x2C4;
-    IconSet(int count, const IconPos *pos) {
-        PreloadResource(0x14B9);
-        PreloadResource(0x14C4);
-        PreloadResource(0x14BA);
-        icons[0].id = 0x14B9;
-        icons[1].id = 0x14C7;
-        icons[2].id = 0x14C5;
-        icons[3].id = 0x1ECD;
-        icons[4].id = 0x14BA;
-        icons[5].id = 0x14C4;
-        icons[6].id = count / 10 + 0x14BA;
-        icons[7].id = count % 10 + 0x14BA;
-        icons[5].x2C = lbl_806D7068;
-        icons[5].x30 = lbl_806D7068;
-        icons[6].x2C = lbl_806D70C0;
-        icons[6].x30 = lbl_806D70C0;
-        icons[7].x2C = lbl_806D70C0;
-        icons[7].x30 = lbl_806D70C0;
-        for (int i = 0; i < 8; i++) {
-            icons[i].Set(pos[i].x, pos[i].y);
-        }
-        x2C0 = 0;
-        x2C4 = lbl_806D7070;
-    }
-};
-
-struct ShotVec {
-    float x, y, z;
-    void Zero() { x = y = z = lbl_806D7070; }
-};
-struct CoinShotTrail { int age; ShotVec pos; };
-struct CoinShot {
-    int active;
-    int x4;
-    int timer;
-    ShotVec pos;
-    ShotVec vel;
-    float rot;
-    float alpha;
-    CoinShotTrail trail[20];
-};
-
-#include "game/types/CoinShotBase.h"
-
-inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
-    xC = 0;
-    x10 = 0;
-    trailCount = 5;
-    model = new clNormal3D(modelFile, 1);
-    clNormal3D_SetFlags(model, 0x40000000, 0);
-    trailModel = new clNormal3D(trailFile, 1);
-    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
-    for (int i = 0; i < 6; i++) {
-        shots[i].active = 0;
-        shots[i].timer = 0;
-        shots[i].rot = lbl_806D7070;
-        shots[i].alpha = lbl_806D7070;
-        shots[i].x4 = 0;
-        shots[i].pos.Zero();
-        shots[i].vel.Zero();
-        for (int j = 0; j < 20; j++) {
-            shots[i].trail[j].age = -1;
-        }
-    }
-    if (trailCount >= 20) {
-        trailCount = 19;
-    }
-}
-
-struct CoinShots : CoinShotBase {
-    CoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile) {
-        Object_SetJObjScaleXYZ(model, lbl_806D70C4, lbl_806D70C4, lbl_806D70C4);
-    }
-    virtual ~CoinShots();
-};
-
-
-
-clCGameDK::clCGameDK() {
-    float x, z;
-    float camA, camB;
-    float *course;
-    float speed;
-
-    DrawManager_GetOrCreate();
-    SetResourceLoadingFlag(0);
-    DMAChannelManager_Init();
-    TransitionEffect_GetOrCreate();
-    SoundChannels_ClearAll();
-    ItemObjectManager_Init();
-    CourseObjectManager_Init();
-    input = new InputManager;
-    renderTarget = HSD_LObjLoadDesc(GetCourseDataPtr());
-    camera = new Camera ARGS_ORDER((lbl_806D70BC, lbl_806D706C, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, lbl_806D70BC, lbl_806D706C));
-    SetActiveCamera(0, camera);
-    g_raceCamera = camera;
-    ProcessSystemTick(0);
-    RankingTable_Init(GetRaceContextPtr());
-    lbl_806D12BC = 0;
-    SoundDriver_GetOrCreate(0);
-    GetStartPosition(0, &x, 0, &z);
-    car = new PlayerCar(&x, &z, GetChara());
-    {
-        KartDriver *r = CarObject_GetRenderObj(car);
-        r->visible_238 = 1;
-    }
-    {
-        KartDriver *r = CarObject_GetRenderObj(car);
-        r->forceDraw = 1;
-    }
-    SetPlayerCarObject(car);
-    KartMovement_EquipItem(CarObject_GetRenderObj(car), 6);
-    lakitu = new LakituStart(s_lakituFile, 0, lbl_806D70B0, lbl_806D7070, lbl_806D7070);
-    scene = new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
-    goalCam = new ChallengeGoalCamera;
-    water = new MapWaterEffect;
-    ProcessSystemTick(0);
-    Scene3D_GetCameraPos(scene, &camA, &camB);
-    camA += lbl_806D7050;
-    Scene3D_SetupProjection(scene, camA, camB);
-    hud = new HUD(0);
-    HUD_RegisterOverlay(hud, 6, 0);
-    HUD_RegisterOverlay(hud, 0x11, 0);
-    HUD_RegisterOverlay(hud, 0x12, 0);
-    HUD_RegisterOverlay(hud, 0xE, 0);
-    g_lakituStartAnimDone = 0;
-    SetCourseScene3D(scene);
-    g_raceEnded = 0;
-    x34 = 0;
-    x36 = 0;
-    x38 = 0;
-    x3C = 0;
-    g_raceTimeRemaining = MiniGame_GetTimerValue();
-    PreloadEffectResources(2);
-    PreloadEffectResources(9);
-    PreloadEffectResources(0xA);
-    course = MiniGame_GetCourseData();
-    count = 15;
-    speed = lbl_806D7058;
-    if (course != 0) {
-        speed = course[0];
-        count = ((int *)course)[1];
-    }
-    NokoNoko_Init(speed);
-    icons = new IconSet(count, s_iconPos);
-    shots = new CoinShots(s_coinFile, s_kiraFile);
-    if (g_weatherSystem == 0) {
-        g_weatherSystem = new WeatherSystem(1);
-    }
-    SetResourceLoadingFlag(1);
-}
-
-extern "C" void fn_8012A070(ShotOwner *self)
-{
-    for (int i = 0; i < 6; i++) {
-        if (((ShotSet *)self)->shots[i].active) {
-            Object_SetJObjPositionVec(self->model, &((ShotSet *)self)->shots[i].pos);
-            Object_SetJObjRotationY(self->model, lbl_806D704C * ((ShotSet *)self)->shots[i].rot);
-            Object_SetColorAlphaOnly(self->model, 0, ((ShotSet *)self)->shots[i].alpha);
-            Object_RenderJObjEx(self->model, LinkedNode_GetField10_OrFallback(self->model, 0), 7);
-            LNode *n = LinkedNode_GetField10_OrFallback(self->model, 0);
-            Object_RenderJObjEx(self->model, n == 0 ? 0 : n->f8, 7);
-            for (int j = 0; j < self->trailCount; j++) {
-                float f = ((ShotSet *)self)->shots[i].trail[j].age / lbl_806D7050;
-                float sc = lbl_806D7054 - f;
-                Object_SetJObjPositionVec(self->trailModel, &((ShotSet *)self)->shots[i].trail[j].pos);
-                Object_SetJObjScaleXYZ(self->trailModel, sc, sc, sc);
-                Object_SetColorAlphaOnly(self->trailModel, 0, (lbl_806D7058 - f) * ((ShotSet *)self)->shots[i].alpha);
-                Object_RenderJObjTree(self->trailModel, 7);
-            }
-        }
-    }
-}
-
-static inline bool Trail_Spawn(Trail *t, float a, float b)
-{
-    if (t->age >= 0) {
-        return false;
-    }
-    t->age = 0;
-    t->pos.x = 5.0f * LUT_Sin12Bit(360.0f * a);
-    t->pos.y = 10.0f * b;
-    t->pos.z = 5.0f * fn_80186960(360.0f * a);
-    return true;
-}
-
-extern "C" void fn_8012A22C(ShotOwner *self)
-{
-    Shot *s;
-    Trail *trails;
-    int i;
-    int j;
-
-    for (i = 0; i < 6; i++) {
-        s = &((ShotSet *)self)->shots[i];
-        if (s->active) {
-            trails = s->trail;
-            s->pos.x += s->vel.x;
-            s->pos.y += s->vel.y;
-            s->pos.z += s->vel.z;
-            s->vel.y -= 0.1f;
-            float ground = 0.0f;
-            if (Terrain_GetGroundHeightWithPenetration(&s->pos, &ground, 0, 0, 10.0f) == 1 && s->pos.y < ground) {
-                s->vel.y = 0.85f * -s->vel.y;
-            }
-            s->rot += 5.0f;
-            if (s->rot > 360.0f) {
-                s->rot -= 360.0f;
-            }
-            s->alpha = 1.0f - s->timer / 90.0f;
-            for (j = 0; j < self->trailCount; j++) {
-                if (trails[j].age >= 0) {
-                    trails[j].pos.y -= 2.0f;
-                    if (++trails[j].age > 10) {
-                        trails[j].age = -1;
-                    }
-                }
-            }
-            if ((s->timer & 3) == 0) {
-                for (j = 0; j < self->trailCount; j++) {
-                    if (Trail_Spawn(&trails[j], lbl_80495994[self->sinIdx], lbl_80495A94[self->cosIdx]) == 1) {
-                        trails[j].pos.x += s->pos.x;
-                        trails[j].pos.y += s->pos.y;
-                        trails[j].pos.z += s->pos.z;
-                        break;
-                    }
-                }
-                if (++self->sinIdx >= 0x40) {
-                    self->sinIdx = 0;
-                }
-                if (++self->cosIdx >= 0x30) {
-                    self->cosIdx = 0;
-                }
-            }
-            if (++s->timer >= 0x5a) {
-                s->active = 0;
-            }
-        }
-    }
-}
-
-extern "C" ModelPair *fn_8012A52C(ModelPair *self, short flag)
-{
-    if (self) {
-        self->vt = CoinShots_vtable_8048E36C;
-        if (self) {
-            self->vt = CoinShotBase_vtable_8048E34C;
-            Object_DtorWithGXSync(self->a, 1);
-            Object_DtorWithGXSync(self->b, 1);
-        }
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
+    fn_80253448(self->hud, lbl_806DC1B8);
+    fn_802535D4(self->hud);
+    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
+    HSD_StateInvalidate(0x7f);
 }
